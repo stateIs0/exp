@@ -66,3 +66,10 @@ public String run() {
      return "ok";
  }
 ```
+
+## 模块
+1. [all-package](all-package) 打包模块
+2. [bom-manager](bom-manager) pom 管理, 自身管理和三方依赖管理
+3. [open-exp-code](open-exp-code) exp 核心代码
+4. [open-exp-example](open-exp-example) exp 使用示例代码
+5. [spring-adapter](spring-adapter) springboot starter, exp 适配 spring boot
