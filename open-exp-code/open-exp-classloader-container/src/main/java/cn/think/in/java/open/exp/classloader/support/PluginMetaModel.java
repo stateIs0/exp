@@ -12,7 +12,6 @@ import lombok.Data;
 public class PluginMetaModel {
 
     /**
-     * build: pluginCode||||pluginVersion
      */
     String pluginId;
 
@@ -28,9 +27,6 @@ public class PluginMetaModel {
 
     String pluginBootClass;
 
-
-    public PluginMetaModel() {
-    }
 
     public PluginMetaModel(String pluginCode, String pluginDesc,
                            String pluginVersion, String pluginExt,
