@@ -12,6 +12,7 @@ extension plugin 扩展点插件系统
 1. 支持 spring 热插拔
 2. 基于 classloader 类隔离
 3. 支持多租户场景下的多实现
+4. 支持 springboot2.x/1.x 依赖
 
 
 ## USE
