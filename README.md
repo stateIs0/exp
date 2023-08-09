@@ -12,3 +12,46 @@ extension plugin 扩展点插件系统
 1. 支持 spring 热插拔
 2. 基于 classloader 类隔离
 3. 支持多租户场景下的多实现
+
+
+## USE
+
+主程序依赖
+```xml
+<dependency>
+   <groupId>cn.think.in.java</groupId>
+   <artifactId>open-exp-adapter-springboot2</artifactId>
+</dependency>
+```
+
+插件依赖
+```xml
+<dependency>
+   <groupId>cn.think.in.java</groupId>
+   <artifactId>open-exp-plugin-depend</artifactId>
+</dependency>
+```
+
+
+## API 使用
+```java
+ public String run() {
+     Optional<UserService> first = expAppContext.get(UserService.class).stream().findFirst();
+     if (first.isPresent()) {
+         first.get().createUserExt();
+     } else {
+         return "not found";
+     }
+     return "success";
+ }
+
+ public String install(String path) throws Throwable {
+     Plugin load = expAppContext.load(new File(path));
+     return load.getPluginId();
+ }
+
+ public String unInstall(String id) throws Exception {
+     expAppContext.unload(id);
+     return "ok";
+ }
+```
