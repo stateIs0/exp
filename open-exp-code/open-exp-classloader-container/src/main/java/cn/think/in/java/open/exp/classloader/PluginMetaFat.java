@@ -1,8 +1,8 @@
 package cn.think.in.java.open.exp.classloader;
 
-import lombok.Data;
-import cn.think.in.java.open.exp.client.PluginObjectRegister;
 import cn.think.in.java.open.exp.client.Plugin;
+import cn.think.in.java.open.exp.client.PluginObjectRegister;
+import lombok.Data;
 
 import java.io.File;
 import java.util.Map;
@@ -16,9 +16,6 @@ import java.util.Map;
 @Data
 public class PluginMetaFat {
 
-    /**
-     * build: pluginCode||pluginVersion
-     */
     String pluginId;
 
     String pluginCode;
