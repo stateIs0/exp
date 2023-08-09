@@ -32,6 +32,11 @@ extension plugin 扩展点插件系统
 
 ## USE
 
+env: 
+
+1. JDK 1.8
+2. Maven
+
 ```shell
 git clone git@github.com:stateIs0/exp.git
 cd all-package
