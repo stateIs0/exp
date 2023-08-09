@@ -10,3 +10,5 @@ extension plugin 扩展点插件系统
 ## Feature
 
 1. 支持 spring 热插拔
+2. 基于 classloader 类隔离
+3. 支持多租户场景下的多实现
