@@ -61,7 +61,7 @@ mvn clean package
 ```
 
 
-## API 使用
+## 编程界面 API 使用
 ```java
 ExpAppContext expAppContext = ExpAppContextSpiFactory.getFirst();
 
