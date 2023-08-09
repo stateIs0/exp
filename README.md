@@ -32,6 +32,12 @@ extension plugin 扩展点插件系统
 
 ## USE
 
+```shell
+cd all-package
+mvn clean package
+```
+
+
 主程序依赖
 ```xml
 <dependency>
