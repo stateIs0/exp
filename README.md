@@ -35,7 +35,9 @@ extension plugin 扩展点插件系统
 
 ## API 使用
 ```java
- public String run() {
+ExpAppContext expAppContext = ExpAppContextSpiFactory.getFirst();
+
+public String run() {
      Optional<UserService> first = expAppContext.get(UserService.class).stream().findFirst();
      if (first.isPresent()) {
          first.get().createUserExt();
