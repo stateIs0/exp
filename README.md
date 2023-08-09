@@ -33,6 +33,7 @@ extension plugin 扩展点插件系统
 ## USE
 
 ```shell
+git clone git@github.com:stateIs0/exp.git
 cd all-package
 mvn clean package
 ```
