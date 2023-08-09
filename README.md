@@ -4,9 +4,15 @@ extension plugin 扩展点插件系统
 
 名词定义:
 1. 主应用
+   - exp 需要运行在一个 jvm 之上, 通常, 这是一个 springboot, 这个 springboot 就是主应用;
 2. 插件
+   - 扩展功能使用插件的方式支持
+   - 插件里的代码写法和 spring 一样
 3. 扩展点
+   - 主应用定义的接口, 可被插件实现;
 4. 热插拔
+   - 插件支持从 jvm 和 spring 容器里摘除. 
+   - 支持运行时动态安装 jar 和 zip;
 
 场景:
 1. B 端大客户对业务进行定制, 需要对主代码扩展. 
@@ -21,6 +27,7 @@ extension plugin 扩展点插件系统
 2. 基于 classloader 类隔离
 3. 支持多租户场景下的多实现
 4. 支持 springboot2.x/1.x 依赖
+5. 支持插件里对外暴露 Controller Rest, 可热插拔;
 
 
 ## USE
