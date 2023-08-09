@@ -1,2 +1,2 @@
-plugins_path: my-exp-plugins
-plugins_work_dir: my-exp-workdir
+plugins_path: exp-plugins
+plugins_work_dir: exp-workdir

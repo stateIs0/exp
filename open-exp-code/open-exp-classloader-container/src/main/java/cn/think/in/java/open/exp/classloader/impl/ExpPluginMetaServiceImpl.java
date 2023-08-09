@@ -4,6 +4,7 @@ import cn.think.in.java.open.exp.classloader.ExpClass;
 import cn.think.in.java.open.exp.classloader.ExpPluginMetaService;
 import cn.think.in.java.open.exp.classloader.PluginMetaConfig;
 import cn.think.in.java.open.exp.classloader.PluginMetaFat;
+import cn.think.in.java.open.exp.classloader.support.ClassLoaderFinder;
 import cn.think.in.java.open.exp.classloader.support.DirectoryCleaner;
 import cn.think.in.java.open.exp.classloader.support.MetaConfigReader;
 import cn.think.in.java.open.exp.classloader.support.PluginMetaModel;
@@ -49,21 +50,8 @@ public class ExpPluginMetaServiceImpl implements ExpPluginMetaService {
         }
 
         PluginMetaFat pluginMetaFat = new PluginMetaFat();
-        ClassLoader classLoader = null;
-        if (file.getName().endsWith(".jar")) {
-
-            classLoader =
-                    new JarExtractorClassLoader(file.getPath(), dir);
-            pluginMetaFat.setClassLoader(classLoader);
-        } else if (file.getName().endsWith(".zip")) {
-            classLoader =
-                    new JarExtractorClassLoader(file.getPath(), dir);
-            pluginMetaFat.setClassLoader(classLoader);
-        }
-
-        if (classLoader == null) {
-            throw new RuntimeException("classLoader is null...file " + file.getName());
-        }
+        ClassLoader classLoader = ClassLoaderFinder.find(file, dir);
+        pluginMetaFat.setClassLoader(classLoader);
 
         Class<ExpBoot> aClass = (Class<ExpBoot>) classLoader.loadClass(meta.getPluginBootClass());
         PluginObjectRegister register = aClass.newInstance().boot();
@@ -115,11 +103,11 @@ public class ExpPluginMetaServiceImpl implements ExpPluginMetaService {
 
         List<ExpClass<T>> re = new ArrayList<>();
 
-        Set<String> set = extCache.get(extCode);
-        if (set == null) {
+        Set<String> pluginIdSet = extCache.get(extCode);
+        if (pluginIdSet == null) {
             return new ArrayList<>();
         }
-        for (String pluginId : set) {
+        for (String pluginId : pluginIdSet) {
             re.add(get(extCode, pluginId));
         }
         return re;
