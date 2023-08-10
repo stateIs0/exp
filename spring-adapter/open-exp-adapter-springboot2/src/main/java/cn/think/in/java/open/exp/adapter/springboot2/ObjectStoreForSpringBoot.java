@@ -60,11 +60,10 @@ public class ObjectStoreForSpringBoot implements ObjectStore {
         });
 
         if (beanFactory != null) {
-            RequestMappingHandlerMapping mapping = beanFactory.getBean(RequestMappingHandlerMapping.class);
-            RequestMappingHandlerAdapter adapter = beanFactory.getBean(RequestMappingHandlerAdapter.class);
+            RequestMappingHandlerMapping mapping = (RequestMappingHandlerMapping) beanFactory.getBean("requestMappingHandlerMapping");
+            RequestMappingHandlerAdapter adapter = (RequestMappingHandlerAdapter) beanFactory.getBean("requestMappingHandlerAdapter");
             for (Class<?> aClass : classes) {
                 try {
-
                     beanFactory.getBean(UniqueNameUtil.getName(aClass, pluginId));
                 } catch (Exception e) {
                     // ignore
