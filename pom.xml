@@ -10,10 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>bom-manager</module>
         <module>all-package</module>
-        <module>open-exp-code</module>
-        <module>spring-adapter</module>
     </modules>
 
     <properties>
