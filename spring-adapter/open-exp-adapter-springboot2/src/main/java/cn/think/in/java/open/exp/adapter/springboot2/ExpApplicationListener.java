@@ -14,12 +14,12 @@ public class ExpApplicationListener implements ApplicationListener<ApplicationRe
 
     ObjectStoreForSpringBoot objectStore;
 
-    public void setObjectStore(ObjectStoreForSpringBoot objectStore) {
-        this.objectStore = objectStore;
-    }
-
     public ObjectStoreForSpringBoot getObjectStore() {
         return objectStore;
+    }
+
+    public void setObjectStore(ObjectStoreForSpringBoot objectStore) {
+        this.objectStore = objectStore;
     }
 
     @Override

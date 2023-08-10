@@ -7,6 +7,7 @@ import cn.think.in.java.open.exp.classloader.support.UniqueNameUtil;
 import cn.think.in.java.open.exp.client.ExpAppContext;
 import cn.think.in.java.open.exp.client.ObjectStore;
 import cn.think.in.java.open.exp.client.Plugin;
+import cn.think.in.java.open.exp.client.TenantCallback;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -21,6 +22,7 @@ public class ExpAppContextImpl implements ExpAppContext {
 
     ExpPluginMetaService metaService;
     ObjectStore objectStore;
+    TenantCallback tenantCallback;
 
 
     public void setPluginMetaService(ExpPluginMetaService expPluginMetaService) {
@@ -52,6 +54,13 @@ public class ExpAppContextImpl implements ExpAppContext {
             List<ExpClass<P>> classes = metaService.get(extCode);
             List<P> result = new ArrayList<>();
             for (ExpClass<P> aClass : classes) {
+                Boolean ownCurrentTenant = tenantCallback.isOwnCurrentTenant(aClass.getPluginId());
+                if (ownCurrentTenant == null) {
+                    ownCurrentTenant = true;
+                }
+                if (!ownCurrentTenant) {
+                    continue;
+                }
                 P bean = objectStore.getObject(UniqueNameUtil.getName(aClass.getAClass(), aClass.getPluginId()));
                 if (bean != null) {
                     result.add(bean);
@@ -76,5 +85,21 @@ public class ExpAppContextImpl implements ExpAppContext {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public TenantCallback getTenantCallback() {
+        if (this.tenantCallback == null) {
+            return TenantCallback.TenantCallbackMock.instance;
+        }
+        return this.tenantCallback;
+    }
+
+    @Override
+    public void setTenantCallback(TenantCallback callback) {
+        if (callback == null) {
+            throw new RuntimeException("callback can not be null");
+        }
+        this.tenantCallback = callback;
     }
 }

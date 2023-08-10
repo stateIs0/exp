@@ -1,10 +1,9 @@
 package cn.think.in.java.open.exp.adapter.springboot2;
 
 import cn.think.in.java.open.exp.classloader.support.UniqueNameUtil;
-import cn.think.in.java.open.exp.client.PluginObjectRegister;
 import cn.think.in.java.open.exp.client.ObjectStore;
+import cn.think.in.java.open.exp.client.PluginObjectRegister;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;

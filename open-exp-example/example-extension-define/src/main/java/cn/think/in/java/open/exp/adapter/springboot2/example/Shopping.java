@@ -6,5 +6,4 @@ package cn.think.in.java.open.exp.adapter.springboot2.example;
 public interface Shopping {
 
 
-
 }

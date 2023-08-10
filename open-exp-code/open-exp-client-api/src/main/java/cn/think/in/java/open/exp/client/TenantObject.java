@@ -1,4 +1,4 @@
-package cn.think.in.java.open.exp.core.tenant.impl;
+package cn.think.in.java.open.exp.client;
 
 /**
  * @Author cxs
