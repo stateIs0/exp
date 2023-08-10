@@ -33,6 +33,9 @@ public interface ExpAppContext {
      */
     <P> P get(String extCode, String pluginId);
 
+    /**
+     * 获取 TenantCallback 扩展逻辑;
+     */
     default TenantCallback getTenantCallback() {
         return TenantCallback.TenantCallbackMock.instance;
     }
