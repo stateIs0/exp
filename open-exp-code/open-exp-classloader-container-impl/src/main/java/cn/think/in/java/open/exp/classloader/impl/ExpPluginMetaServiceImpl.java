@@ -7,7 +7,7 @@ import cn.think.in.java.open.exp.classloader.PluginMetaFat;
 import cn.think.in.java.open.exp.classloader.support.ClassLoaderFinder;
 import cn.think.in.java.open.exp.classloader.support.DirectoryCleaner;
 import cn.think.in.java.open.exp.classloader.support.MetaConfigReader;
-import cn.think.in.java.open.exp.classloader.support.PluginMetaModel;
+import cn.think.in.java.open.exp.classloader.support.PluginMetaInnerModel;
 import cn.think.in.java.open.exp.client.ExpBoot;
 import cn.think.in.java.open.exp.client.PluginObjectRegister;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ public class ExpPluginMetaServiceImpl implements ExpPluginMetaService {
 
     @Override
     public PluginMetaFat install(File file) throws Throwable {
-        PluginMetaModel meta = MetaConfigReader.getMeta(file);
+        PluginMetaInnerModel meta = MetaConfigReader.getMeta(file);
         Map<String, String> mapping = MetaConfigReader.getMapping(file);
 
         String dir = pluginMetaConfig.getWorkDir() + "/" + meta.getPluginId();

@@ -44,7 +44,7 @@ mvn clean package
 ```
 
 
-主程序依赖
+主程序依赖(springboot starter)
 ```xml
 <dependency>
    <groupId>cn.think.in.java</groupId>
@@ -92,7 +92,8 @@ public String run() {
    - [exp-one-bom](bom-manager%2Fexp-one-bom) 自身包管理
    - [exp-third-bom](bom-manager%2Fexp-third-bom) 三方包管理
 3. [open-exp-code](open-exp-code) exp 核心代码
-   - [open-exp-classloader-container](open-exp-code%2Fopen-exp-classloader-container) classloader 隔离模块
+   - [open-exp-classloader-container](open-exp-code%2Fopen-exp-classloader-container) classloader 隔离 API
+   - [open-exp-classloader-container-impl](open-exp-code%2Fopen-exp-classloader-container-impl) classloader 隔离 API 具体实现
    - [open-exp-client-api](open-exp-code%2Fopen-exp-client-api) 核心 api 模块
    - [open-exp-core-impl](open-exp-code%2Fopen-exp-core-impl) 核心 api 实现
    - [open-exp-document-api](open-exp-code%2Fopen-exp-document-api) 扩展点文档 api

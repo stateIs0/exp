@@ -11,6 +11,7 @@
     <modules>
         <module>open-exp-client-api</module>
         <module>open-exp-classloader-container</module>
+        <module>open-exp-classloader-container-impl</module>
         <module>open-exp-document-api</module>
         <module>open-exp-document-core-impl</module>
         <module>open-exp-core-impl</module>

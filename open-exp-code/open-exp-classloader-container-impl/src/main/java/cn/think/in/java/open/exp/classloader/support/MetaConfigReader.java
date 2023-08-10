@@ -32,7 +32,7 @@ public class MetaConfigReader {
     public static String pluginBootClassName = "plugin.boot.class";
 
 
-    public static PluginMetaModel getMeta(File file) {
+    public static PluginMetaInnerModel getMeta(File file) {
         Properties properties = loadProperties(file.getAbsolutePath(), pluginInfoFileName);
         String code = properties.getProperty(pluginCodeName);
         String desc = properties.getProperty(pluginDescName);
@@ -40,7 +40,7 @@ public class MetaConfigReader {
         String ext = properties.getProperty(pluginExtName);
         String config = properties.getProperty(pluginConfigName);
         String boot = properties.getProperty(pluginBootClassName);
-        return new PluginMetaModel(code, desc, version, ext, config, boot);
+        return new PluginMetaInnerModel(code, desc, version, ext, config, boot);
     }
 
     public static Map<String, String> getMapping(File file) {

@@ -9,7 +9,7 @@ import lombok.Data;
  * @version 1.0
  **/
 @Data
-public class PluginMetaModel {
+public class PluginMetaInnerModel {
 
     /**
      */
@@ -28,9 +28,9 @@ public class PluginMetaModel {
     String pluginBootClass;
 
 
-    public PluginMetaModel(String pluginCode, String pluginDesc,
-                           String pluginVersion, String pluginExt,
-                           String pluginConfig, String pluginBootClass) {
+    public PluginMetaInnerModel(String pluginCode, String pluginDesc,
+                                String pluginVersion, String pluginExt,
+                                String pluginConfig, String pluginBootClass) {
 
         this.pluginId = pluginCode + UniqueNameUtil.getSplit() + pluginVersion;
         this.pluginCode = pluginCode;

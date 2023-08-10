@@ -26,7 +26,7 @@ public class Bootstrap {
         if (expAppContext instanceof ExpAppContextImpl) {
             ExpAppContextImpl spi = (ExpAppContextImpl) expAppContext;
             spi.setObjectStore(callback);
-            ExpPluginMetaService metaService = PluginMetaServiceSpiFactory.getSpi();
+            ExpPluginMetaService metaService = PluginMetaServiceSpiFactory.getFirst();
             metaService.setConfig(new PluginMetaConfig(workDir));
             spi.setPluginMetaService(metaService);
         }
