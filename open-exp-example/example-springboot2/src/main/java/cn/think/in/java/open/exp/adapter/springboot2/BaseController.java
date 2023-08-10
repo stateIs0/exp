@@ -10,11 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 /**
  * @Author cxs
@@ -52,45 +48,44 @@ public class BaseController {
         });
     }
 
-    @RequestMapping("/hi")
-    public String hi() {
-        return "hi";
-    }
-
 
     @RequestMapping("/run")
     public String run(String tenantId) {
         // 上下文设置租户 id
         context.set(tenantId);
-
-        List<UserService> userServices = expAppContext.get(UserService.class);
-
-        List<UserService> collect = userServices.stream().sorted().collect(Collectors.toList());
-
-        Optional<UserService> first = collect.stream().findFirst();
-        if (first.isPresent()) {
-            first.get().createUserExt();
-        } else {
-            return "not found";
+        try {
+            List<UserService> userServices = expAppContext.get(UserService.class);
+            // first 第一个就是这个租户优先级最高的.
+            Optional<UserService> optional = userServices.stream().findFirst();
+            if (optional.isPresent()) {
+                optional.get().createUserExt();
+            } else {
+                return "not found";
+            }
+            return "success";
+        } finally {
+            // 上下文删除租户 id
+            context.remove();
         }
-        // 上下文删除租户 id
-        context.remove();
-        return "success";
     }
 
 
     @RequestMapping("/install")
-    public String install(String path) throws Throwable {
-        Plugin load = expAppContext.load(new File(path));
+    public String install(String path, String tenantId) throws Throwable {
+        Plugin plugin = expAppContext.load(new File(path));
 
+        sortMap.put(plugin.getPluginId(), Math.abs(new Random().nextInt(100)));
+        pluginIdTenantIdMap.put(plugin.getPluginId(), tenantId);
 
-        return load.getPluginId();
+        return plugin.getPluginId();
     }
 
     @RequestMapping("/unInstall")
-    public String unInstall(String id) throws Exception {
-        log.info("plugin id {}", id);
-        expAppContext.unload(id);
+    public String unInstall(String pluginId) throws Exception {
+        log.info("plugin id {}", pluginId);
+        expAppContext.unload(pluginId);
+        pluginIdTenantIdMap.remove(pluginId);
+        sortMap.remove(pluginId);
         return "ok";
     }
 }

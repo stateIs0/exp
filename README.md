@@ -65,27 +65,45 @@ mvn clean package
 ## 编程界面 API 使用
 
 ```java
-ExpAppContext expAppContext=ExpAppContextSpiFactory.getFirst();
+@RequestMapping("/run")
+public String run(String tenantId) {
+  // 上下文设置租户 id
+  context.set(tenantId);
+  try {
+      List<UserService> userServices = expAppContext.get(UserService.class);
+      // first 第一个就是这个租户优先级最高的.
+      Optional<UserService> optional = userServices.stream().findFirst();
+      if (optional.isPresent()) {
+          optional.get().createUserExt();
+      } else {
+          return "not found";
+      }
+      return "success";
+  } finally {
+      // 上下文删除租户 id
+      context.remove();
+  }
+}
 
-public String run(){
-        Optional<UserService> first=expAppContext.get(UserService.class).stream().findFirst();
-        if(first.isPresent()){
-        first.get().createUserExt();
-        }else{
-        return"not found";
-        }
-        return"success";
-        }
 
-public String install(String path)throws Throwable{
-        Plugin load=expAppContext.load(new File(path));
-        return load.getPluginId();
-        }
+@RequestMapping("/install")
+public String install(String path, String tenantId) throws Throwable {
+  Plugin plugin = expAppContext.load(new File(path));
 
-public String unInstall(String id)throws Exception{
-        expAppContext.unload(id);
-        return"ok";
-        }
+  sortMap.put(plugin.getPluginId(), Math.abs(new Random().nextInt(100)));
+  pluginIdTenantIdMap.put(plugin.getPluginId(), tenantId);
+
+  return plugin.getPluginId();
+}
+
+@RequestMapping("/unInstall")
+public String unInstall(String pluginId) throws Exception {
+  log.info("plugin id {}", pluginId);
+  expAppContext.unload(pluginId);
+  pluginIdTenantIdMap.remove(pluginId);
+  sortMap.remove(pluginId);
+  return "ok";
+}
 ```
 
 ## 模块

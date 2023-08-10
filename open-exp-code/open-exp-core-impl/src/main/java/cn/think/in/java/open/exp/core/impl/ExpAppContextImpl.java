@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author cxs
@@ -66,7 +67,7 @@ public class ExpAppContextImpl implements ExpAppContext {
                     result.add(bean);
                 }
             }
-            return result;
+            return result.stream().sorted().collect(Collectors.toList());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
