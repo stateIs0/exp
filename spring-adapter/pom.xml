@@ -15,6 +15,7 @@
     <modules>
         <module>open-exp-adapter-springboot1</module>
         <module>open-exp-adapter-springboot2</module>
+        <module>open-exp-tenant-adapter-springboot2</module>
     </modules>
 
     <properties>

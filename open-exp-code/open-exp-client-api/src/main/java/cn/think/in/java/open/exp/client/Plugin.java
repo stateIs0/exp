@@ -2,6 +2,8 @@ package cn.think.in.java.open.exp.client;
 
 import lombok.Data;
 
+import java.util.Objects;
+
 /**
  * @Author cxs
  * @Description
@@ -28,4 +30,23 @@ public class Plugin {
 
     String pluginBootClass;
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Plugin plugin = (Plugin) o;
+
+        return Objects.equals(pluginId, plugin.pluginId);
+    }
+
+    @Override
+    public int hashCode() {
+        return pluginId != null ? pluginId.hashCode() : 0;
+    }
 }

@@ -25,7 +25,7 @@ extension plugin 扩展点插件系统
 
 1. 支持 spring 热插拔/启动时加载
 2. 基于 classloader 类隔离
-3. 支持多租户场景下的多实现
+3. 支持多租户场景下的多实现, 各个实现可实时更新优先级
 4. 支持 springboot2.x/1.x 依赖
 5. 支持插件里对外暴露 Controller Rest, 可热插拔;
 
@@ -105,5 +105,7 @@ public String run() {
    - [example-plugin2](open-exp-example%2Fexample-plugin2) 示例插件实现 2
    - [example-springboot1](open-exp-example%2Fexample-springboot1) 示例 springboot 1.x 例子
    - [example-springboot2](open-exp-example%2Fexample-springboot2) 示例 springboot 2.x 例子
+   - [example-tenant-springboot2](open-exp-example%2Fexample-tenant-springboot2) 租户示例 springboot2 
 5. [spring-adapter](spring-adapter) springboot starter, exp 适配 spring boot
-   - 主应用依赖 stater
+   - [open-exp-tenant-adapter-springboot2](spring-adapter%2Fopen-exp-tenant-adapter-springboot2) 租户实现 springboot2 依赖
+   - [open-exp-adapter-springboot2](spring-adapter%2Fopen-exp-adapter-springboot2) 普通实现 springboot2 依赖

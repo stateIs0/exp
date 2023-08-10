@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>example-springboot2</module>
+        <module>example-tenant-springboot2</module>
         <module>example-springboot1</module>
         <module>example-extension-define</module>
         <module>example-plugin1</module>

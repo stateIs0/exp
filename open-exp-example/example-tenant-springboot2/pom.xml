@@ -5,12 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cn.think.in.java</groupId>
-        <artifactId>spring-adapter</artifactId>
+        <artifactId>open-exp-example</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>open-exp-adapter-springboot2</artifactId>
+    <artifactId>example-tenant-springboot2</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -29,6 +28,13 @@
             </dependency>
             <dependency>
                 <groupId>cn.think.in.java</groupId>
+                <artifactId>exp-third-bom</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>cn.think.in.java</groupId>
                 <artifactId>exp-one-bom</artifactId>
                 <version>1.0-SNAPSHOT</version>
                 <scope>import</scope>
@@ -42,35 +48,24 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>cn.think.in.java</groupId>
-            <artifactId>open-exp-client-api</artifactId>
+            <artifactId>open-exp-tenant-adapter-springboot2</artifactId>
         </dependency>
+
         <dependency>
             <groupId>cn.think.in.java</groupId>
-            <artifactId>open-exp-core-impl</artifactId>
+            <artifactId>open-exp-plugin-depend</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>cn.think.in.java.open.exp.core.tenant.impl</groupId>
-            <artifactId>open-exp-core-tenant-impl</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>cn.think.in.java</groupId>
+            <artifactId>example-extension-define</artifactId>
         </dependency>
     </dependencies>
-
 
 
 </project>

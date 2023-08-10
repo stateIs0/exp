@@ -11,6 +11,7 @@
 
     <modules>
         <module>all-package</module>
+        <module>open-exp-code/open-exp-core-tenant-impl</module>
     </modules>
 
     <properties>

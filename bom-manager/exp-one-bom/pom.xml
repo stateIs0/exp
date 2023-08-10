@@ -42,12 +42,27 @@
             </dependency>
             <dependency>
                 <groupId>cn.think.in.java</groupId>
+                <artifactId>open-exp-tenant-adapter-springboot2</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.think.in.java</groupId>
                 <artifactId>open-exp-classloader-container</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>cn.think.in.java</groupId>
                 <artifactId>open-exp-classloader-container-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.think.in.java.open.exp.core.tenant.impl</groupId>
+                <artifactId>open-exp-core-tenant-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.think.in.java</groupId>
+                <artifactId>example-extension-define</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
