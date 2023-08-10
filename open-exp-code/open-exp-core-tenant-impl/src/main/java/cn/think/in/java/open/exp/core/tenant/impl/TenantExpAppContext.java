@@ -4,6 +4,7 @@ import cn.think.in.java.open.exp.client.Plugin;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @Author cxs
@@ -22,12 +23,12 @@ public interface TenantExpAppContext {
     /**
      * 卸载
      */
-    void unLoad(String pluginId) throws Exception;
+    void unload(String pluginId) throws Exception;
 
     /**
      * 获取这个租户的优先级最高的插件实现.
      */
-    <P> P getSortFirst(Class<P> pClass, String tenantId);
+    <P> Optional<P> getSortFirst(Class<P> pClass, String tenantId);
 
     /**
      * 获取集合

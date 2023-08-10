@@ -1,9 +1,9 @@
 package cn.think.in.java.open.exp.adapter.springboot2.tenant;
 
 import cn.think.in.java.open.exp.adapter.springboot2.example.UserService;
-import cn.think.in.java.open.exp.client.ExpAppContext;
-import cn.think.in.java.open.exp.client.ExpAppContextSpiFactory;
 import cn.think.in.java.open.exp.client.Plugin;
+import cn.think.in.java.open.exp.core.tenant.impl.TenantExpAppContext;
+import cn.think.in.java.open.exp.core.tenant.impl.TenantExpAppContextSpiFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,14 +27,13 @@ public class BaseController {
         return "hi";
     }
 
-    ExpAppContext expAppContext = ExpAppContextSpiFactory.getFirst();
-
+    TenantExpAppContext tenantExpAppContext = TenantExpAppContextSpiFactory.getFirst();
 
     @RequestMapping("/run")
-    public String run() {
-        Optional<UserService> first = expAppContext.get(UserService.class).stream().findFirst();
-        if (first.isPresent()) {
-            first.get().createUserExt();
+    public String run(String tenantId) {
+        Optional<UserService> sortFirst = tenantExpAppContext.getSortFirst(UserService.class, tenantId);
+        if (sortFirst.isPresent()) {
+            sortFirst.get().createUserExt();
         } else {
             return "not found";
         }
@@ -43,17 +42,15 @@ public class BaseController {
 
 
     @RequestMapping("/install")
-    public String install(String path) throws Throwable {
-        Plugin load = expAppContext.load(new File(path));
-
-
+    public String install(String path, String tenantId) throws Throwable {
+        Plugin load = tenantExpAppContext.load(new File(path), tenantId);
         return load.getPluginId();
     }
 
     @RequestMapping("/unInstall")
     public String unInstall(String id) throws Exception {
         log.info("plugin id {}", id);
-        expAppContext.unload(id);
+        tenantExpAppContext.unload(id);
         return "ok";
     }
 }

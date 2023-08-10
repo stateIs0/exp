@@ -4,8 +4,8 @@ import cn.think.in.java.open.exp.adapter.springboot2.example.UserService;
 import cn.think.in.java.open.exp.client.Plugin;
 
 import java.io.File;
-
-import static org.junit.Assert.*;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 public class TenantExpAppContextImplTest {
 
@@ -16,11 +16,9 @@ public class TenantExpAppContextImplTest {
 
         Plugin load = tenantExpAppContext.load(new File("/Users/cxs/github/open-exp/exp-plugins/example-plugin1-1.0-SNAPSHOT.jar"), "123");
 
-        UserService sortFirst = tenantExpAppContext.getSortFirst(UserService.class, "123");
+        Optional<UserService> sortFirst = tenantExpAppContext.getSortFirst(UserService.class, "123");
 
-        System.out.println(sortFirst);
-
-
+        sortFirst.ifPresent(UserService::createUserExt);
 
 
     }

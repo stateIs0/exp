@@ -5,10 +5,7 @@ import cn.think.in.java.open.exp.client.ExpAppContextSpiFactory;
 import cn.think.in.java.open.exp.client.Plugin;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -39,7 +36,7 @@ public class TenantExpAppContextImpl implements TenantExpAppContext {
     }
 
     @Override
-    public void unLoad(String pluginId) throws Exception {
+    public void unload(String pluginId) throws Exception {
         appContext.unload(pluginId);
         for (Map.Entry<String, List<TenantPlugin>> entry : tenantPluginMappings.entrySet()) {
             entry.getValue().removeIf(t -> t.getPlugin().getPluginId().equals(pluginId));
@@ -48,9 +45,9 @@ public class TenantExpAppContextImpl implements TenantExpAppContext {
     }
 
     @Override
-    public <P> P getSortFirst(Class<P> pClass, String tenantId) {
+    public <P> Optional<P> getSortFirst(Class<P> pClass, String tenantId) {
         List<P> list = appContext.get(pClass);
-        return list.stream().filter(p -> ((TenantObject) p).getTenantId().equals(tenantId)).sorted().findFirst().orElse(null);
+        return list.stream().filter(p -> ((TenantObject) p).getTenantId().equals(tenantId)).sorted().findFirst();
     }
 
     @Override

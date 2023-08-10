@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 @SpringBootApplication
 public class TenantMainBoot2 {
@@ -25,9 +27,9 @@ public class TenantMainBoot2 {
                     throw new RuntimeException(e);
                 }
                 tenantExpAppContext.updateSort("example-plugin2_2.0.0", 11);
-                UserService sortFirst = tenantExpAppContext.getSortFirst(UserService.class, "999");
+                Optional<UserService> sortFirst = tenantExpAppContext.getSortFirst(UserService.class, "999");
                 List<UserService> list = tenantExpAppContext.getList(UserService.class, "999");
-                System.out.println(sortFirst);
+                sortFirst.ifPresent(userService -> userService.createUserExt());
                 System.out.println(list);
             }
         }).start();
