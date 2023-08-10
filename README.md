@@ -130,6 +130,12 @@ public String unInstall(String pluginId) throws Exception {
 5. [spring-adapter](spring-adapter) springboot starter, exp 适配 spring boot
     - [open-exp-adapter-springboot2](spring-adapter%2Fopen-exp-adapter-springboot2) 普通实现 springboot2 依赖
 
+## 模块依赖
+
+![](ar.png)
+
+
+
 ## 扩展
 
 cn.think.in.java.open.exp.client.TenantCallback

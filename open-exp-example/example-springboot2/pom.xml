@@ -52,7 +52,7 @@
 
         <dependency>
             <groupId>cn.think.in.java</groupId>
-            <artifactId>open-exp-adapter-springboot2</artifactId>
+            <artifactId>open-exp-adapter-springboot2-starter</artifactId>
         </dependency>
 
         <dependency>

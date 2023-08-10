@@ -13,8 +13,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>open-exp-adapter-springboot1</module>
-        <module>open-exp-adapter-springboot2</module>
+        <module>open-exp-adapter-springboot1-starter</module>
+        <module>open-exp-adapter-springboot2-starter</module>
     </modules>
 
     <properties>
