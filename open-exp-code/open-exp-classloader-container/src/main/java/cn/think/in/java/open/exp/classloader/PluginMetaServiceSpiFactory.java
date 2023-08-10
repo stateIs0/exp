@@ -9,21 +9,21 @@ public class PluginMetaServiceSpiFactory {
 
     private static final Object LOCK = new Object();
 
-    private static ExpPluginMetaService expPluginMetaService;
+    private static PluginMetaService pluginMetaService;
 
-    public static ExpPluginMetaService getFirst() {
-        if (expPluginMetaService != null) {
-            return expPluginMetaService;
+    public static PluginMetaService getFirst() {
+        if (pluginMetaService != null) {
+            return pluginMetaService;
         }
         synchronized (LOCK) {
-            if (expPluginMetaService != null) {
-                return expPluginMetaService;
+            if (pluginMetaService != null) {
+                return pluginMetaService;
             }
 
-            ServiceLoader<ExpPluginMetaService> load = ServiceLoader.load(ExpPluginMetaService.class);
-            for (ExpPluginMetaService service : load) {
-                PluginMetaServiceSpiFactory.expPluginMetaService = service;
-                return expPluginMetaService;
+            ServiceLoader<PluginMetaService> load = ServiceLoader.load(PluginMetaService.class);
+            for (PluginMetaService service : load) {
+                PluginMetaServiceSpiFactory.pluginMetaService = service;
+                return pluginMetaService;
             }
             throw new RuntimeException("SPI 缺失.");
         }

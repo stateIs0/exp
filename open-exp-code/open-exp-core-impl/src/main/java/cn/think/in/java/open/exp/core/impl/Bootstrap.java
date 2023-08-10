@@ -1,8 +1,7 @@
 package cn.think.in.java.open.exp.core.impl;
 
-import cn.think.in.java.open.exp.classloader.ExpPluginMetaService;
+import cn.think.in.java.open.exp.classloader.PluginMetaService;
 import cn.think.in.java.open.exp.classloader.PluginMetaConfig;
-import cn.think.in.java.open.exp.classloader.PluginMetaServiceSpiFactory;
 import cn.think.in.java.open.exp.client.ExpAppContext;
 import cn.think.in.java.open.exp.client.ExpAppContextSpiFactory;
 import cn.think.in.java.open.exp.client.ObjectStore;
@@ -26,7 +25,7 @@ public class Bootstrap {
         if (expAppContext instanceof ExpAppContextImpl) {
             ExpAppContextImpl spi = (ExpAppContextImpl) expAppContext;
             spi.setObjectStore(callback);
-            ExpPluginMetaService metaService = PluginMetaServiceSpiFactory.getFirst();
+            PluginMetaService metaService = PluginMetaService.getSpi();
             metaService.setConfig(new PluginMetaConfig(workDir));
             spi.setPluginMetaService(metaService);
         }

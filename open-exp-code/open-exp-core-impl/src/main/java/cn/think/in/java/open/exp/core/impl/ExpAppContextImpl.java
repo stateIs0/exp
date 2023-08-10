@@ -1,7 +1,7 @@
 package cn.think.in.java.open.exp.core.impl;
 
 import cn.think.in.java.open.exp.classloader.ExpClass;
-import cn.think.in.java.open.exp.classloader.ExpPluginMetaService;
+import cn.think.in.java.open.exp.classloader.PluginMetaService;
 import cn.think.in.java.open.exp.classloader.PluginMetaFat;
 import cn.think.in.java.open.exp.classloader.support.UniqueNameUtil;
 import cn.think.in.java.open.exp.client.ExpAppContext;
@@ -21,13 +21,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ExpAppContextImpl implements ExpAppContext {
 
-    ExpPluginMetaService metaService;
+    PluginMetaService metaService;
     ObjectStore objectStore;
     TenantCallback tenantCallback;
 
 
-    public void setPluginMetaService(ExpPluginMetaService expPluginMetaService) {
-        this.metaService = expPluginMetaService;
+    public void setPluginMetaService(PluginMetaService pluginMetaService) {
+        this.metaService = pluginMetaService;
     }
 
     public void setObjectStore(ObjectStore objectStore) {

@@ -10,7 +10,11 @@ import java.util.List;
  * @date 2023/8/9
  * @version 1.0
  **/
-public interface ExpPluginMetaService {
+public interface PluginMetaService {
+
+    static PluginMetaService getSpi(){
+        return PluginMetaServiceSpiFactory.getFirst();
+    }
 
     void setConfig(PluginMetaConfig pluginMetaConfig);
 

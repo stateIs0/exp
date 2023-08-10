@@ -1,7 +1,7 @@
 package cn.think.in.java.open.exp.classloader.impl;
 
 import cn.think.in.java.open.exp.classloader.ExpClass;
-import cn.think.in.java.open.exp.classloader.ExpPluginMetaService;
+import cn.think.in.java.open.exp.classloader.PluginMetaService;
 import cn.think.in.java.open.exp.classloader.PluginMetaConfig;
 import cn.think.in.java.open.exp.classloader.PluginMetaFat;
 import cn.think.in.java.open.exp.classloader.support.ClassLoaderFinder;
@@ -18,13 +18,10 @@ import java.util.*;
 
 /**
  * @Author cxs
- * @Description
- * @date 2023/8/9
- * @version 1.0
  **/
 @Slf4j
 @SuppressWarnings("unchecked")
-public class ExpPluginMetaServiceImpl implements ExpPluginMetaService {
+public class PluginMetaServiceImpl implements PluginMetaService {
 
     private PluginMetaConfig pluginMetaConfig = new PluginMetaConfig();
 
