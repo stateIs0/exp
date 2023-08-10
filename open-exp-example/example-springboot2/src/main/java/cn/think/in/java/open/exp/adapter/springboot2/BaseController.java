@@ -31,7 +31,7 @@ public class BaseController {
         sortMap.put("example-plugin1_1.0.0", 1);
         sortMap.put("example-plugin2_2.0.0", 2);
         pluginIdTenantIdMap.put("example-plugin2_2.0.0", "12345");
-        pluginIdTenantIdMap.put("example-plugin1_1.0.0", "11111");
+        pluginIdTenantIdMap.put("example-plugin1_1.0.0", "12345");
 
         expAppContext.setTenantCallback(new TenantCallback() {
             @Override

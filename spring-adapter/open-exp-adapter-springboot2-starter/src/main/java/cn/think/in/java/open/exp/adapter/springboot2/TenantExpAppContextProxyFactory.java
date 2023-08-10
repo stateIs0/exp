@@ -2,7 +2,7 @@ package cn.think.in.java.open.exp.adapter.springboot2;
 
 import cn.think.in.java.open.exp.client.ExpAppContext;
 import cn.think.in.java.open.exp.client.ExpAppContextSpiFactory;
-import cn.think.in.java.open.exp.client.TenantObject;
+import cn.think.in.java.open.exp.client.Sort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cglib.core.SpringNamingPolicy;
 import org.springframework.cglib.proxy.Enhancer;
@@ -28,7 +28,7 @@ public class TenantExpAppContextProxyFactory {
 
     public static <P> P getProxy(final MethodInterceptor callback, Class<P> c) {
         Enhancer enhancer = new Enhancer();
-        enhancer.setInterfaces(new Class[]{TenantObject.class});
+        enhancer.setInterfaces(new Class[]{Sort.class});
         enhancer.setSuperclass(c);
         enhancer.setNamingPolicy(SPRING_NAMING_POLICY);
         enhancer.setCallback(callback);
@@ -50,9 +50,16 @@ public class TenantExpAppContextProxyFactory {
         public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
             method.setAccessible(true);
             try {
-                Integer sortNum = sortHandle((TenantObject) o, method, objects);
-                if (sortNum != null) {
-                    return sortNum;
+                if ("getSort".equals(method.getName())) {
+                    sort = expAppContext.getTenantCallback().getSort(pluginId);
+                    if (sort == null) {
+                        sort = 0;
+                    }
+                    return sort;
+                }
+
+                if ("compareTo".equals(method.getName())) {
+                    return ((Sort) objects[0]).getSort() - ((Sort)o).getSort();
                 }
 
                 return method.invoke(bean, objects);
@@ -64,19 +71,5 @@ public class TenantExpAppContextProxyFactory {
             }
         }
 
-        private Integer sortHandle(TenantObject o, Method method, Object[] objects) {
-            if ("getSort".equals(method.getName())) {
-                sort = expAppContext.getTenantCallback().getSort(pluginId);
-                if (sort == null) {
-                    sort = 0;
-                }
-                return sort;
-            }
-
-            if ("compareTo".equals(method.getName())) {
-                return ((TenantObject) objects[0]).getSort() - o.getSort();
-            }
-            return null;
-        }
     }
 }
