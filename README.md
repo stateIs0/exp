@@ -142,7 +142,8 @@ public String unInstall(String pluginId) throws Exception {
     - [example-springboot1](open-exp-example%2Fexample-springboot1) 示例 springboot 1.x 例子
     - [example-springboot2](open-exp-example%2Fexample-springboot2) 示例 springboot 2.x 例子
 5. [spring-adapter](spring-adapter) springboot starter, exp 适配 spring boot
-    - [open-exp-adapter-springboot2](spring-adapter%2Fopen-exp-adapter-springboot2) 普通实现 springboot2 依赖
+    - [open-exp-adapter-springboot2](spring-adapter%2Fopen-exp-adapter-springboot2-starter)  springboot2 依赖
+    - [open-exp-adapter-springboot1-starter](spring-adapter%2Fopen-exp-adapter-springboot1-starter) springboot1 依赖
 
 ## 模块依赖
 
