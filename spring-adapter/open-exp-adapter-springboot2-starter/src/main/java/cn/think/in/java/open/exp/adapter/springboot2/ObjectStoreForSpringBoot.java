@@ -5,6 +5,7 @@ import cn.think.in.java.open.exp.client.ObjectStore;
 import cn.think.in.java.open.exp.client.PluginObjectRegister;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -30,13 +31,15 @@ public class ObjectStoreForSpringBoot implements ObjectStore {
 
     private Map<String, List<Class<?>>> classesMap = new HashMap<>();
 
+    private BeanPostProcessor beanPostProcessor = new TenantBeanPostProcessor();
+
     public ObjectStoreForSpringBoot(BeanDefinitionRegistry beanDefinitionRegistry) {
         this.beanDefinitionRegistry = beanDefinitionRegistry;
     }
 
     public void setBeanFactory(ConfigurableListableBeanFactory beanFactory) {
         this.beanFactory = beanFactory;
-        this.beanFactory.addBeanPostProcessor(new TenantBeanPostProcessor());
+        this.beanFactory.addBeanPostProcessor(beanPostProcessor);
     }
 
     @Override

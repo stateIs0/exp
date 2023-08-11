@@ -16,9 +16,9 @@ public class TenantBeanPostProcessor implements BeanPostProcessor {
         String[] split = beanName.split("_");
 
         if (split.length >= 2) {
-            String p = split[split.length - 2] + "_" + split[split.length - 1];
+            String pluginId = split[split.length - 2] + "_" + split[split.length - 1];
             return TenantExpAppContextProxyFactory.getProxy(
-                    new TenantExpAppContextProxyFactory.ExpMethodInterceptor(bean, p), bean.getClass());
+                    new TenantExpAppContextProxyFactory.ExpMethodInterceptor(bean, pluginId), bean.getClass());
         }
 
         return bean;
