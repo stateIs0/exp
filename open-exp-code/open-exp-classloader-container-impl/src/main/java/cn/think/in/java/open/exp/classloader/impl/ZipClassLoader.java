@@ -10,31 +10,28 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Enumeration;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
-/**
- * @author cxs
- */
-public class JarExtractorClassLoader extends BaseClassLoader implements PluginClassLoader {
+public class ZipClassLoader extends BaseClassLoader implements PluginClassLoader {
 
-    public JarExtractorClassLoader(String jarFilePath, String extractDir) throws Exception {
+    public ZipClassLoader(String zipFilePath, String extractDir) throws Exception {
         super(extractDir);
-        extractJar(jarFilePath, extractDir);
+        extractZip(zipFilePath, extractDir);
     }
 
-    private void extractJar(String jarFilePath, String extractDir) throws Exception {
-        try (JarFile jar = new JarFile(jarFilePath)) {
-            Enumeration<JarEntry> entries = jar.entries();
+    private void extractZip(String zipFilePath, String extractDir) throws Exception {
+        try (ZipFile zip = new ZipFile(zipFilePath)) {
+            Enumeration<? extends ZipEntry> entries = zip.entries();
             while (entries.hasMoreElements()) {
-                JarEntry entry = entries.nextElement();
+                ZipEntry entry = entries.nextElement();
                 Path outputPath = Paths.get(extractDir, entry.getName());
 
                 if (entry.isDirectory()) {
                     Files.createDirectories(outputPath);
                 } else {
                     Files.createDirectories(outputPath.getParent());
-                    try (InputStream in = new BufferedInputStream(jar.getInputStream(entry));
+                    try (InputStream in = new BufferedInputStream(zip.getInputStream(entry));
                          OutputStream out = new BufferedOutputStream(Files.newOutputStream(outputPath.toFile().toPath()))) {
 
                         byte[] buffer = new byte[1024];

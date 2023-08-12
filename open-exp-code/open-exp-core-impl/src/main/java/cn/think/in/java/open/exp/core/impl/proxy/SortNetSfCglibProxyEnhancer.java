@@ -17,7 +17,7 @@ public class SortNetSfCglibProxyEnhancer {
         enhancer.setNamingPolicy(new DefaultNamingPolicy() {
             @Override
             protected String getTag() {
-                return super.getTag() + "$$EXP$$SORT";
+                return super.getTag() + "$$EXP$$SORT$$" + pluginId;
             }
         });
         enhancer.setCallback(new ExpSortInterceptor(pluginId, b));

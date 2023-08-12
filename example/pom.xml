@@ -19,6 +19,7 @@
         <module>example-plugin-a-v2</module>
         <module>example-plugin-b-v1</module>
         <module>example-plugin-b-v2</module>
+        <module>simple-java-app</module>
     </modules>
 
     <properties>

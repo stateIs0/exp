@@ -1,7 +1,7 @@
 package cn.think.in.java.open.exp.classloader.support;
 
-import cn.think.in.java.open.exp.classloader.impl.JarExtractorClassLoader;
-import cn.think.in.java.open.exp.classloader.impl.ZipExtractorClassLoader;
+import cn.think.in.java.open.exp.classloader.impl.JarClassLoader;
+import cn.think.in.java.open.exp.classloader.impl.ZipClassLoader;
 
 import java.io.File;
 
@@ -16,10 +16,10 @@ public class ClassLoaderFinder {
 
             if (file.getName().endsWith(".jar")) {
                 classLoader =
-                        new JarExtractorClassLoader(file.getPath(), dir);
+                        new JarClassLoader(file.getPath(), dir);
             } else if (file.getName().endsWith(".zip")) {
                 classLoader =
-                        new ZipExtractorClassLoader(file.getPath(), dir);
+                        new ZipClassLoader(file.getPath(), dir);
             }
 
             if (classLoader == null) {

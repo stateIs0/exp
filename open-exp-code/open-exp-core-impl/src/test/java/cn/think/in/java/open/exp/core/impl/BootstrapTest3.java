@@ -18,7 +18,7 @@ public class BootstrapTest3 {
     @Test
     public void test() throws Throwable {
 
-        String absolutePath = new File("/Users/cxs/github/open-exp/exp-plugins").getAbsolutePath();
+        String absolutePath = new File("../../exp-plugins/").getAbsolutePath();
         ExpAppContext bootstrap = Bootstrap.bootstrap(absolutePath, "exp-workdir3");
         bootstrap.get(UserService.class).stream().findFirst().ifPresent(new Consumer<UserService>() {
             @Override
