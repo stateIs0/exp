@@ -89,7 +89,7 @@ public String run(String tenantId) {
   // 上下文设置租户 id
   context.set(tenantId);
   try {
-      List<UserService> userServices = expAppContext.get(UserService.class);
+      List<UserService> userServices = expAppContext.get(UserService.class, TenantCallback.TenantCallbackMock.DEFAULT);
       // first 第一个就是这个租户优先级最高的.
       Optional<UserService> optional = userServices.stream().findFirst();
       if (optional.isPresent()) {
@@ -183,18 +183,9 @@ public interface ExpAppContext {
      */
     <P> P get(String extCode, String pluginId);
 
-    /**
-     * 获取 TenantCallback 扩展逻辑;
-     */
-    default TenantCallback getTenantCallback() {
-        return TenantCallback.TenantCallbackMock.instance;
-    }
+    <P> List<P> get(String extCode, TenantCallback callback);
 
-    /**
-     * 设置 callback;
-     */
-    default void setTenantCallback(TenantCallback callback) {
-    }
+    <P> List<P> get(Class<P> pClass, TenantCallback callback);
 }
 ```
 
@@ -209,33 +200,37 @@ public interface TenantCallback {
     * 返回这个插件的序号, 默认 0; 
     * {@link  cn.think.in.java.open.exp.client.ExpAppContext#get(java.lang.Class)} 函数返回的List 的第一位就是 sort 最高的.
     */
-   Integer getSort(String pluginId);
+   int getSort(String pluginId);
 
    /**
     * 这个插件是否属于当前租户, 默认是;
     * 这个返回值, 会影响 {@link  cn.think.in.java.open.exp.client.ExpAppContext#get(java.lang.Class)} 的结果
     * 即进行过滤, 返回为 true 的 plugin 实现, 才会被返回.
     */
-   Boolean isOwnCurrentTenant(String pluginId);
+   boolean filter(String pluginId);
 }
 ```
 
 租户过滤示例代码:
 
 ````java
-expAppContext.setTenantCallback(new TenantCallback() {
+TenantCallback callback = new TenantCallback() {
    @Override
-   public Integer getSort(String pluginId) {
+   public int getSort(String pluginId) {
        // 获取这个插件的排序
        return sortMap.get(pluginId);
    }
 
    @Override
-   public Boolean isOwnCurrentTenant(String pluginId) {
+   public boolean filter(String pluginId) {
        // 判断当前租户是不是这个匹配这个插件
        return context.get().equals(pluginIdTenantIdMap.get(pluginId));
    }
-});
+}
+;
+List<UserService> userServices = expAppContext.get(UserService.class, callback);
+// first 第一个就是这个租户优先级最高的.
+Optional<UserService> optional = userServices.stream().findFirst();
 ````
 
 插件获取配置示例代码:

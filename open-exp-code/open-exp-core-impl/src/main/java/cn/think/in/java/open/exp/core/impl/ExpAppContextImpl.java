@@ -52,12 +52,9 @@ public class ExpAppContextImpl implements ExpAppContext {
             List<SortObj<P>> sortObjList = new ArrayList<>();
 
             for (ExpClass<P> aClass : classes) {
-                Boolean filter = true;
+                boolean filter = true;
                 if (callback != null) {
                     filter = callback.filter(aClass.getPluginId());
-                }
-                if (filter == null) {
-                    filter = true;
                 }
                 if (!filter) {
                     continue;
