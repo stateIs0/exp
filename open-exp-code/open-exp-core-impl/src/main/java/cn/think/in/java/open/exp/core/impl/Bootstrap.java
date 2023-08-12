@@ -43,8 +43,17 @@ public class Bootstrap {
             log.warn("在目录里没有找到 jar 包或 zip 包, 目录 = {}", path);
         } else {
             for (File file : files) {
-                Plugin load = expAppContext.load(file);
-                log.info(load.toString());
+                try {
+                    if (!file.exists()) {
+                        continue;
+                    }
+                    System.out.println(file.getAbsolutePath());
+                    Plugin load = expAppContext.load(file);
+                    log.info(load.toString());
+                } catch (Exception e) {
+                    log.error(e.getMessage() + file.getAbsolutePath(), e);
+                    throw e;
+                }
             }
         }
 

@@ -15,8 +15,10 @@
         <module>example-springboot2</module>
         <module>example-springboot1</module>
         <module>example-extension-define</module>
-        <module>example-plugin1</module>
-        <module>example-plugin2</module>
+        <module>example-plugin-a-v1</module>
+        <module>example-plugin-a-v2</module>
+        <module>example-plugin-b-v1</module>
+        <module>example-plugin-b-v2</module>
     </modules>
 
     <properties>

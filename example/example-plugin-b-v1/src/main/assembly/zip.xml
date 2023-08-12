@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly
+        xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+
+    <!-- id 标识符，添加到生成文件名称的后缀符-->
+    <id>${project.version}</id>
+
+    <!-- 指定打包格式。maven-assembly-plugin插件支持的打包格式有zip、tar、tar.gz (or tgz)、tar.bz2 (or tbz2)、jar、dir、war，能够同时指定多个打包格式 -->
+    <formats>
+        <format>zip</format>
+    </formats>
+
+    <!-- 指定打的包是否包含打包层目录（好比finalName是terminal-dispatch，当值为true，全部文件被放在包内的terminal-dispatch目录下，不然直接放在包的根目录下）-->
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+    <!-- 指定要包含的文件集，能够定义多个fileSet -->
+    <fileSets>
+        <fileSet>
+            <directory>target/classes/</directory>
+            <outputDirectory>/</outputDirectory> <!-- 指定要将当前目录（<directory>标签中的目录放在归档文件（要打的jar包）bin目录下） -->
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources</directory>
+            <outputDirectory>./</outputDirectory>
+            <includes>
+                <include>*.properties</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>

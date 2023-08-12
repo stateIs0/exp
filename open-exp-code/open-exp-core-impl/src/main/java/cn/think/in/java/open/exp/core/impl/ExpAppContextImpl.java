@@ -54,7 +54,7 @@ public class ExpAppContextImpl implements ExpAppContext {
             List<ExpClass<P>> classes = metaService.get(extCode);
             List<P> result = new ArrayList<>();
             for (ExpClass<P> aClass : classes) {
-                Boolean ownCurrentTenant = tenantCallback.isOwnCurrentTenant(aClass.getPluginId());
+                Boolean ownCurrentTenant = getTenantCallback().isOwnCurrentTenant(aClass.getPluginId());
                 if (ownCurrentTenant == null) {
                     ownCurrentTenant = true;
                 }

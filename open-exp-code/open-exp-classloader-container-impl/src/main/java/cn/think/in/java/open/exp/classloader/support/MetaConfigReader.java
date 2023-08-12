@@ -45,18 +45,18 @@ public class MetaConfigReader {
     }
 
 
-    private static Properties loadProperties(String file, String fileName) {
+    private static Properties loadProperties(String file, String propertiesFileName) {
         Properties properties = new Properties();
 
         if (file.endsWith(".jar")) {
             try (JarFile jarFile = new JarFile(file)) {
-                JarEntry entry = jarFile.getJarEntry(fileName);
+                JarEntry entry = jarFile.getJarEntry(propertiesFileName);
                 if (entry != null) {
                     try (InputStream inputStream = jarFile.getInputStream(entry)) {
                         properties.load(inputStream);
                     }
                 } else {
-                    throw new RuntimeException(file + " not found " + fileName);
+                    throw new RuntimeException(file + " not found " + propertiesFileName);
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -66,14 +66,14 @@ public class MetaConfigReader {
         }
 
         if (file.endsWith(".zip")) {
-            try (ZipFile zipFile = new ZipFile(fileName)) {
-                ZipArchiveEntry entry = zipFile.getEntry(fileName);
+            try (ZipFile zipFile = new ZipFile(file)) {
+                ZipArchiveEntry entry = zipFile.getEntry(propertiesFileName);
                 if (entry != null) {
                     try (InputStream inputStream = zipFile.getInputStream(entry)) {
                         properties.load(inputStream);
                     }
                 } else {
-                    throw new IOException("Properties file not found: " + fileName);
+                    throw new IOException("Properties file not found: " + propertiesFileName);
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
