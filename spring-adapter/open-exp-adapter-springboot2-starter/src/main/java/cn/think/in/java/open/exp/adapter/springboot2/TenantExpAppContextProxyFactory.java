@@ -35,11 +35,12 @@ public class TenantExpAppContextProxyFactory {
         return (P) enhancer.create();
     }
 
-    public static class ExpMethodInterceptor implements MethodInterceptor {
+    public static class ExpMethodInterceptor implements MethodInterceptor, Sort {
         Object bean;
         ExpAppContext expAppContext = ExpAppContextSpiFactory.getFirst();
         String pluginId;
         Integer sort;
+        boolean setAccessibleFlag = false;
 
         public ExpMethodInterceptor(Object bean, String pluginId) {
             this.bean = bean;
@@ -48,18 +49,19 @@ public class TenantExpAppContextProxyFactory {
 
         @Override
         public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
-            method.setAccessible(true);
+            if (!setAccessibleFlag) {
+                method.setAccessible(true);
+                setAccessibleFlag = true;
+            }
+
             try {
+                // 一个扩展点多个实现时, 会触发排序.
                 if ("getSort".equals(method.getName())) {
-                    sort = expAppContext.getTenantCallback().getSort(pluginId);
-                    if (sort == null) {
-                        sort = 0;
-                    }
-                    return sort;
+                    return getSort();
                 }
 
                 if ("compareTo".equals(method.getName())) {
-                    return ((Sort) objects[0]).getSort() - ((Sort)o).getSort();
+                    return ((Sort) objects[0]).getSort() - ((Sort) o).getSort();
                 }
 
                 return method.invoke(bean, objects);
@@ -69,6 +71,15 @@ public class TenantExpAppContextProxyFactory {
                 log.error(e.getMessage(), e);
                 throw e;
             }
+        }
+
+        @Override
+        public int getSort() {
+            sort = expAppContext.getTenantCallback().getSort(pluginId);
+            if (sort == null) {
+                sort = 0;
+            }
+            return sort;
         }
 
     }

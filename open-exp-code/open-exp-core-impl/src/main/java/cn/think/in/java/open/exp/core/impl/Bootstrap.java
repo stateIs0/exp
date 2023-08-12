@@ -15,11 +15,19 @@ import java.io.File;
  **/
 @Slf4j
 public class Bootstrap {
+    /**
+     * 默认实现. ObjectStore 仅仅是个 hashmap;
+     * 通常, ObjectStore 是个 spring 容器.
+     */
+    public static ExpAppContext bootstrap(String path, String workDir) throws Throwable {
+        return bootstrap(new SimpleObjectStore(), path, workDir);
+    }
+
 
     /**
      * 自动安装 path 下的所有 jar.
      */
-    public static void bootstrap(ObjectStore callback, String path, String workDir) throws Throwable {
+    public static ExpAppContext bootstrap(ObjectStore callback, String path, String workDir) throws Throwable {
 
         ExpAppContext expAppContext = ExpAppContextSpiFactory.getFirst();
         if (expAppContext instanceof ExpAppContextImpl) {
@@ -39,6 +47,8 @@ public class Bootstrap {
                 log.info(load.toString());
             }
         }
+
+        return expAppContext;
 
     }
 }

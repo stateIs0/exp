@@ -12,13 +12,13 @@ import org.springframework.context.ApplicationListener;
 @Slf4j
 public class ExpApplicationListener implements ApplicationListener<ApplicationReadyEvent> {
 
-    ObjectStoreForSpringBoot objectStore;
+    private SpringBootObjectStore objectStore;
 
-    public ObjectStoreForSpringBoot getObjectStore() {
+    public SpringBootObjectStore getObjectStore() {
         return objectStore;
     }
 
-    public void setObjectStore(ObjectStoreForSpringBoot objectStore) {
+    public void setObjectStore(SpringBootObjectStore objectStore) {
         this.objectStore = objectStore;
     }
 

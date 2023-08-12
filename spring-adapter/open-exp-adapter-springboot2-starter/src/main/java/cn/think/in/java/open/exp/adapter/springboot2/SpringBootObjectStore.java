@@ -3,9 +3,9 @@ package cn.think.in.java.open.exp.adapter.springboot2;
 import cn.think.in.java.open.exp.classloader.support.UniqueNameUtil;
 import cn.think.in.java.open.exp.client.ObjectStore;
 import cn.think.in.java.open.exp.client.PluginObjectRegister;
+import cn.think.in.java.open.exp.client.TenantObjectProxyFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -21,7 +21,7 @@ import java.util.Map;
  **/
 @Slf4j
 @SuppressWarnings("unchecked")
-public class ObjectStoreForSpringBoot implements ObjectStore {
+public class SpringBootObjectStore implements ObjectStore {
 
     private final Map<String, RestUrlScanComponent> cache = new HashMap<>();
 
@@ -29,17 +29,20 @@ public class ObjectStoreForSpringBoot implements ObjectStore {
 
     private ConfigurableListableBeanFactory beanFactory;
 
-    private Map<String, List<Class<?>>> classesMap = new HashMap<>();
+    private final Map<String, List<Class<?>>> classesMap = new HashMap<>();
 
-    private BeanPostProcessor beanPostProcessor = new TenantBeanPostProcessor();
+    private final SpringBootTenantObjectPostProcessorFactory tenantObjectProxy = new SpringBootTenantObjectPostProcessorFactory();
 
-    public ObjectStoreForSpringBoot(BeanDefinitionRegistry beanDefinitionRegistry) {
+    public SpringBootObjectStore(BeanDefinitionRegistry beanDefinitionRegistry) {
         this.beanDefinitionRegistry = beanDefinitionRegistry;
     }
 
     public void setBeanFactory(ConfigurableListableBeanFactory beanFactory) {
+        if (beanFactory == null) {
+            throw new RuntimeException("beanFactory can not be null");
+        }
         this.beanFactory = beanFactory;
-        this.beanFactory.addBeanPostProcessor(beanPostProcessor);
+        this.beanFactory.addBeanPostProcessor(tenantObjectProxy);
     }
 
     @Override
@@ -63,26 +66,29 @@ public class ObjectStoreForSpringBoot implements ObjectStore {
             }
         });
 
-        if (beanFactory != null) {
-            RequestMappingHandlerMapping mapping = (RequestMappingHandlerMapping) beanFactory.getBean("requestMappingHandlerMapping");
-            RequestMappingHandlerAdapter adapter = (RequestMappingHandlerAdapter) beanFactory.getBean("requestMappingHandlerAdapter");
-            for (Class<?> aClass : classes) {
-                try {
-                    beanFactory.getBean(UniqueNameUtil.getName(aClass, pluginId));
-                } catch (Exception e) {
-                    // ignore
-                }
-            }
-            for (Class<?> aClass : classes) {
-                Object bean = beanFactory.getBean(UniqueNameUtil.getName(aClass, pluginId));
+        handleMappings(pluginId, classes);
 
-                RestUrlScanComponent r = new RestUrlScanComponent(bean, mapping, adapter);
-                r.register();
-                cache.put(UniqueNameUtil.getName(aClass, pluginId), r);
-            }
-        }
         classesMap.put(pluginId, classes);
         return classes;
+    }
+
+    private void handleMappings(String pluginId, List<Class<?>> classes) {
+        RequestMappingHandlerMapping mapping = (RequestMappingHandlerMapping) beanFactory.getBean("requestMappingHandlerMapping");
+        RequestMappingHandlerAdapter adapter = (RequestMappingHandlerAdapter) beanFactory.getBean("requestMappingHandlerAdapter");
+        for (Class<?> aClass : classes) {
+            try {
+                beanFactory.getBean(UniqueNameUtil.getName(aClass, pluginId));
+            } catch (Exception e) {
+                // ignore
+            }
+        }
+        for (Class<?> aClass : classes) {
+            Object bean = beanFactory.getBean(UniqueNameUtil.getName(aClass, pluginId));
+
+            RestUrlScanComponent r = new RestUrlScanComponent(bean, mapping, adapter);
+            r.register();
+            cache.put(UniqueNameUtil.getName(aClass, pluginId), r);
+        }
     }
 
     @Override
@@ -108,10 +114,16 @@ public class ObjectStoreForSpringBoot implements ObjectStore {
     }
 
     @Override
-    public <T> T getObject(String name) {
+    public <T> T getObject(String name, String pluginId) {
         if (beanFactory == null) {
             return null;
         }
+        name = UniqueNameUtil.getName(name, pluginId);
         return (T) beanFactory.getBean(name);
+    }
+
+    @Override
+    public TenantObjectProxyFactory getTenantObjectProxyFactory() {
+        return tenantObjectProxy;
     }
 }

@@ -13,10 +13,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserPlugin implements UserService, ExPBean {
 
-    String name = "hello";
+    String name = "plugin1";
 
     @Override
     public void createUserExt() {
-        log.info("name = {}", "plugin1");
+        System.out.println("name = " + name);
+        log.info("name = {}", name);
     }
 }

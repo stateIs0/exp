@@ -22,7 +22,7 @@ public class ExpBeanDefinitionRegistryPostProcessor implements BeanDefinitionReg
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-        exPApplicationListener.setObjectStore(new ObjectStoreForSpringBoot(registry));
+        exPApplicationListener.setObjectStore(new SpringBootObjectStore(registry));
     }
 
     @Override

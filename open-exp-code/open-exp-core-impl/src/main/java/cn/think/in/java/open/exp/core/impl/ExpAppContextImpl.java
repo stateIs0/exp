@@ -1,9 +1,8 @@
 package cn.think.in.java.open.exp.core.impl;
 
 import cn.think.in.java.open.exp.classloader.ExpClass;
-import cn.think.in.java.open.exp.classloader.PluginMetaService;
 import cn.think.in.java.open.exp.classloader.PluginMetaFat;
-import cn.think.in.java.open.exp.classloader.support.UniqueNameUtil;
+import cn.think.in.java.open.exp.classloader.PluginMetaService;
 import cn.think.in.java.open.exp.client.ExpAppContext;
 import cn.think.in.java.open.exp.client.ObjectStore;
 import cn.think.in.java.open.exp.client.Plugin;
@@ -62,7 +61,7 @@ public class ExpAppContextImpl implements ExpAppContext {
                 if (!ownCurrentTenant) {
                     continue;
                 }
-                P bean = objectStore.getObject(UniqueNameUtil.getName(aClass.getAClass(), aClass.getPluginId()));
+                P bean = objectStore.getObject(aClass.getAClass().getName(), aClass.getPluginId());
                 if (bean != null) {
                     result.add(bean);
                 }
@@ -82,7 +81,7 @@ public class ExpAppContextImpl implements ExpAppContext {
     public <P> P get(String extCode, String pluginId) {
         try {
             ExpClass<P> classZ = metaService.get(extCode, pluginId);
-            return objectStore.getObject(UniqueNameUtil.getName(classZ.getAClass(), classZ.getPluginId()));
+            return objectStore.getObject(classZ.getAClass().getName(), classZ.getPluginId());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -100,6 +99,9 @@ public class ExpAppContextImpl implements ExpAppContext {
     public void setTenantCallback(TenantCallback callback) {
         if (callback == null) {
             throw new RuntimeException("callback can not be null");
+        }
+        if (this.tenantCallback != null) {
+            throw new RuntimeException("不能重复设置 tenantCallback");
         }
         this.tenantCallback = callback;
     }

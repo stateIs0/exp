@@ -39,15 +39,17 @@ Extension Plugin 扩展点插件系统
 
 ## Feature
 
-1. 支持 spring 热插拔/启动时加载
-2. 基于 classloader 类隔离
-3. 支持多租户场景下的多实现, 各个实现可实时更新优先级
+1. 支持 热插拔 or 启动时加载
+2. 基于 classloader 双亲委派的类隔离机制
+3. 支持多租户场景下的单个扩展点有多实现, 业务支持租户过滤, 租户多个实现可自定义排序
 4. 支持 springboot2.x/1.x 依赖
-5. 支持插件里对外暴露 Controller Rest, 可热插拔;
+5. 支持插件内对外暴露 Spring Controller Rest, 可热插拔;
+6. 支持插件获取独有的配置, 支持自定义设计插件配置热更新逻辑;
+7. 支持插件和主应用绑定事务.
 
 ## USE
 
-env:
+环境准备:
 
 1. JDK 1.8
 2. Maven
@@ -130,7 +132,7 @@ public String unInstall(String pluginId) throws Exception {
     - [open-exp-classloader-container](open-exp-code%2Fopen-exp-classloader-container) classloader 隔离 API
     - [open-exp-classloader-container-impl](open-exp-code%2Fopen-exp-classloader-container-impl) classloader 隔离 API 具体实现
     - [open-exp-client-api](open-exp-code%2Fopen-exp-client-api) 核心 api 模块
-    - [open-exp-core-impl](open-exp-code%2Fopen-exp-core-impl) 核心 api 实现
+    - [open-exp-core-impl](open-exp-code%2Fopen-exp-core-impl) 核心 api 实现; 内部 shade cglib 动态代理, 可不以来 spring 实现;
     - [open-exp-document-api](open-exp-code%2Fopen-exp-document-api) 扩展点文档 api
     - [open-exp-document-core-impl](open-exp-code%2Fopen-exp-document-core-impl) 扩展点文档导出实现
     - [open-exp-plugin-depend](open-exp-code%2Fopen-exp-plugin-depend) exp 插件依赖
@@ -139,7 +141,7 @@ public String unInstall(String pluginId) throws Exception {
     - [example-plugin1](open-exp-example%2Fexample-plugin1) 示例插件实现 1
     - [example-plugin2](open-exp-example%2Fexample-plugin2) 示例插件实现 2
     - [example-springboot1](open-exp-example%2Fexample-springboot1) 示例 springboot 1.x 例子
-    - [example-springboot2](open-exp-example%2Fexample-springboot2) 示例 springboot 2.x 例子
+    - [example-springboot2](open-exp-example%2Fexample-springboot2) 示例 springboot 2.x 例子; 使用 spring cglib 动态代理
 5. [spring-adapter](spring-adapter) springboot starter, exp 适配 spring boot
     - [open-exp-adapter-springboot2](spring-adapter%2Fopen-exp-adapter-springboot2-starter)  springboot2 依赖
     - [open-exp-adapter-springboot1-starter](spring-adapter%2Fopen-exp-adapter-springboot1-starter) springboot1 依赖
@@ -215,7 +217,7 @@ public interface TenantCallback {
 }
 ```
 
-示例代码:
+租户过滤示例代码:
 
 ````java
 expAppContext.setTenantCallback(new TenantCallback() {
@@ -232,5 +234,29 @@ expAppContext.setTenantCallback(new TenantCallback() {
    }
 });
 ````
+
+插件获取配置示例代码:
+```java
+public class Boot extends AbstractBoot {
+    private static String selfPluginId;
+
+    @Override
+    protected String getScanPath() {
+        return Boot.class.getPackage().getName();
+    }
+
+    @Override
+    public void setPluginId(String pluginId) {
+        // 系统自动注入自身的插件 id;
+        selfPluginId = pluginId;
+    }
+
+    public static String get(String key, String value) {
+        //  简化操作, 读取配置
+        return PluginConfig.getSpi().getProperty(selfPluginId, key, value);
+    }
+
+}
+```
 
 

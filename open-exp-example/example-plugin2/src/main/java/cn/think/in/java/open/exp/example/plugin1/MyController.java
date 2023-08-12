@@ -1,6 +1,7 @@
 package cn.think.in.java.open.exp.example.plugin1;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -14,8 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class MyController {
 
     @RequestMapping("/bb2")
-    public String hello() {
-        return "hello2 " + getClass().getClassLoader() + getClass().getProtectionDomain()
+    public String hello(@RequestParam(name = "key") String key) {
+
+        return Boot.get(key, "default") + "hello2 " + getClass().getClassLoader() + getClass().getProtectionDomain()
                 .getCodeSource().getLocation();
     }
 }

@@ -46,6 +46,53 @@
             <groupId>cn.think.in.java</groupId>
             <artifactId>open-exp-classloader-container-impl</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.think.in.java</groupId>
+            <artifactId>example-extension-define</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>2.2.2</version>
+        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.4.1</version>
+                <configuration>
+                    <artifactSet>
+                        <includes>
+                            <include>cglib:cglib</include>
+                        </includes>
+                    </artifactSet>
+                    <relocations>
+                        <relocation>
+                            <!-- shade cglib, 防止类冲突 -->
+                            <pattern>net.sf.cglib</pattern>
+                            <shadedPattern>shade.cn.think.in.java.open.exp.net.sf.cglib</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

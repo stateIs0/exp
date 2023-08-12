@@ -17,4 +17,8 @@ public class UniqueNameUtil {
         return c.getName() + getSplit() + pluginId;
     }
 
+    public static String getName(String c, String pluginId) {
+        return c + getSplit() + pluginId;
+    }
+
 }

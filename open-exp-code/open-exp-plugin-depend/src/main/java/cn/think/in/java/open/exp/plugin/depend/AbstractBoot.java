@@ -4,6 +4,7 @@ import cn.think.in.java.open.exp.client.ExpBoot;
 import cn.think.in.java.open.exp.client.PluginClassLoader;
 import cn.think.in.java.open.exp.client.PluginObjectRegister;
 import cn.think.in.java.open.exp.client.StringUtil;
+import cn.think.in.java.open.exp.plugin.depend.support.PluginIdUtil;
 
 /**
  * @Author cxs
@@ -13,6 +14,7 @@ public abstract class AbstractBoot implements ExpBoot {
     private final ClassLoader pluginClassLoader;
     private final String classLocation;
     private final PluginObjectRegister pluginBeanRegister;
+    private String pluginId;
 
     public AbstractBoot() {
         if (getClass().getClassLoader() instanceof PluginClassLoader) {
@@ -24,6 +26,8 @@ public abstract class AbstractBoot implements ExpBoot {
         this.pluginBeanRegister = new DefaultRegister();
         this.pluginBeanRegister.setPluginClassLoader(this.pluginClassLoader);
         this.pluginBeanRegister.setLocation(this.classLocation);
+        this.pluginId = PluginIdUtil.getId(this.classLocation);
+        setPluginId(this.pluginId);
         String scanPath = getScanPath();
         if (StringUtil.isEmpty(scanPath)) {
             throw new RuntimeException("AbstractBoot getScanPath 不能为空.");
