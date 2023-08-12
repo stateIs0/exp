@@ -64,9 +64,11 @@ mvn clean package
 主程序依赖(springboot starter)
 
 ```xml
+
 <dependency>
-   <groupId>cn.think.in.java</groupId>
-   <artifactId>open-exp-adapter-springboot2</artifactId>
+    <groupId>cn.think.in.java</groupId>
+    <!-- 这里是 springboot 2 例子, 如果是普通应用或者 springboot 1 应用, 请进行 artifactId 更换  -->
+    <artifactId>open-exp-adapter-springboot2-starter</artifactId>
 </dependency>
 ```
 
