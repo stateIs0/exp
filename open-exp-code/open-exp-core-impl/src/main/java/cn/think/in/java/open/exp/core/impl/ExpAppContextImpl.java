@@ -20,25 +20,17 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ExpAppContextImpl implements ExpAppContext {
 
-    PluginMetaService metaService;
-    ObjectStore objectStore;
-    TenantCallback tenantCallback;
+    private PluginMetaService metaService;
+    private ObjectStore objectStore;
+    private TenantCallback tenantCallback;
 
-
-    public void setPluginMetaService(PluginMetaService pluginMetaService) {
-        this.metaService = pluginMetaService;
-    }
-
-    public void setObjectStore(ObjectStore objectStore) {
-        this.objectStore = objectStore;
-    }
 
     @Override
     public Plugin load(File file) throws Throwable {
-        PluginMetaFat install = metaService.install(file);
-        objectStore.startRegister(install.getRegister(), install.getPluginId());
-        log.info("安装加载插件 {}", install.getPluginId());
-        return install.conv();
+        PluginMetaFat fat = metaService.install(file);
+        objectStore.startRegister(fat.getRegister(), fat.getPluginId());
+        log.info("安装加载插件 {}", fat.getPluginId());
+        return fat.conv();
     }
 
     @Override
@@ -108,5 +100,14 @@ public class ExpAppContextImpl implements ExpAppContext {
             throw new RuntimeException("不能重复设置 tenantCallback");
         }
         this.tenantCallback = callback;
+    }
+
+
+    public void setPluginMetaService(PluginMetaService pluginMetaService) {
+        this.metaService = pluginMetaService;
+    }
+
+    public void setObjectStore(ObjectStore objectStore) {
+        this.objectStore = objectStore;
     }
 }

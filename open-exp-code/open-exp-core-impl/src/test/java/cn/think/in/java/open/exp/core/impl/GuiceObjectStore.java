@@ -15,6 +15,8 @@ import java.util.List;
  **/
 public class GuiceObjectStore implements ObjectStore {
 
+    private ObjectStore objectStore;
+
     @Override
     public List<Class<?>> startRegister(PluginObjectRegister register, String pluginId) throws Exception {
         return null;
