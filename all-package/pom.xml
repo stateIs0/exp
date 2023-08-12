@@ -13,7 +13,7 @@
         <module>../bom-manager</module>
         <module>../open-exp-code</module>
         <module>../spring-adapter</module>
-        <module>../open-exp-example</module>
+        <module>../example</module>
     </modules>
 
 </project>

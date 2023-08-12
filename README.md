@@ -139,12 +139,12 @@ public String unInstall(String pluginId) throws Exception {
     - [open-exp-document-api](open-exp-code%2Fopen-exp-document-api) 扩展点文档 api
     - [open-exp-document-core-impl](open-exp-code%2Fopen-exp-document-core-impl) 扩展点文档导出实现
     - [open-exp-plugin-depend](open-exp-code%2Fopen-exp-plugin-depend) exp 插件依赖
-4. [open-exp-example](open-exp-example) exp 使用示例代码
-    - [example-extension-define](open-exp-example%2Fexample-extension-define) 示例扩展点定义
-    - [example-plugin1](open-exp-example%2Fexample-plugin1) 示例插件实现 1
-    - [example-plugin2](open-exp-example%2Fexample-plugin2) 示例插件实现 2
-    - [example-springboot1](open-exp-example%2Fexample-springboot1) 示例 springboot 1.x 例子
-    - [example-springboot2](open-exp-example%2Fexample-springboot2) 示例 springboot 2.x 例子; 使用 spring cglib 动态代理
+4. [example](example) exp 使用示例代码
+    - [example-extension-define](example%2Fexample-extension-define) 示例扩展点定义
+    - [example-plugin1](example%2Fexample-plugin1) 示例插件实现 1
+    - [example-plugin2](example%2Fexample-plugin2) 示例插件实现 2
+    - [example-springboot1](example%2Fexample-springboot1) 示例 springboot 1.x 例子
+    - [example-springboot2](example%2Fexample-springboot2) 示例 springboot 2.x 例子; 使用 spring cglib 动态代理
 5. [spring-adapter](spring-adapter) springboot starter, exp 适配 spring boot
     - [open-exp-adapter-springboot2](spring-adapter%2Fopen-exp-adapter-springboot2-starter)  springboot2 依赖
     - [open-exp-adapter-springboot1-starter](spring-adapter%2Fopen-exp-adapter-springboot1-starter) springboot1 依赖

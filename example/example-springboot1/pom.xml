@@ -5,19 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cn.think.in.java</groupId>
-        <artifactId>open-exp</artifactId>
+        <artifactId>example</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>open-exp-example</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>example-springboot2</module>
-        <module>example-springboot1</module>
-        <module>example-extension-define</module>
-        <module>example-plugin1</module>
-        <module>example-plugin2</module>
-    </modules>
+    <artifactId>example-springboot1</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
