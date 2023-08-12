@@ -5,8 +5,6 @@ import cn.think.in.java.open.exp.client.ExpAppContext;
 import cn.think.in.java.open.exp.client.TenantCallback;
 import org.junit.Test;
 
-import java.util.function.Consumer;
-
 /**
  * @Author cxs
  **/
@@ -14,7 +12,7 @@ public class BootstrapTest2 {
 
     @Test
     public void bootstrap() throws Throwable {
-        ExpAppContext expAppContext = Bootstrap.bootstrap("../../exp-plugins", "exp-workdir");
+        ExpAppContext expAppContext = Bootstrap.bootstrap(new SimpleObjectStore(), "../../exp-plugins", "exp-workdir");
 
         String asser = "2";
 
@@ -36,13 +34,10 @@ public class BootstrapTest2 {
         });
 
         // 调用逻辑
-        expAppContext.get(UserService.class).stream().findFirst().ifPresent(new Consumer<UserService>() {
-            @Override
-            public void accept(UserService userService) {
-                System.out.println("---->>> " + userService.getClass().getName());
-                userService.createUserExt();
-                // Assert
-            }
+        expAppContext.get(UserService.class).stream().findFirst().ifPresent(userService -> {
+            System.out.println("---->>> " + userService.getClass().getName());
+            userService.createUserExt();
+            // Assert
         });
     }
 }

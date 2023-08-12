@@ -10,13 +10,17 @@ public interface ObjectStore {
 
     /**
      * 注册插件到对象仓库
+     * @param register 插件注册器
+     * @param pluginId 插件 id;
+     * @return 有哪些 class
+     * @throws Exception 可能的异常
      */
-    List<Class<?>> registerCallback(PluginObjectRegister pluginObjectRegisters, String pluginId) throws Exception;
+    List<Class<?>> startRegister(PluginObjectRegister register, String pluginId) throws Exception;
 
     /**
      * 从对象仓库反注册插件
      */
-    void unRegisterCallback(String pluginId);
+    void unRegister(String pluginId);
 
     /**
      * 从对象仓库获取某个对象

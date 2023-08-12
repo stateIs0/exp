@@ -18,7 +18,7 @@ public class SimpleObjectStore implements ObjectStore {
     Map<String, Map<String, Object>> pluginIdMapping = new HashMap<>();
 
     @Override
-    public List<Class<?>> registerCallback(PluginObjectRegister register, String pluginId) throws Exception {
+    public List<Class<?>> startRegister(PluginObjectRegister register, String pluginId) throws Exception {
         Map<String, Object> store = new HashMap<>();
         List<Class<?>> classList = register.register(aClass -> {
             Object proxy = getTenantObjectProxyFactory().getProxy(aClass.newInstance(), pluginId);
@@ -29,7 +29,7 @@ public class SimpleObjectStore implements ObjectStore {
     }
 
     @Override
-    public void unRegisterCallback(String pluginId) {
+    public void unRegister(String pluginId) {
         pluginIdMapping.remove(pluginId);
     }
 

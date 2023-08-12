@@ -46,7 +46,7 @@ public class SpringBootObjectStore implements ObjectStore {
     }
 
     @Override
-    public List<Class<?>> registerCallback(PluginObjectRegister register, String pluginId) throws Exception {
+    public List<Class<?>> startRegister(PluginObjectRegister register, String pluginId) throws Exception {
 
         List<Class<?>> rollbackList = new ArrayList<>();
 
@@ -92,7 +92,7 @@ public class SpringBootObjectStore implements ObjectStore {
     }
 
     @Override
-    public void unRegisterCallback(String pluginId) {
+    public void unRegister(String pluginId) {
         List<Class<?>> classes = classesMap.get(pluginId);
         if (classes == null) {
             log.warn("no class need un register");

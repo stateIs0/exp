@@ -75,7 +75,7 @@ public class PluginMetaServiceImpl implements PluginMetaService {
     }
 
     @Override
-    public void unInstall(String pluginId) throws IOException {
+    public void unInstall(String pluginId) {
         PluginMetaFat pluginMetaFat = cache.get(pluginId);
         if (pluginMetaFat == null) {
             log.warn("请检查你的 pluginId 是否正确 {} ", pluginId);

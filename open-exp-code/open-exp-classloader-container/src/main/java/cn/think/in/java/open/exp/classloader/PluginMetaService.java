@@ -1,26 +1,24 @@
 package cn.think.in.java.open.exp.classloader;
 
+import cn.think.in.java.open.exp.client.SpiFactory;
+
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 /**
  * @Author cxs
- * @Description
- * @date 2023/8/9
- * @version 1.0
  **/
 public interface PluginMetaService {
 
-    static PluginMetaService getSpi(){
-        return PluginMetaServiceSpiFactory.getFirst();
+    static PluginMetaService getSpi() {
+        return SpiFactory.get(PluginMetaService.class);
     }
 
     void setConfig(PluginMetaConfig pluginMetaConfig);
 
     PluginMetaFat install(File file) throws Throwable;
 
-    void unInstall(String pluginId) throws IOException;
+    void unInstall(String pluginId) throws Exception;
 
     <T> List<ExpClass<T>> get(Class<T> extClass) throws ClassNotFoundException;
 

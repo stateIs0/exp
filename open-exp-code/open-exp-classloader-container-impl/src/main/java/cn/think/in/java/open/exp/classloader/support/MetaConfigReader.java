@@ -1,5 +1,6 @@
 package cn.think.in.java.open.exp.classloader.support;
 
+import cn.think.in.java.open.exp.client.Constant;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 
@@ -21,30 +22,19 @@ import java.util.jar.JarFile;
  **/
 public class MetaConfigReader {
 
-    public static String pluginInfoFileName = "pluginMeta.properties";
-    public static String pluginExtFileName = "extension.properties";
-
-    public static String pluginCodeName = "plugin.code";
-    public static String pluginDescName = "plugin.desc";
-    public static String pluginVersionName = "plugin.version";
-    public static String pluginExtName = "plugin.ext";
-    public static String pluginConfigName = "plugin.config";
-    public static String pluginBootClassName = "plugin.boot.class";
-
-
     public static PluginMetaInnerModel getMeta(File file) {
-        Properties properties = loadProperties(file.getAbsolutePath(), pluginInfoFileName);
-        String code = properties.getProperty(pluginCodeName);
-        String desc = properties.getProperty(pluginDescName);
-        String version = properties.getProperty(pluginVersionName);
-        String ext = properties.getProperty(pluginExtName);
-        String config = properties.getProperty(pluginConfigName);
-        String boot = properties.getProperty(pluginBootClassName);
+        Properties properties = loadProperties(file.getAbsolutePath(), Constant.PLUGIN_META_FILE_NAME);
+        String code = properties.getProperty(Constant.PLUGIN_CODE_KEY);
+        String desc = properties.getProperty(Constant.PLUGIN_DESC_KEY);
+        String version = properties.getProperty(Constant.PLUGIN_VERSION_KEY);
+        String ext = properties.getProperty(Constant.PLUGIN_EXT_KEY);
+        String config = properties.getProperty(Constant.PLUGIN_CONFIG_KEY);
+        String boot = properties.getProperty(Constant.PLUGIN_BOOT_CLASS);
         return new PluginMetaInnerModel(code, desc, version, ext, config, boot);
     }
 
     public static Map<String, String> getMapping(File file) {
-        Properties properties = loadProperties(file.getAbsolutePath(), pluginExtFileName);
+        Properties properties = loadProperties(file.getAbsolutePath(), Constant.EXTENSION_FILE_NAME);
         Map<String, String> map = new HashMap<>();
 
         for (Map.Entry<Object, Object> i : properties.entrySet()) {
