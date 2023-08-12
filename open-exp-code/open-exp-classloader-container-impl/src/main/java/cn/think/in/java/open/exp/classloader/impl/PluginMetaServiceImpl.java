@@ -13,7 +13,6 @@ import cn.think.in.java.open.exp.client.PluginObjectRegister;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -53,7 +52,7 @@ public class PluginMetaServiceImpl implements PluginMetaService {
         Class<ExpBoot> aClass = (Class<ExpBoot>) classLoader.loadClass(meta.getPluginBootClass());
         PluginObjectRegister register = aClass.newInstance().boot();
 
-        pluginMetaFat.setPluginBeanRegister(register);
+        pluginMetaFat.setRegister(register);
         pluginMetaFat.setExtensionMappings(mapping);
         pluginMetaFat.setPluginId(meta.getPluginId());
         pluginMetaFat.setPluginCode(meta.getPluginCode());

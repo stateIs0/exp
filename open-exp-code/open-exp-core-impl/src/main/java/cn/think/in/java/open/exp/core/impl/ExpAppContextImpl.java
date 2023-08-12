@@ -36,7 +36,7 @@ public class ExpAppContextImpl implements ExpAppContext {
     @Override
     public Plugin load(File file) throws Throwable {
         PluginMetaFat install = metaService.install(file);
-        objectStore.startRegister(install.getPluginBeanRegister(), install.getPluginId());
+        objectStore.startRegister(install.getRegister(), install.getPluginId());
         log.info("安装加载插件 {}", install.getPluginId());
         return install.conv();
     }

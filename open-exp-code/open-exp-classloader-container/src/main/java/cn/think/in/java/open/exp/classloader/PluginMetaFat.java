@@ -16,30 +16,30 @@ import java.util.Map;
 @Data
 public class PluginMetaFat {
 
-    String pluginId;
+    private String pluginId;
 
-    String pluginCode;
+    private String pluginCode;
 
-    String pluginDesc;
+    private String pluginDesc;
 
-    String pluginVersion;
+    private String pluginVersion;
 
-    String pluginExt;
+    private String pluginExt;
 
-    String pluginConfig;
+    private String pluginConfig;
 
-    String pluginBootClass;
+    private String pluginBootClass;
 
-    PluginObjectRegister pluginBeanRegister;
+    private PluginObjectRegister register;
 
     /**
      * 扩展点映射关系
      */
-    Map<String, String> extensionMappings;
+    private Map<String, String> extensionMappings;
 
-    File location;
+    private File location;
 
-    ClassLoader classLoader;
+    private ClassLoader classLoader;
 
     public Plugin conv() {
         Plugin plugin = new Plugin();
