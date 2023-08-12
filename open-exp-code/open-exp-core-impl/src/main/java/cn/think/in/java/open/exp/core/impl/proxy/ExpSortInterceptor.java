@@ -1,8 +1,5 @@
 package cn.think.in.java.open.exp.core.impl.proxy;
 
-import cn.think.in.java.open.exp.client.ExpAppContext;
-import cn.think.in.java.open.exp.client.ExpAppContextSpiFactory;
-import cn.think.in.java.open.exp.client.Sort;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
@@ -17,10 +14,8 @@ import java.lang.reflect.Method;
  * @version 1.0
  **/
 @Slf4j
-public class ExpSortInterceptor implements MethodInterceptor, Sort {
+public class ExpSortInterceptor implements MethodInterceptor {
 
-    ExpAppContext expAppContext = ExpAppContextSpiFactory.getFirst();
-    Integer sort;
     String pluginId;
     Object target;
 
@@ -32,15 +27,6 @@ public class ExpSortInterceptor implements MethodInterceptor, Sort {
     @Override
     public Object intercept(Object origin, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
         try {
-            // 一个扩展点多个实现时, 会触发排序.
-            if ("getSort".equals(method.getName())) {
-                return getSort();
-            }
-
-            if ("compareTo".equals(method.getName())) {
-                return ((Sort) objects[0]).getSort() - ((Sort) origin).getSort();
-            }
-
             return method.invoke(target, objects);
         } catch (InvocationTargetException e) {
             throw e.getTargetException();
@@ -50,12 +36,4 @@ public class ExpSortInterceptor implements MethodInterceptor, Sort {
         }
     }
 
-    @Override
-    public int getSort() {
-        sort = expAppContext.getTenantCallback().getSort(pluginId);
-        if (sort == null) {
-            sort = 0;
-        }
-        return sort;
-    }
 }

@@ -11,19 +11,23 @@ import java.util.Random;
 public class SimpleJavaAppMain {
 
     public static void main(String[] args) throws Throwable {
-        ExpAppContext bootstrap = Bootstrap.bootstrap("exp-plugins/", "workdir-simple-java-app");
-        bootstrap.setTenantCallback(new TenantCallback() {
+        Class<UserService> extensionClass = UserService.class;
+        ExpAppContext expAppContext = Bootstrap.bootstrap("exp-plugins/", "workdir-simple-java-app");
+        TenantCallback callback = new TenantCallback() {
             @Override
-            public Integer getSort(String pluginId) {
-                return new Random().nextInt(10);
+            public int getSort(String pluginId) {
+                int sort = new Random().nextInt(10);
+                System.out.println(pluginId + ",    " + sort);
+                return sort;
             }
 
             @Override
-            public Boolean isOwnCurrentTenant(String pluginId) {
-                return null;
+            public boolean filter(String pluginId) {
+                return true;
             }
-        });
-        Optional<UserService> first = bootstrap.get(UserService.class).stream().findFirst();
+        };
+
+        Optional<UserService> first = expAppContext.get(extensionClass, callback).stream().findFirst();
         first.ifPresent(userService -> {
             System.out.println(userService.getClass());
             System.out.println(userService.getClass().getClassLoader());

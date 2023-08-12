@@ -2,6 +2,7 @@ package cn.think.in.java.open.exp.core.impl;
 
 import cn.think.in.java.open.exp.client.ExpAppContext;
 import cn.think.in.java.open.exp.client.Plugin;
+import cn.think.in.java.open.exp.client.TenantCallback;
 
 import java.io.File;
 import java.util.List;
@@ -36,6 +37,16 @@ public class ExpAppContextMock implements ExpAppContext {
 
     @Override
     public <P> P get(String extCode, String pluginId) {
+        return null;
+    }
+
+    @Override
+    public <P> List<P> get(String extCode, TenantCallback callback) {
+        return null;
+    }
+
+    @Override
+    public <P> List<P> get(Class<P> pClass, TenantCallback callback) {
         return null;
     }
 }

@@ -1,7 +1,10 @@
 package cn.think.in.java.open.exp.adapter.springboot2;
 
 import cn.think.in.java.open.exp.adapter.springboot2.example.UserService;
-import cn.think.in.java.open.exp.client.*;
+import cn.think.in.java.open.exp.client.ExpAppContext;
+import cn.think.in.java.open.exp.client.ExpAppContextSpiFactory;
+import cn.think.in.java.open.exp.client.Plugin;
+import cn.think.in.java.open.exp.client.TenantCallback;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,25 +27,27 @@ public class BaseController {
     Map<String, Integer> sortMap = new HashMap<>();
     Map<String, String> pluginIdTenantIdMap = new HashMap<>();
 
+    TenantCallback callback;
+
     public BaseController() {
         sortMap.put("example-plugin1_1.0.0", 1);
         sortMap.put("example-plugin2_2.0.0", 2);
         pluginIdTenantIdMap.put("example-plugin2_2.0.0", "12345");
         pluginIdTenantIdMap.put("example-plugin1_1.0.0", "12345");
 
-        expAppContext.setTenantCallback(new TenantCallback() {
+        callback = new TenantCallback() {
             @Override
-            public Integer getSort(String pluginId) {
+            public int getSort(String pluginId) {
                 // 获取这个插件的排序
                 return sortMap.get(pluginId);
             }
 
             @Override
-            public Boolean isOwnCurrentTenant(String pluginId) {
+            public boolean filter(String pluginId) {
                 // 判断当前租户是不是这个匹配这个插件
                 return context.get().equals(pluginIdTenantIdMap.get(pluginId));
             }
-        });
+        };
 
     }
 
@@ -52,7 +57,7 @@ public class BaseController {
         // 上下文设置租户 id
         context.set(tenantId);
         try {
-            List<UserService> userServices = expAppContext.get(UserService.class);
+            List<UserService> userServices = expAppContext.get(UserService.class, callback);
             // first 第一个就是这个租户优先级最高的.
             Optional<UserService> optional = userServices.stream().findFirst();
             if (optional.isPresent()) {

@@ -22,7 +22,6 @@ public class ExpAppContextImpl implements ExpAppContext {
 
     private PluginMetaService metaService;
     private ObjectStore objectStore;
-    private TenantCallback tenantCallback;
 
 
     @Override
@@ -42,27 +41,37 @@ public class ExpAppContextImpl implements ExpAppContext {
 
     @Override
     public <P> List<P> get(String extCode) {
+        return get(extCode, TenantCallback.TenantCallbackMock.DEFAULT);
+    }
+
+    @Override
+    public <P> List<P> get(String extCode, TenantCallback callback) {
         try {
             List<ExpClass<P>> classes = metaService.get(extCode);
-            List<P> result = new ArrayList<>();
+
+            List<SortObj<P>> sortObjList = new ArrayList<>();
 
             for (ExpClass<P> aClass : classes) {
-                Boolean ownCurrentTenant = true;
-                if (!extCode.equals(TenantCallback.class.getName())) {
-                    ownCurrentTenant = getTenantCallback().isOwnCurrentTenant(aClass.getPluginId());
+                Boolean filter = true;
+                if (callback != null) {
+                    filter = callback.filter(aClass.getPluginId());
                 }
-                if (ownCurrentTenant == null) {
-                    ownCurrentTenant = true;
+                if (filter == null) {
+                    filter = true;
                 }
-                if (!ownCurrentTenant) {
+                if (!filter) {
                     continue;
                 }
+
                 P bean = objectStore.getObject(aClass.getAClass().getName(), aClass.getPluginId());
-                if (bean != null) {
-                    result.add(bean);
+                if (callback != null) {
+                    sortObjList.add(new SortObj<>(bean, callback.getSort(aClass.getPluginId())));
+                } else {
+                    sortObjList.add(new SortObj<>(bean, 0));
                 }
             }
-            return result.stream().sorted().collect(Collectors.toList());
+
+            return sortObjList.stream().sorted().map(pSortObj -> pSortObj.obj).collect(Collectors.toList());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -74,6 +83,11 @@ public class ExpAppContextImpl implements ExpAppContext {
     }
 
     @Override
+    public <P> List<P> get(Class<P> pClass, TenantCallback callback) {
+        return get(pClass.getName(), callback);
+    }
+
+    @Override
     public <P> P get(String extCode, String pluginId) {
         try {
             ExpClass<P> classZ = metaService.get(extCode, pluginId);
@@ -82,26 +96,6 @@ public class ExpAppContextImpl implements ExpAppContext {
             throw new RuntimeException(e);
         }
     }
-
-    @Override
-    public TenantCallback getTenantCallback() {
-        if (this.tenantCallback == null) {
-            return TenantCallback.TenantCallbackMock.instance;
-        }
-        return this.tenantCallback;
-    }
-
-    @Override
-    public void setTenantCallback(TenantCallback callback) {
-        if (callback == null) {
-            throw new RuntimeException("callback can not be null");
-        }
-        if (this.tenantCallback != null) {
-            throw new RuntimeException("不能重复设置 tenantCallback");
-        }
-        this.tenantCallback = callback;
-    }
-
 
     public void setPluginMetaService(PluginMetaService pluginMetaService) {
         this.metaService = pluginMetaService;

@@ -17,9 +17,9 @@ public class BootstrapTest2 {
         String asser = "2";
 
         // 业务逻辑实现
-        expAppContext.setTenantCallback(new TenantCallback() {
+        TenantCallback callback = new TenantCallback() {
             @Override
-            public Integer getSort(String pluginId) {
+            public int getSort(String pluginId) {
                 // 测试用, 随便写的.
                 if (pluginId.endsWith(asser + ".0.0")) {
                     return 2;
@@ -28,13 +28,13 @@ public class BootstrapTest2 {
             }
 
             @Override
-            public Boolean isOwnCurrentTenant(String pluginId) {
+            public boolean filter(String pluginId) {
                 return true;
             }
-        });
+        };
 
         // 调用逻辑
-        expAppContext.get(UserService.class).stream().findFirst().ifPresent(userService -> {
+        expAppContext.get(UserService.class, callback).stream().findFirst().ifPresent(userService -> {
             System.out.println("---->>> " + userService.getClass().getName());
             userService.createUserExt();
             // Assert

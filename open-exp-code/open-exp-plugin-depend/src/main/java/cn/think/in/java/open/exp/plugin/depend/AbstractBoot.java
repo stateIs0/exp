@@ -36,7 +36,7 @@ public abstract class AbstractBoot implements ExpBoot {
     }
 
     @Override
-    public PluginObjectRegister boot() throws Throwable {
+    public PluginObjectRegister getRegister() throws Throwable {
         return this.pluginBeanRegister;
     }
 

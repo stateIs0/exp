@@ -50,7 +50,7 @@ public class PluginMetaServiceImpl implements PluginMetaService {
         pluginMetaFat.setClassLoader(classLoader);
 
         Class<ExpBoot> aClass = (Class<ExpBoot>) classLoader.loadClass(meta.getPluginBootClass());
-        PluginObjectRegister register = aClass.newInstance().boot();
+        PluginObjectRegister register = aClass.newInstance().getRegister();
 
         pluginMetaFat.setRegister(register);
         pluginMetaFat.setExtensionMappings(mapping);

@@ -27,6 +27,6 @@ public class SpringBootTenantObjectPostProcessorFactory implements BeanPostProce
     @Override
     public Object getProxy(Object bean, String pluginId) {
         return TenantExpAppContextProxyFactory.getProxy(
-                new TenantExpAppContextProxyFactory.ExpMethodInterceptor(bean, pluginId), bean.getClass());
+                new TenantExpAppContextProxyFactory.ExpMethodInterceptor(bean, pluginId), bean.getClass(), pluginId);
     }
 }

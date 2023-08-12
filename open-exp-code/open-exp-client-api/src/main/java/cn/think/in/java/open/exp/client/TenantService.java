@@ -1,21 +1,13 @@
 package cn.think.in.java.open.exp.client;
 
+import java.util.List;
+
 /**
  * @Author cxs
  **/
 public interface TenantService {
 
+    <P> List<P> get(String extCode, TenantCallback callback);
 
-    /**
-     * 获取 TenantCallback 扩展逻辑;
-     */
-    default TenantCallback getTenantCallback() {
-        return TenantCallback.TenantCallbackMock.instance;
-    }
-
-    /**
-     * 设置 callback;
-     */
-    default void setTenantCallback(TenantCallback callback) {
-    }
+    <P> List<P> get(Class<P> pClass, TenantCallback callback);
 }

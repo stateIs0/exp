@@ -55,38 +55,14 @@ public class BootstrapTest {
 
                     @Override
                     public Object getProxy(Object origin, String pluginId) {
-                        return getProxy(new MethodInterceptor() {
-                            ExpAppContext expAppContext = ExpAppContextSpiFactory.getFirst();
-                            Integer sort;
-
-
-                            @Override
-                            public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
-                                try {
-                                    // 一个扩展点多个实现时, 会触发排序.
-                                    if ("getSort".equals(method.getName())) {
-                                        return getSort();
-                                    }
-
-                                    if ("compareTo".equals(method.getName())) {
-                                        return ((Sort) objects[0]).getSort() - ((Sort) o).getSort();
-                                    }
-
-                                    return method.invoke(origin, objects);
-                                } catch (InvocationTargetException e) {
-                                    throw e.getTargetException();
-                                } catch (Exception e) {
-                                    log.error(e.getMessage(), e);
-                                    throw e;
-                                }
-                            }
-
-                            public int getSort() {
-                                sort = expAppContext.getTenantCallback().getSort(pluginId);
-                                if (sort == null) {
-                                    sort = 0;
-                                }
-                                return sort;
+                        return getProxy((o, method, objects, methodProxy) -> {
+                            try {
+                                return method.invoke(origin, objects);
+                            } catch (InvocationTargetException e) {
+                                throw e.getTargetException();
+                            } catch (Exception e) {
+                                log.error(e.getMessage(), e);
+                                throw e;
                             }
                         }, origin.getClass());
                     }
@@ -106,9 +82,9 @@ public class BootstrapTest {
 
 
         // 业务逻辑实现
-        expAppContext.setTenantCallback(new TenantCallback() {
+        TenantCallback callback = new TenantCallback() {
             @Override
-            public Integer getSort(String pluginId) {
+            public int getSort(String pluginId) {
                 // 测试用, 随便写的.
                 if (pluginId.endsWith("1.0.0")) {
                     return 2;
@@ -117,13 +93,13 @@ public class BootstrapTest {
             }
 
             @Override
-            public Boolean isOwnCurrentTenant(String pluginId) {
+            public boolean filter(String pluginId) {
                 return true;
             }
-        });
+        };
 
         // 调用逻辑
-        expAppContext.get(UserService.class).stream().findFirst().ifPresent(new Consumer<UserService>() {
+        expAppContext.get(UserService.class, callback).stream().findFirst().ifPresent(new Consumer<UserService>() {
             @Override
             public void accept(UserService userService) {
                 System.out.println("---->>> " + userService.getClass().getName());
