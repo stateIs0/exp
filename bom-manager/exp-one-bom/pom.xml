@@ -37,6 +37,11 @@
             </dependency>
             <dependency>
                 <groupId>cn.think.in.java</groupId>
+                <artifactId>open-exp-object-field-extend</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.think.in.java</groupId>
                 <artifactId>open-exp-plugin-depend</artifactId>
                 <version>${project.version}</version>
             </dependency>

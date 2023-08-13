@@ -20,6 +20,7 @@ import java.io.IOException;
  **/
 @Slf4j
 public class Listener implements SpringApplicationRunListener, BeanDefinitionRegistryPostProcessor {
+
     public Listener(SpringApplication springApplication, String... args) throws IOException {
     }
 
@@ -31,6 +32,11 @@ public class Listener implements SpringApplicationRunListener, BeanDefinitionReg
         ExpApplicationListener listener = new ExpApplicationListener();
         context.addApplicationListener(listener);
         context.addBeanFactoryPostProcessor(new ExpBeanDefinitionRegistryPostProcessor(listener));
+        ExtFieldJsonConfigHandler.
+                builder().
+                environment(context.getEnvironment()).
+                build().
+                run();
     }
 
     private boolean isEnabled(ConfigurableApplicationContext context) {

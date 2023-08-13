@@ -63,6 +63,10 @@
             <groupId>cn.think.in.java</groupId>
             <artifactId>open-exp-core-impl</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.think.in.java</groupId>
+            <artifactId>open-exp-object-field-extend</artifactId>
+        </dependency>
     </dependencies>
 
 

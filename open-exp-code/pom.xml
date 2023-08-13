@@ -16,6 +16,7 @@
         <module>open-exp-document-core-impl</module>
         <module>open-exp-core-impl</module>
         <module>open-exp-plugin-depend</module>
+        <module>open-exp-object-field-extend</module>
     </modules>
 
     <properties>
