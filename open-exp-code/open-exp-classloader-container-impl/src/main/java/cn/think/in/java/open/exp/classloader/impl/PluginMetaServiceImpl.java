@@ -41,7 +41,7 @@ public class PluginMetaServiceImpl implements PluginMetaService {
 
         String dir = pluginMetaConfig.getWorkDir() + "/" + meta.getPluginId();
         if (new File(dir).exists()) {
-            log.info("exists, delete {}", dir);
+            log.warn("---->>>>> 插件目录已经存在, 删除 = {}", dir);
             new File(dir).delete();
         }
 

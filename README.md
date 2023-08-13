@@ -258,3 +258,8 @@ public class Boot extends AbstractBoot {
 ```
 
 
+springboot 配置项(-D 或 application.yml 都支持): 
+```java
+plugins_path={springboot 启动时, exp主动加载的插件目录}
+plugins_work_dir={exp 的工作目录, 其会将代码解压达成这个目录里,子目录名为插件 id}
+```

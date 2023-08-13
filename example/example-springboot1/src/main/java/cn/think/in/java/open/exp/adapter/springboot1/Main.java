@@ -1,4 +1,4 @@
-package cn.think.in.java.open.exp.adapter.springboot2;
+package cn.think.in.java.open.exp.adapter.springboot1;
 
 public class Main {
     public static void main(String[] args) {
