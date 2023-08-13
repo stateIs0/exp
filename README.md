@@ -85,43 +85,26 @@ mvn clean package
 ## 编程界面 API 使用
 
 ```java
-@RequestMapping("/run")
 public String run(String tenantId) {
-  // 上下文设置租户 id
-  context.set(tenantId);
-  try {
-      List<UserService> userServices = expAppContext.get(UserService.class, TenantCallback.TenantCallbackMock.DEFAULT);
-      // first 第一个就是这个租户优先级最高的.
-      Optional<UserService> optional = userServices.stream().findFirst();
-      if (optional.isPresent()) {
-          optional.get().createUserExt();
-      } else {
-          return "not found";
-      }
-      return "success";
-  } finally {
-      // 上下文删除租户 id
-      context.remove();
-  }
+   List<UserService> userServices = expAppContext.get(UserService.class, TenantCallback.TenantCallbackMock.DEFAULT);
+   // first 第一个就是这个租户优先级最高的.
+   Optional<UserService> optional = userServices.stream().findFirst();
+   if (optional.isPresent()) {
+       optional.get().createUserExt();
+   } else {
+       return "not found";
+   }
 }
 
 
-@RequestMapping("/install")
 public String install(String path, String tenantId) throws Throwable {
   Plugin plugin = expAppContext.load(new File(path));
-
-  sortMap.put(plugin.getPluginId(), Math.abs(new Random().nextInt(100)));
-  pluginIdTenantIdMap.put(plugin.getPluginId(), tenantId);
-
   return plugin.getPluginId();
 }
 
-@RequestMapping("/unInstall")
 public String unInstall(String pluginId) throws Exception {
   log.info("plugin id {}", pluginId);
   expAppContext.unload(pluginId);
-  pluginIdTenantIdMap.remove(pluginId);
-  sortMap.remove(pluginId);
   return "ok";
 }
 ```
