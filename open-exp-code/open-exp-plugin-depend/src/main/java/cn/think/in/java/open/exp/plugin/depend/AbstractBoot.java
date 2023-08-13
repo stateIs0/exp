@@ -13,7 +13,7 @@ public abstract class AbstractBoot implements ExpBoot {
 
     private final ClassLoader pluginClassLoader;
     private final String classLocation;
-    private final PluginObjectRegister pluginBeanRegister;
+    private final DefaultRegister pluginBeanRegister;
     private String pluginId;
 
     public AbstractBoot() {

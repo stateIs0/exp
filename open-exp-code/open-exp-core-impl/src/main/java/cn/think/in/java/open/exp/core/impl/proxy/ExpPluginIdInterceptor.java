@@ -14,12 +14,12 @@ import java.lang.reflect.Method;
  * @version 1.0
  **/
 @Slf4j
-public class ExpSortInterceptor implements MethodInterceptor {
+public class ExpPluginIdInterceptor implements MethodInterceptor {
 
     String pluginId;
     Object target;
 
-    public ExpSortInterceptor(String pluginId, Object target) {
+    public ExpPluginIdInterceptor(String pluginId, Object target) {
         this.pluginId = pluginId;
         this.target = target;
     }
@@ -27,6 +27,9 @@ public class ExpSortInterceptor implements MethodInterceptor {
     @Override
     public Object intercept(Object origin, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
         try {
+            if ("toString".equals(method.getName())) {
+                return toString();
+            }
             return method.invoke(target, objects);
         } catch (InvocationTargetException e) {
             throw e.getTargetException();
@@ -36,4 +39,11 @@ public class ExpSortInterceptor implements MethodInterceptor {
         }
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "pluginId='" + pluginId + '\'' +
+                ", target=" + target +
+                '}';
+    }
 }

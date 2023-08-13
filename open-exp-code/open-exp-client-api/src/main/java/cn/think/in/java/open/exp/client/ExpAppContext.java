@@ -2,6 +2,7 @@ package cn.think.in.java.open.exp.client;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author cxs
@@ -16,7 +17,7 @@ public interface ExpAppContext extends TenantService {
     /**
      * 卸载插件
      */
-    void unload(String id) throws Exception;
+    void unload(String pluginId) throws Exception;
 
     /**
      * 获取多个扩展点的插件实例
@@ -33,6 +34,6 @@ public interface ExpAppContext extends TenantService {
     /**
      * 获取单个插件实例.
      */
-    <P> P get(String extCode, String pluginId);
+    <P> Optional<P> get(String extCode, String pluginId);
 
 }

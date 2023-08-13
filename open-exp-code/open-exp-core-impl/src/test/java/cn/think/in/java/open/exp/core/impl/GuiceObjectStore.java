@@ -18,8 +18,8 @@ public class GuiceObjectStore implements ObjectStore {
     private ObjectStore objectStore;
 
     @Override
-    public List<Class<?>> startRegister(PluginObjectRegister register, String pluginId) throws Exception {
-        return null;
+    public void startRegister(List<Class<?>> list, String pluginId) throws Exception {
+
     }
 
     @Override
@@ -28,7 +28,7 @@ public class GuiceObjectStore implements ObjectStore {
     }
 
     @Override
-    public <T> T getObject(String name, String pluginId) {
+    public <T> T getObject(Class<?> c, String pluginId) {
         return null;
     }
 

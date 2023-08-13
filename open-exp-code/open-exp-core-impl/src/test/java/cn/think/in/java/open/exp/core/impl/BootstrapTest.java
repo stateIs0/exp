@@ -6,10 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import net.sf.cglib.core.DefaultNamingPolicy;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
-import net.sf.cglib.proxy.MethodProxy;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,17 +23,13 @@ public class BootstrapTest {
     public void bootstrap() throws Throwable {
         ExpAppContext expAppContext = Bootstrap.bootstrap(new ObjectStore() {
             @Override
-            public List<Class<?>> startRegister(PluginObjectRegister pluginObjectRegisters, String pluginId) throws Exception {
+            public void startRegister(List<Class<?>> list, String pluginId) throws Exception {
                 Map<String, Object> store = new HashMap<>();
-                List<Class<?>> classList = pluginObjectRegisters.register(new PluginObjectRegister.Callback() {
-                    @Override
-                    public void register(Class<?> aClass) throws Exception {
-                        Object proxy = getTenantObjectProxyFactory().getProxy(aClass.newInstance(), pluginId);
-                        store.put(aClass.getName(), proxy);
-                    }
-                });
+                for (Class<?> aClass : list) {
+                    Object proxy = getTenantObjectProxyFactory().getProxy(aClass.newInstance(), pluginId);
+                    store.put(aClass.getName(), proxy);
+                }
                 pluginIdMapping.put(pluginId, store);
-                return classList;
             }
 
             @Override
@@ -44,8 +38,8 @@ public class BootstrapTest {
             }
 
             @Override
-            public <T> T getObject(String name, String pluginId) {
-                return (T) pluginIdMapping.get(pluginId).get(name);
+            public <T> T getObject(Class<?> c, String pluginId) {
+                return (T) pluginIdMapping.get(pluginId).get(c.getName());
             }
 
 
@@ -70,7 +64,7 @@ public class BootstrapTest {
 
                     public <P> P getProxy(final MethodInterceptor callback, Class<P> c) {
                         Enhancer enhancer = new Enhancer();
-                        enhancer.setInterfaces(new Class[]{Sort.class});
+                        enhancer.setInterfaces(new Class[]{});
                         enhancer.setSuperclass(c);
                         enhancer.setNamingPolicy(new DefaultNamingPolicy());
                         enhancer.setCallback(callback);

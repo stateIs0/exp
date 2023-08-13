@@ -1,9 +1,8 @@
 package cn.think.in.java.open.exp.core.impl;
 
 import cn.think.in.java.open.exp.client.ObjectStore;
-import cn.think.in.java.open.exp.client.PluginObjectRegister;
 import cn.think.in.java.open.exp.client.TenantObjectProxyFactory;
-import cn.think.in.java.open.exp.core.impl.proxy.SortNetSfCglibProxyEnhancer;
+import cn.think.in.java.open.exp.core.impl.proxy.PluginIdNetSfCglibProxyEnhancer;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,14 +17,18 @@ public class SimpleObjectStore implements ObjectStore {
     Map<String, Map<String, Object>> pluginIdMapping = new HashMap<>();
 
     @Override
-    public List<Class<?>> startRegister(PluginObjectRegister register, String pluginId) throws Exception {
+    public void startRegister(List<Class<?>> list, String pluginId) throws Exception {
         Map<String, Object> store = new HashMap<>();
-        List<Class<?>> classList = register.register(aClass -> {
-            Object proxy = getTenantObjectProxyFactory().getProxy(aClass.newInstance(), pluginId);
+        list.forEach(aClass -> {
+            Object proxy;
+            try {
+                proxy = getTenantObjectProxyFactory().getProxy(aClass.newInstance(), pluginId);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             store.put(aClass.getName(), proxy);
         });
         pluginIdMapping.put(pluginId, store);
-        return classList;
     }
 
     @Override
@@ -34,16 +37,16 @@ public class SimpleObjectStore implements ObjectStore {
     }
 
     @Override
-    public <T> T getObject(String name, String pluginId) {
+    public <T> T getObject(Class<?> c, String pluginId) {
         Map<String, Object> map = pluginIdMapping.get(pluginId);
         if (map == null) {
             return null;
         }
-        return (T) map.get(name);
+        return (T) map.get(c.getName());
     }
 
     @Override
     public TenantObjectProxyFactory getTenantObjectProxyFactory() {
-        return SortNetSfCglibProxyEnhancer::getEnhancer;
+        return PluginIdNetSfCglibProxyEnhancer::getEnhancer;
     }
 }

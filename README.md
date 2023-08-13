@@ -183,9 +183,9 @@ public interface ExpAppContext {
      */
     <P> P get(String extCode, String pluginId);
 
-    <P> List<P> get(String extCode, TenantCallback callback);
+    <P> List<P> get(String extCode, TenantCallback registerCallback);
 
-    <P> List<P> get(Class<P> pClass, TenantCallback callback);
+    <P> List<P> get(Class<P> pClass, TenantCallback registerCallback);
 }
 ```
 
@@ -214,7 +214,7 @@ public interface TenantCallback {
 租户过滤示例代码:
 
 ````java
-TenantCallback callback = new TenantCallback() {
+TenantCallback registerCallback = new TenantCallback() {
    @Override
    public int getSort(String pluginId) {
        // 获取这个插件的排序
@@ -228,7 +228,7 @@ TenantCallback callback = new TenantCallback() {
    }
 }
 ;
-List<UserService> userServices = expAppContext.get(UserService.class, callback);
+List<UserService> userServices = expAppContext.get(UserService.class, registerCallback);
 // first 第一个就是这个租户优先级最高的.
 Optional<UserService> optional = userServices.stream().findFirst();
 ````

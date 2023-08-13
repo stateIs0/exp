@@ -4,26 +4,12 @@ import java.util.List;
 
 /**
  * @Author cxs
+ * 插件返回的的注册器.
  **/
 public interface PluginObjectRegister {
 
-    void setScanPath(String scanPath);
-
-    void setPluginClassLoader(ClassLoader pluginClassLoader);
-
-    void setLocation(String location);
-
     /**
      * 注册
-     * @param callback 注册回调
      */
-    List<Class<?>> register(Callback callback) throws Exception;
-
-    interface Callback {
-        /**
-         *
-         * @param aClass 当前的 class
-         */
-        void register(Class<?> aClass) throws Exception;
-    }
+    List<Class<?>> register() throws Exception;
 }

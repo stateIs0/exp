@@ -2,13 +2,13 @@ package cn.think.in.java.open.exp.adapter.springboot2;
 
 import cn.think.in.java.open.exp.classloader.support.UniqueNameUtil;
 import cn.think.in.java.open.exp.client.ObjectStore;
-import cn.think.in.java.open.exp.client.PluginObjectRegister;
 import cn.think.in.java.open.exp.client.TenantObjectProxyFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.util.Assert;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
@@ -29,7 +29,7 @@ public class SpringBootObjectStore implements ObjectStore {
 
     private ConfigurableListableBeanFactory beanFactory;
 
-    private final Map<String, List<Class<?>>> classesMap = new HashMap<>();
+    private final Map<String, List<Class<?>>> classesCache = new HashMap<>();
 
     private final SpringBootTenantObjectPostProcessorFactory tenantObjectProxy = new SpringBootTenantObjectPostProcessorFactory();
 
@@ -46,11 +46,10 @@ public class SpringBootObjectStore implements ObjectStore {
     }
 
     @Override
-    public List<Class<?>> startRegister(PluginObjectRegister register, String pluginId) throws Exception {
+    public void startRegister(List<Class<?>> list, String pluginId) throws Exception {
 
         List<Class<?>> rollbackList = new ArrayList<>();
-
-        List<Class<?>> classes = register.register((aClass) -> {
+        for (Class<?> aClass : list) {
             try {
                 String name = UniqueNameUtil.getName(aClass, pluginId);
                 BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(aClass);
@@ -64,12 +63,12 @@ public class SpringBootObjectStore implements ObjectStore {
                 }
                 throw e;
             }
-        });
+        }
 
-        handleMappings(pluginId, classes);
 
-        classesMap.put(pluginId, classes);
-        return classes;
+        handleMappings(pluginId, list);
+
+        classesCache.put(pluginId, list);
     }
 
     private void handleMappings(String pluginId, List<Class<?>> classes) {
@@ -93,7 +92,7 @@ public class SpringBootObjectStore implements ObjectStore {
 
     @Override
     public void unRegister(String pluginId) {
-        List<Class<?>> classes = classesMap.get(pluginId);
+        List<Class<?>> classes = classesCache.get(pluginId);
         if (classes == null) {
             log.warn("no class need un register");
             return;
@@ -101,7 +100,7 @@ public class SpringBootObjectStore implements ObjectStore {
         for (Class<?> aClass : classes) {
             unRegisterCallback(aClass, pluginId);
         }
-        classesMap.remove(pluginId);
+        classesCache.remove(pluginId);
     }
 
     private void unRegisterCallback(Class<?> aClass, String pluginId) {
@@ -114,11 +113,11 @@ public class SpringBootObjectStore implements ObjectStore {
     }
 
     @Override
-    public <T> T getObject(String name, String pluginId) {
+    public <T> T getObject(Class<?> c, String pluginId) {
         if (beanFactory == null) {
             return null;
         }
-        name = UniqueNameUtil.getName(name, pluginId);
+        String name = UniqueNameUtil.getName(c.getName(), pluginId);
         return (T) beanFactory.getBean(name);
     }
 

@@ -6,6 +6,7 @@ import cn.think.in.java.open.exp.client.TenantCallback;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @Author cxs
@@ -21,7 +22,7 @@ public class ExpAppContextMock implements ExpAppContext {
     }
 
     @Override
-    public void unload(String id) throws Exception {
+    public void unload(String pluginId) throws Exception {
 
     }
 
@@ -36,8 +37,8 @@ public class ExpAppContextMock implements ExpAppContext {
     }
 
     @Override
-    public <P> P get(String extCode, String pluginId) {
-        return null;
+    public <P> Optional<P> get(String extCode, String pluginId) {
+        return Optional.ofNullable(null);
     }
 
     @Override

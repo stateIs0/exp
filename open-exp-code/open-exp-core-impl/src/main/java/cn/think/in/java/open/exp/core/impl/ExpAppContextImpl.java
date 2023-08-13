@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -27,7 +28,8 @@ public class ExpAppContextImpl implements ExpAppContext {
     @Override
     public Plugin load(File file) throws Throwable {
         PluginMetaFat fat = metaService.install(file);
-        objectStore.startRegister(fat.getRegister(), fat.getPluginId());
+        List<Class<?>> classes = fat.getRegister().register();
+        objectStore.startRegister(classes, fat.getPluginId());
         log.info("安装加载插件, 插件 ID = [{}]", fat.getPluginId());
         return fat.conv();
     }
@@ -49,21 +51,25 @@ public class ExpAppContextImpl implements ExpAppContext {
         try {
             List<ExpClass<P>> classes = metaService.get(extCode);
 
+            if (classes == null) {
+                return new ArrayList<>();
+            }
+
             List<SortObj<P>> sortObjList = new ArrayList<>();
 
-            for (ExpClass<P> aClass : classes) {
+            classes.forEach(c -> {
                 if (callback == null) {
-                    P bean = objectStore.getObject(aClass.getAClass().getName(), aClass.getPluginId());
+                    P bean = objectStore.getObject(c.getAClass(), c.getPluginId());
                     sortObjList.add(new SortObj<>(bean, 0));
-                    continue;
+                    return;
                 }
-                if (!callback.filter(aClass.getPluginId())) {
-                    continue;
+                if (!callback.filter(c.getPluginId())) {
+                    return;
                 }
 
-                P bean = objectStore.getObject(aClass.getAClass().getName(), aClass.getPluginId());
-                sortObjList.add(new SortObj<>(bean, callback.getSort(aClass.getPluginId())));
-            }
+                P bean = objectStore.getObject(c.getAClass(), c.getPluginId());
+                sortObjList.add(new SortObj<>(bean, callback.getSort(c.getPluginId())));
+            });
 
             return sortObjList.stream().sorted().map(pSortObj -> pSortObj.obj).collect(Collectors.toList());
         } catch (
@@ -84,10 +90,13 @@ public class ExpAppContextImpl implements ExpAppContext {
     }
 
     @Override
-    public <P> P get(String extCode, String pluginId) {
+    public <P> Optional<P> get(String extCode, String pluginId) {
         try {
             ExpClass<P> classZ = metaService.get(extCode, pluginId);
-            return objectStore.getObject(classZ.getAClass().getName(), classZ.getPluginId());
+            if (classZ == null) {
+                return Optional.empty();
+            }
+            return Optional.ofNullable(objectStore.getObject(classZ.getAClass(), classZ.getPluginId()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

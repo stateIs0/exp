@@ -6,7 +6,7 @@ import net.sf.cglib.proxy.Enhancer;
 /**
  * @Author cxs
  **/
-public class SortNetSfCglibProxyEnhancer {
+public class PluginIdNetSfCglibProxyEnhancer {
 
     public static Object getEnhancer(Object b, String pluginId) {
         Enhancer enhancer = new Enhancer();
@@ -18,7 +18,7 @@ public class SortNetSfCglibProxyEnhancer {
                 return super.getTag() + "$$EXP$$SORT$$" + pluginId;
             }
         });
-        enhancer.setCallback(new ExpSortInterceptor(pluginId, b));
+        enhancer.setCallback(new ExpPluginIdInterceptor(pluginId, b));
         return enhancer.create();
     }
 
