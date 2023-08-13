@@ -88,7 +88,8 @@ public class SpringBootObjectStore implements ObjectStore {
         for (Class<?> aClass : classes) {
             Object bean = beanFactory.getBean(UniqueNameUtil.getName(aClass, pluginId));
 
-            RestUrlScanComponent r = new RestUrlScanComponent(bean, mapping, adapter, pluginsSpringUrlReplaceKey.get());
+            RestUrlScanComponent r = new RestUrlScanComponent(bean, mapping, adapter,
+                    pluginsSpringUrlReplaceKey.get(), pluginId);
             r.register();
             cache.put(UniqueNameUtil.getName(aClass, pluginId), r);
         }

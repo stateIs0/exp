@@ -25,15 +25,18 @@ public class RestUrlScanComponent {
     private final Object obj;
     private List<RequestMappingInfoWrapper> scan;
     private final String pluginsSpringUrlReplaceKey;
+    private String pluginId;
 
     public RestUrlScanComponent(Object obj,
                                 RequestMappingHandlerMapping handlerMapping,
                                 RequestMappingHandlerAdapter handlerAdapter,
-                                String pluginsSpringUrlReplaceKey) {
+                                String pluginsSpringUrlReplaceKey,
+                                String pluginId) {
         this.obj = obj;
         this.handlerMapping = handlerMapping;
         this.handlerAdapter = handlerAdapter;
         this.pluginsSpringUrlReplaceKey = pluginsSpringUrlReplaceKey;
+        this.pluginId = pluginId;
     }
 
     public void register() {
@@ -45,7 +48,7 @@ public class RestUrlScanComponent {
             }
             // 将新的Controller方法添加到handlerMapping
             handlerMapping.registerMapping(mapping.requestMappingInfo, obj, mapping.method);
-            log.info("注册 url, mapping = {}", (mapping.path));
+            log.info("注册 url -->> {}, mapping = {}", pluginId, mapping.path);
         }
         // 刷新handlerAdapter以应用新的映射
         handlerAdapter.afterPropertiesSet();
@@ -54,7 +57,7 @@ public class RestUrlScanComponent {
     public void unRegister() {
         for (RequestMappingInfoWrapper mapping : scan) {
             handlerMapping.unregisterMapping(mapping.requestMappingInfo);
-            log.warn("反注册 url, mapping = {}", (mapping.path));
+            log.warn("反注册 url -->> {}, mapping = {}", pluginId, mapping.path);
         }
         handlerAdapter.afterPropertiesSet();
     }
