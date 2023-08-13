@@ -7,6 +7,7 @@ import cn.think.in.java.open.exp.client.TenantCallback;
 import java.io.File;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @Author cxs
@@ -15,6 +16,11 @@ import java.util.Optional;
  * @version 1.0
  **/
 public class ExpAppContextMock implements ExpAppContext {
+
+    @Override
+    public Set<String> getAllPluginId() {
+        return null;
+    }
 
     @Override
     public Plugin load(File file) throws Throwable {

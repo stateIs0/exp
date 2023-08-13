@@ -28,6 +28,7 @@ public class PluginMetaServiceImpl implements PluginMetaService {
 
     private Map<String/* extCode */, Set<String/* pluginId */>> extCache = new HashMap<>();
 
+    private Set<String> ids = new HashSet<>();
 
     @Override
     public void setConfig(PluginMetaConfig pluginMetaConfig) {
@@ -37,6 +38,9 @@ public class PluginMetaServiceImpl implements PluginMetaService {
     @Override
     public PluginMetaFat install(File file) throws Throwable {
         PluginMetaInnerModel meta = MetaConfigReader.getMeta(file);
+        if (ids.contains(meta.getPluginId())) {
+            throw new RuntimeException("不要重复安装插件 " + meta.getPluginId());
+        }
         Map<String, String> mapping = MetaConfigReader.getMapping(file);
 
         String dir = pluginMetaConfig.getWorkDir() + "/" + meta.getPluginId();
@@ -74,6 +78,8 @@ public class PluginMetaServiceImpl implements PluginMetaService {
             set.add(pluginMetaFat.getPluginId());
         }
 
+        ids.add(pluginMetaFat.getPluginId());
+
         return pluginMetaFat;
     }
 
@@ -91,6 +97,8 @@ public class PluginMetaServiceImpl implements PluginMetaService {
         for (Map.Entry<String, Set<String>> entry : extCache.entrySet()) {
             entry.getValue().removeIf(s -> s.equals(pluginId));
         }
+
+        ids.remove(pluginId);
     }
 
     @Override

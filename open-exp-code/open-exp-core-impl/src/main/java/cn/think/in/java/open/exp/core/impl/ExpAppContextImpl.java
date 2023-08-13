@@ -10,9 +10,7 @@ import cn.think.in.java.open.exp.client.TenantCallback;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -23,13 +21,20 @@ public class ExpAppContextImpl implements ExpAppContext {
 
     private PluginMetaService metaService;
     private ObjectStore objectStore;
+    private Set<String> all = new HashSet<>();
 
+
+    @Override
+    public Set<String> getAllPluginId() {
+        return all;
+    }
 
     @Override
     public Plugin load(File file) throws Throwable {
         PluginMetaFat fat = metaService.install(file);
         List<Class<?>> classes = fat.getScanner().scan();
         objectStore.startRegister(classes, fat.getPluginId());
+        all.add(fat.getPluginId());
         log.info("安装加载插件, 插件 ID = [{}]", fat.getPluginId());
         return fat.conv();
     }
@@ -38,6 +43,7 @@ public class ExpAppContextImpl implements ExpAppContext {
     public void unload(String pluginId) throws Exception {
         objectStore.unRegister(pluginId);
         metaService.unInstall(pluginId);
+        all.remove(pluginId);
         log.info("卸载插件 {}", pluginId);
     }
 

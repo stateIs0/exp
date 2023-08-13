@@ -3,11 +3,14 @@ package cn.think.in.java.open.exp.client;
 import java.io.File;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author cxs
  */
 public interface ExpAppContext extends TenantService {
+
+    Set<String> getAllPluginId();
 
     /**
      * 加载插件
