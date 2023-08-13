@@ -52,26 +52,25 @@ public class ExpAppContextImpl implements ExpAppContext {
             List<SortObj<P>> sortObjList = new ArrayList<>();
 
             for (ExpClass<P> aClass : classes) {
-                boolean filter = true;
-                if (callback != null) {
-                    filter = callback.filter(aClass.getPluginId());
+                if (callback == null) {
+                    P bean = objectStore.getObject(aClass.getAClass().getName(), aClass.getPluginId());
+                    sortObjList.add(new SortObj<>(bean, 0));
+                    continue;
                 }
-                if (!filter) {
+                if (!callback.filter(aClass.getPluginId())) {
                     continue;
                 }
 
                 P bean = objectStore.getObject(aClass.getAClass().getName(), aClass.getPluginId());
-                if (callback != null) {
-                    sortObjList.add(new SortObj<>(bean, callback.getSort(aClass.getPluginId())));
-                } else {
-                    sortObjList.add(new SortObj<>(bean, 0));
-                }
+                sortObjList.add(new SortObj<>(bean, callback.getSort(aClass.getPluginId())));
             }
 
             return sortObjList.stream().sorted().map(pSortObj -> pSortObj.obj).collect(Collectors.toList());
-        } catch (Exception e) {
+        } catch (
+                Exception e) {
             throw new RuntimeException(e);
         }
+
     }
 
     @Override

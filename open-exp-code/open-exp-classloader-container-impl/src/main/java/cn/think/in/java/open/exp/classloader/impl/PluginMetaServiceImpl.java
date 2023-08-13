@@ -1,9 +1,9 @@
 package cn.think.in.java.open.exp.classloader.impl;
 
 import cn.think.in.java.open.exp.classloader.ExpClass;
-import cn.think.in.java.open.exp.classloader.PluginMetaService;
 import cn.think.in.java.open.exp.classloader.PluginMetaConfig;
 import cn.think.in.java.open.exp.classloader.PluginMetaFat;
+import cn.think.in.java.open.exp.classloader.PluginMetaService;
 import cn.think.in.java.open.exp.classloader.support.ClassLoaderFinder;
 import cn.think.in.java.open.exp.classloader.support.DirectoryCleaner;
 import cn.think.in.java.open.exp.classloader.support.MetaConfigReader;
@@ -42,7 +42,11 @@ public class PluginMetaServiceImpl implements PluginMetaService {
         String dir = pluginMetaConfig.getWorkDir() + "/" + meta.getPluginId();
         if (new File(dir).exists()) {
             log.warn("---->>>>> 插件目录已经存在, 删除 = {}", dir);
-            new File(dir).delete();
+            if (Boolean.parseBoolean(pluginMetaConfig.getAutoDelete())) {
+                new File(dir).delete();
+            } else {
+                throw new RuntimeException("插件目录已经存在, 请先卸载再安装.");
+            }
         }
 
         PluginMetaFat pluginMetaFat = new PluginMetaFat();
