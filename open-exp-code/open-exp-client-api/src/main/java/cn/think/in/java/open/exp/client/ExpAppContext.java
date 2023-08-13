@@ -10,6 +10,9 @@ import java.util.Set;
  */
 public interface ExpAppContext extends TenantService {
 
+    /**
+     * 获取当前所有的插件 id
+     */
     Set<String> getAllPluginId();
 
     /**
