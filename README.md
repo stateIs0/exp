@@ -86,7 +86,7 @@ mvn clean package
 
 ```java
 public String run(String tenantId) {
-   List<UserService> userServices = expAppContext.get(UserService.class, TenantCallback.TenantCallbackMock.DEFAULT);
+   List<UserService> userServices = expAppContext.get(UserService.class, TenantCallback.DEFAULT);
    // first 第一个就是这个租户优先级最高的.
    Optional<UserService> optional = userServices.stream().findFirst();
    if (optional.isPresent()) {
