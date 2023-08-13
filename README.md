@@ -122,6 +122,7 @@ public String unInstall(String pluginId) throws Exception {
     - [open-exp-core-impl](open-exp-code%2Fopen-exp-core-impl) 核心 api 实现; 内部 shade cglib 动态代理, 可不以来 spring 实现;
     - [open-exp-document-api](open-exp-code%2Fopen-exp-document-api) 扩展点文档 api
     - [open-exp-document-core-impl](open-exp-code%2Fopen-exp-document-core-impl) 扩展点文档导出实现
+    - [open-exp-object-field-extend](open-exp-code%2Fopen-exp-object-field-extend) 字节码动态扩展字段模块
     - [open-exp-plugin-depend](open-exp-code%2Fopen-exp-plugin-depend) exp 插件依赖
 4. [example](example) exp 使用示例代码
     - [example-extension-define](example%2Fexample-extension-define) 示例扩展点定义
@@ -248,4 +249,5 @@ plugins_path={springboot 启动时, exp主动加载的插件目录}
 plugins_work_dir={exp 的工作目录, 其会将代码解压达成这个目录里,子目录名为插件 id}
 plugins_auto_delete_enable={是否自动删除已经存在的 plugin 目录}
 plugins_spring_url_replace_enable={插件是否可以覆盖主程序 url, 注意, 目前无法支持多租户级别的覆盖}
+exp_object_field_config_json={插件动态增加字段json, json 结构定义见: cn.think.in.java.open.exp.object.field.ext.ExtMetaBean}
 ```
