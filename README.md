@@ -85,6 +85,8 @@ mvn clean package
 ## 编程界面 API 使用
 
 ```java
+ExpAppContext expAppContext = ExpAppContextSpiFactory.getFirst();
+
 public String run(String tenantId) {
    List<UserService> userServices = expAppContext.get(UserService.class, TenantCallback.DEFAULT);
    // first 第一个就是这个租户优先级最高的.

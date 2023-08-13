@@ -20,14 +20,11 @@ public class BootstrapTest3 {
 
         String absolutePath = new File("../../exp-plugins/").getAbsolutePath();
         ExpAppContext bootstrap = Bootstrap.bootstrap(absolutePath, "exp-workdir3");
-        bootstrap.get(UserService.class).stream().findFirst().ifPresent(new Consumer<UserService>() {
-            @Override
-            public void accept(UserService userService) {
-                System.out.println("exist");
-                System.out.println(userService.getClass());
-                System.out.println(userService.getClass().getClassLoader());
-                userService.createUserExt();
-            }
+        bootstrap.get(UserService.class).stream().findFirst().ifPresent(userService -> {
+            System.out.println("exist");
+            System.out.println(userService.getClass());
+            System.out.println(userService.getClass().getClassLoader());
+            userService.createUserExt();
         });
     }
 }
