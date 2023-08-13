@@ -17,26 +17,33 @@ import java.util.List;
  **/
 @Slf4j
 public class Bootstrap {
+
+    public static ExpAppContext bootstrap(String path, String workDir) throws Throwable {
+        return bootstrap(new SimpleObjectStore(), path, workDir, "true");
+    }
+
     /**
      * 默认实现. ObjectStore 仅仅是个 hashmap;
      * 通常, ObjectStore 是个 spring 容器.
      */
-    public static ExpAppContext bootstrap(String path, String workDir) throws Throwable {
-        return bootstrap(new SimpleObjectStore(), path, workDir);
+    public static ExpAppContext bootstrap(String path, String workDir, String autoDelete) throws Throwable {
+        return bootstrap(new SimpleObjectStore(), path, workDir, autoDelete);
     }
 
 
     /**
      * 自动安装 path 下的所有 jar.
      */
-    public static ExpAppContext bootstrap(ObjectStore callback, String path, String workDir) throws Throwable {
+    public static ExpAppContext bootstrap(ObjectStore callback, String path, String workDir, String extPluginAutoDelete) throws Throwable {
 
         ExpAppContext expAppContext = ExpAppContextSpiFactory.getFirst();
         if (expAppContext instanceof ExpAppContextImpl) {
             ExpAppContextImpl spi = (ExpAppContextImpl) expAppContext;
             spi.setObjectStore(callback);
             PluginMetaService metaService = PluginMetaService.getSpi();
-            metaService.setConfig(new PluginMetaConfig(workDir));
+            PluginMetaConfig pluginMetaConfig = new PluginMetaConfig(workDir);
+            pluginMetaConfig.setAutoDelete(extPluginAutoDelete);
+            metaService.setConfig(pluginMetaConfig);
             spi.setPluginMetaService(metaService);
         }
 

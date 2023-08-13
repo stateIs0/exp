@@ -4,6 +4,8 @@ import cn.think.in.java.open.exp.adapter.springboot2.example.UserService;
 import cn.think.in.java.open.exp.client.*;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.cglib.core.DefaultNamingPolicy;
+import net.sf.cglib.core.NamingPolicy;
+import net.sf.cglib.core.Predicate;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 
@@ -11,7 +13,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 @Slf4j
 public class BootstrapTest {
@@ -58,21 +59,26 @@ public class BootstrapTest {
                                 log.error(e.getMessage(), e);
                                 throw e;
                             }
-                        }, origin.getClass());
+                        }, origin.getClass(), pluginId);
                     }
 
 
-                    public <P> P getProxy(final MethodInterceptor callback, Class<P> c) {
+                    public <P> P getProxy(final MethodInterceptor callback, Class<P> c, String pluginId) {
                         Enhancer enhancer = new Enhancer();
                         enhancer.setInterfaces(new Class[]{});
                         enhancer.setSuperclass(c);
-                        enhancer.setNamingPolicy(new DefaultNamingPolicy());
+                        enhancer.setNamingPolicy(new NamingPolicy() {
+                            @Override
+                            public String getClassName(String s, String s1, Object o, Predicate predicate) {
+                                return s + "$$" + pluginId + "$$";
+                            }
+                        });
                         enhancer.setCallback(callback);
                         return (P) enhancer.create();
                     }
                 };
             }
-        }, "../../exp-plugins", "exp-workdir");
+        }, "../../exp-plugins", "exp-workdir", "true");
 
 
         // 业务逻辑实现
@@ -93,13 +99,10 @@ public class BootstrapTest {
         };
 
         // 调用逻辑
-        expAppContext.get(UserService.class, callback).stream().findFirst().ifPresent(new Consumer<UserService>() {
-            @Override
-            public void accept(UserService userService) {
-                System.out.println("---->>> " + userService.getClass().getName());
-                userService.createUserExt();
-                // Assert
-            }
+        expAppContext.get(UserService.class, callback).stream().findFirst().ifPresent(userService -> {
+            System.out.println("---->>> " + userService.getClass().getName());
+            userService.createUserExt();
+            // Assert
         });
 
     }

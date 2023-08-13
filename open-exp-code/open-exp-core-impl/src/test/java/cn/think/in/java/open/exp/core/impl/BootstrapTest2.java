@@ -12,7 +12,8 @@ public class BootstrapTest2 {
 
     @Test
     public void bootstrap() throws Throwable {
-        ExpAppContext expAppContext = Bootstrap.bootstrap(new SimpleObjectStore(), "../../exp-plugins", "exp-workdir");
+        ExpAppContext expAppContext = Bootstrap.bootstrap(new SimpleObjectStore(),
+                "../../exp-plugins", "exp-workdir", "true");
 
         String asser = "2";
 
