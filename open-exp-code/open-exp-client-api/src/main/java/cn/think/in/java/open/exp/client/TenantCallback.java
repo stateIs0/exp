@@ -5,6 +5,8 @@ package cn.think.in.java.open.exp.client;
  **/
 public interface TenantCallback {
 
+    TenantCallback DEFAULT = new TenantCallbackMock();
+
     /**
      * 返回这个插件的序号, 默认 0;
      * {@link  cn.think.in.java.open.exp.client.ExpAppContext#get(java.lang.Class)} 函数返回的List 的第一位就是 sort 最高的.
@@ -22,8 +24,6 @@ public interface TenantCallback {
      * 最简单的, 随机排序, 全都过.
      */
     class TenantCallbackMock implements TenantCallback {
-        public static TenantCallbackMock DEFAULT = new TenantCallbackMock();
-
         @Override
         public int getSort(String pluginId) {
             return 0;

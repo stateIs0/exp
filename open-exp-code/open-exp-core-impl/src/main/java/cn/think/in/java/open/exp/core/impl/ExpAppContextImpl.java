@@ -49,7 +49,7 @@ public class ExpAppContextImpl implements ExpAppContext {
 
     @Override
     public <P> List<P> get(String extCode) {
-        return get(extCode, TenantCallback.TenantCallbackMock.DEFAULT);
+        return get(extCode, TenantCallback.DEFAULT);
     }
 
     @Override
