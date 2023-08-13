@@ -2,7 +2,7 @@ package cn.think.in.java.open.exp.plugin.depend;
 
 import cn.think.in.java.open.exp.client.ExpBoot;
 import cn.think.in.java.open.exp.client.PluginClassLoader;
-import cn.think.in.java.open.exp.client.PluginObjectRegister;
+import cn.think.in.java.open.exp.client.PluginObjectScanner;
 import cn.think.in.java.open.exp.client.StringUtil;
 import cn.think.in.java.open.exp.plugin.depend.support.PluginIdUtil;
 
@@ -13,7 +13,7 @@ public abstract class AbstractBoot implements ExpBoot {
 
     private final ClassLoader pluginClassLoader;
     private final String classLocation;
-    private final DefaultRegister pluginBeanRegister;
+    private final DefaultScaner pluginBeanRegister;
     private String pluginId;
 
     public AbstractBoot() {
@@ -23,7 +23,7 @@ public abstract class AbstractBoot implements ExpBoot {
             throw new RuntimeException("classLocation 非法");
         }
         this.pluginClassLoader = getClass().getClassLoader();
-        this.pluginBeanRegister = new DefaultRegister();
+        this.pluginBeanRegister = new DefaultScaner();
         this.pluginBeanRegister.setPluginClassLoader(this.pluginClassLoader);
         this.pluginBeanRegister.setLocation(this.classLocation);
         this.pluginId = PluginIdUtil.getId(this.classLocation);
@@ -36,7 +36,7 @@ public abstract class AbstractBoot implements ExpBoot {
     }
 
     @Override
-    public PluginObjectRegister getRegister() throws Throwable {
+    public PluginObjectScanner getRegister() throws Throwable {
         return this.pluginBeanRegister;
     }
 

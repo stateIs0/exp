@@ -1,7 +1,7 @@
 package cn.think.in.java.open.exp.classloader;
 
 import cn.think.in.java.open.exp.client.Plugin;
-import cn.think.in.java.open.exp.client.PluginObjectRegister;
+import cn.think.in.java.open.exp.client.PluginObjectScanner;
 import lombok.Data;
 
 import java.io.File;
@@ -30,7 +30,7 @@ public class PluginMetaFat {
 
     private String pluginBootClass;
 
-    private PluginObjectRegister register;
+    private PluginObjectScanner scanner;
 
     /**
      * 扩展点映射关系

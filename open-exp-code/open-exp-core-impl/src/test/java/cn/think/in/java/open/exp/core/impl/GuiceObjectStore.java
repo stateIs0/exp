@@ -1,7 +1,6 @@
 package cn.think.in.java.open.exp.core.impl;
 
 import cn.think.in.java.open.exp.client.ObjectStore;
-import cn.think.in.java.open.exp.client.PluginObjectRegister;
 import cn.think.in.java.open.exp.client.TenantObjectProxyFactory;
 
 import java.util.List;

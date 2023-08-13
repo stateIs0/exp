@@ -1,14 +1,14 @@
 package cn.think.in.java.open.exp.plugin.depend;
 
 import cn.think.in.java.open.exp.client.ExPBean;
-import cn.think.in.java.open.exp.client.PluginObjectRegister;
+import cn.think.in.java.open.exp.client.PluginObjectScanner;
 
 import java.util.List;
 
 /**
  * @Author cxs
  **/
-public class DefaultRegister implements PluginObjectRegister {
+public class DefaultScaner implements PluginObjectScanner {
 
     private String scanPath;
     private ClassLoader pluginClassLoader;
@@ -28,7 +28,7 @@ public class DefaultRegister implements PluginObjectRegister {
     }
 
     @Override
-    public List<Class<?>> register() {
+    public List<Class<?>> scan() {
         try {
             return SimpleClassScanner.doScan(scanPath, ExPBean.class, pluginClassLoader, location);
         } catch (Throwable e) {

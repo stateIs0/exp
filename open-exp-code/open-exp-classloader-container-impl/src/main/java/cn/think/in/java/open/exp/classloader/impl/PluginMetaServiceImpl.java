@@ -9,7 +9,7 @@ import cn.think.in.java.open.exp.classloader.support.DirectoryCleaner;
 import cn.think.in.java.open.exp.classloader.support.MetaConfigReader;
 import cn.think.in.java.open.exp.classloader.support.PluginMetaInnerModel;
 import cn.think.in.java.open.exp.client.ExpBoot;
-import cn.think.in.java.open.exp.client.PluginObjectRegister;
+import cn.think.in.java.open.exp.client.PluginObjectScanner;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -54,9 +54,9 @@ public class PluginMetaServiceImpl implements PluginMetaService {
         pluginMetaFat.setClassLoader(classLoader);
 
         Class<ExpBoot> aClass = (Class<ExpBoot>) classLoader.loadClass(meta.getPluginBootClass());
-        PluginObjectRegister register = aClass.newInstance().getRegister();
+        PluginObjectScanner register = aClass.newInstance().getRegister();
 
-        pluginMetaFat.setRegister(register);
+        pluginMetaFat.setScanner(register);
         pluginMetaFat.setExtensionMappings(mapping);
         pluginMetaFat.setPluginId(meta.getPluginId());
         pluginMetaFat.setPluginCode(meta.getPluginCode());

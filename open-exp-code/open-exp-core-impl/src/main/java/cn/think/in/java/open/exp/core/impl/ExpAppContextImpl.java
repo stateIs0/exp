@@ -28,7 +28,7 @@ public class ExpAppContextImpl implements ExpAppContext {
     @Override
     public Plugin load(File file) throws Throwable {
         PluginMetaFat fat = metaService.install(file);
-        List<Class<?>> classes = fat.getRegister().register();
+        List<Class<?>> classes = fat.getScanner().scan();
         objectStore.startRegister(classes, fat.getPluginId());
         log.info("安装加载插件, 插件 ID = [{}]", fat.getPluginId());
         return fat.conv();
