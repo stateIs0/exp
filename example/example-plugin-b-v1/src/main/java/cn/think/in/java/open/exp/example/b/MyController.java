@@ -17,7 +17,7 @@ public class MyController {
     @RequestMapping("/bb2")
     public String hello(@RequestParam(name = "key") String key) {
 
-        return Boot.get(key, "default") + "hello2 " + getClass().getClassLoader() + getClass().getProtectionDomain()
+        return Boot.get(key, "default") + " ---->> hello2 " + getClass() + "--->>." + getClass().getProtectionDomain()
                 .getCodeSource().getLocation();
     }
 }

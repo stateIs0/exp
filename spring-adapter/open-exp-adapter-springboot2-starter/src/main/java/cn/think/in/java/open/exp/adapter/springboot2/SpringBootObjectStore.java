@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  **/
@@ -31,10 +32,13 @@ public class SpringBootObjectStore implements ObjectStore {
 
     private final Map<String, List<Class<?>>> classesCache = new HashMap<>();
 
+    private Supplier<String> pluginsSpringUrlReplaceKey;
+
     private final SpringBootTenantObjectPostProcessorFactory tenantObjectProxy = new SpringBootTenantObjectPostProcessorFactory();
 
-    public SpringBootObjectStore(BeanDefinitionRegistry beanDefinitionRegistry) {
+    public SpringBootObjectStore(BeanDefinitionRegistry beanDefinitionRegistry, Supplier<String> pluginsSpringUrlReplaceKey) {
         this.beanDefinitionRegistry = beanDefinitionRegistry;
+        this.pluginsSpringUrlReplaceKey = pluginsSpringUrlReplaceKey;
     }
 
     public void setBeanFactory(ConfigurableListableBeanFactory beanFactory) {
@@ -84,7 +88,7 @@ public class SpringBootObjectStore implements ObjectStore {
         for (Class<?> aClass : classes) {
             Object bean = beanFactory.getBean(UniqueNameUtil.getName(aClass, pluginId));
 
-            RestUrlScanComponent r = new RestUrlScanComponent(bean, mapping, adapter);
+            RestUrlScanComponent r = new RestUrlScanComponent(bean, mapping, adapter, pluginsSpringUrlReplaceKey.get());
             r.register();
             cache.put(UniqueNameUtil.getName(aClass, pluginId), r);
         }

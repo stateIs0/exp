@@ -24,16 +24,25 @@ public class RestUrlScanComponent {
     private final RequestMappingHandlerAdapter handlerAdapter;
     private final Object obj;
     private List<RequestMappingInfoWrapper> scan;
+    private final String pluginsSpringUrlReplaceKey;
 
-    public RestUrlScanComponent(Object obj, RequestMappingHandlerMapping handlerMapping, RequestMappingHandlerAdapter handlerAdapter) {
+    public RestUrlScanComponent(Object obj,
+                                RequestMappingHandlerMapping handlerMapping,
+                                RequestMappingHandlerAdapter handlerAdapter,
+                                String pluginsSpringUrlReplaceKey) {
         this.obj = obj;
         this.handlerMapping = handlerMapping;
         this.handlerAdapter = handlerAdapter;
+        this.pluginsSpringUrlReplaceKey = pluginsSpringUrlReplaceKey;
     }
 
     public void register() {
         scan = scan(obj.getClass());
         for (RequestMappingInfoWrapper mapping : scan) {
+            if (Boolean.parseBoolean(pluginsSpringUrlReplaceKey)) {
+                handlerMapping.unregisterMapping(mapping.requestMappingInfo);
+                handlerAdapter.afterPropertiesSet();
+            }
             // 将新的Controller方法添加到handlerMapping
             handlerMapping.registerMapping(mapping.requestMappingInfo, obj, mapping.method);
             log.info("注册 url, mapping = {}", (mapping.path));
