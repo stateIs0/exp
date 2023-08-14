@@ -2,6 +2,8 @@ package cn.think.in.java.open.exp.classloader.impl;
 
 import cn.think.in.java.open.exp.client.PluginClassLoader;
 
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,18 +14,18 @@ import java.security.ProtectionDomain;
 import java.security.cert.Certificate;
 
 /**
+ * @version 1.0
  * @Author cxs
  * @Description
  * @date 2023/8/9
- * @version 1.0
  **/
-public class BaseClassLoader extends ClassLoader implements PluginClassLoader {
+public class BaseClassLoader extends URLClassLoader implements PluginClassLoader {
 
     private final Path extractPath;
     boolean definePackage = false;
 
     public BaseClassLoader(String extractDir, ClassLoader parent) throws Exception {
-        super(parent);
+        super(new URL[]{Paths.get(extractDir).toUri().toURL()}, parent);
         this.extractPath = Paths.get(extractDir);
     }
 
@@ -42,8 +44,7 @@ public class BaseClassLoader extends ClassLoader implements PluginClassLoader {
             ProtectionDomain protectionDomain = new ProtectionDomain(codeSource, permissions);
 
             if (!definePackage) {
-                definePackage(name.substring(0, name.lastIndexOf("."))
-                        , null, null, null, null, null, null, null);
+                definePackage(name.substring(0, name.lastIndexOf(".")), null, null, null, null, null, null, null);
                 definePackage = true;
             }
             return defineClass(name, classData, 0, classData.length, protectionDomain);
