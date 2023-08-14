@@ -51,6 +51,11 @@ public class BaseController {
 
     }
 
+    @RequestMapping("/hello")
+    public ResModel hello() {
+        return new ResModel();
+    }
+
 
     @RequestMapping("/run")
     public String run(String tenantId) {
