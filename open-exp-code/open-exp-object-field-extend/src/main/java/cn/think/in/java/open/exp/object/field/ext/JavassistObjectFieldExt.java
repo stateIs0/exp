@@ -1,6 +1,7 @@
 package cn.think.in.java.open.exp.object.field.ext;
 
 import javassist.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -10,14 +11,20 @@ import java.util.List;
  * @date 2023/8/13
  * @version 1.0
  **/
+@Slf4j
 public class JavassistObjectFieldExt implements ObjectFieldExt {
 
     ClassPool pool = ClassPool.getDefault();
 
+    public JavassistObjectFieldExt() {
+        pool.appendClassPath(new LoaderClassPath(Thread.currentThread().getContextClassLoader()));
+    }
+
     @Override
     public void addField(List<ExtMetaBean> list) throws Exception {
-        for (ExtMetaBean extFieldAnnotationModelDesc : list) {
-            addField0(extFieldAnnotationModelDesc);
+        for (ExtMetaBean item : list) {
+            log.info("增强 {}", item.getClassName());
+            addField0(item);
         }
     }
 
@@ -36,7 +43,7 @@ public class JavassistObjectFieldExt implements ObjectFieldExt {
             ctClass.addField(ctField);
         }
 
-        ctClass.toClass(getClass().getClassLoader());
+        ctClass.toClass();
 
     }
 
