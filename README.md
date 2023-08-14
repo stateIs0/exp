@@ -147,33 +147,54 @@ public interface ExpAppContext {
    /**
     * 获取当前所有的插件 id
     */
-   Set<String> getAllPluginId();
+   List<String> getAllPluginId();
+
    /**
     * 加载插件
     */
    Plugin load(File file) throws Throwable;
+
    /**
     * 卸载插件
     */
    void unload(String pluginId) throws Exception;
+
    /**
     * 获取多个扩展点的插件实例
     */
    <P> List<P> get(String extCode);
+
+
    /**
     * 简化操作, code 就是全路径类名
     */
    <P> List<P> get(Class<P> pClass);
+
+
    /**
     * 获取单个插件实例.
     */
    <P> Optional<P> get(String extCode, String pluginId);
-
-   <P> List<P> get(String extCode, TenantCallback registerCallback);
-
-   <P> List<P> get(Class<P> pClass, TenantCallback registerCallback);
 }
 ```
+
+## 流式 API
+
+```java
+public interface StreamAppContext {
+
+   /**
+    * 针对有返回值的 api, 需要支持流式调用
+    */
+   <R, P> R listStream(Class<P> pClass, Ec<R, List<P>> ecs);
+
+   /**
+    * 针对有返回值的 api, 需要支持流式调用
+    */
+   <R, P> R stream(Class<P> clazz, String pluginId, Ec<R, P> ec);
+}
+```
+
 
 ## 扩展
 
