@@ -259,6 +259,8 @@ exp_object_field_config_json={插件动态增加字段json, json 结构定义见
 [Apache 2.0 License.](https://github.com/stateIs0/exp/blob/master/LICENSE)
 
 
-## Star History
 
-![star-history]( https://starchart.cc/stateis0/exp.svg)
+## Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/stateIs0/exp.svg)](https://starchart.cc/stateIs0/exp)
+
