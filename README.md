@@ -1,6 +1,6 @@
-## EXP Introduction
+## Introduction
 
-Extension Plugin 扩展点插件系统
+EXP (`Ex`tension `P`lugin) 扩展点插件系统
 
 
 名词定义:
