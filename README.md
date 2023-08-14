@@ -252,3 +252,13 @@ plugins_auto_delete_enable={是否自动删除已经存在的 plugin 目录}
 plugins_spring_url_replace_enable={插件是否可以覆盖主程序 url, 注意, 目前无法支持多租户级别的覆盖}
 exp_object_field_config_json={插件动态增加字段json, json 结构定义见: cn.think.in.java.open.exp.object.field.ext.ExtMetaBean}
 ```
+
+
+## License
+
+[Apache 2.0 License.](https://github.com/stateIs0/exp/blob/master/LICENSE)
+
+
+## Star History
+
+![star-history]( https://starchart.cc/stateis0/exp.svg)
