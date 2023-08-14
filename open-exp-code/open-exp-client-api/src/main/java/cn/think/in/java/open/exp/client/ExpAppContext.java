@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * @author cxs
  */
-public interface ExpAppContext extends TenantService {
+public interface ExpAppContext extends StreamAppContext, TenantService {
 
     /**
      * 获取当前所有的插件 id

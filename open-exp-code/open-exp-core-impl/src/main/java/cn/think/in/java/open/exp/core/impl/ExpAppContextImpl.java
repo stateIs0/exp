@@ -3,10 +3,7 @@ package cn.think.in.java.open.exp.core.impl;
 import cn.think.in.java.open.exp.classloader.ExpClass;
 import cn.think.in.java.open.exp.classloader.PluginMetaFat;
 import cn.think.in.java.open.exp.classloader.PluginMetaService;
-import cn.think.in.java.open.exp.client.ExpAppContext;
-import cn.think.in.java.open.exp.client.ObjectStore;
-import cn.think.in.java.open.exp.client.Plugin;
-import cn.think.in.java.open.exp.client.TenantCallback;
+import cn.think.in.java.open.exp.client.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -114,5 +111,20 @@ public class ExpAppContextImpl implements ExpAppContext {
 
     public void setObjectStore(ObjectStore objectStore) {
         this.objectStore = objectStore;
+    }
+
+    @Override
+    public <R, P> R listStream(Class<P> pClass, Ec<R, List<P>> ecs) {
+        List<P> list = get(pClass);
+        if (list == null) {
+            return null;
+        }
+        return ecs.run(list);
+    }
+
+    @Override
+    public <R, P> R stream(Class<P> clazz, String pluginId, Ec<R, P> ec) {
+        Optional<P> o = get(clazz.getName(), pluginId);
+        return o.map(ec::run).orElse(null);
     }
 }

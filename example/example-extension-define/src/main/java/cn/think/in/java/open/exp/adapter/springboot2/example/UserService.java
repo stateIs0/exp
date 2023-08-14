@@ -7,4 +7,8 @@ public interface UserService {
 
     void createUserExt();
 
+    default String getName() {
+        return "";
+    }
+
 }

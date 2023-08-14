@@ -1,5 +1,6 @@
 package cn.think.in.java.open.exp.core.impl;
 
+import cn.think.in.java.open.exp.client.Ec;
 import cn.think.in.java.open.exp.client.ExpAppContext;
 import cn.think.in.java.open.exp.client.Plugin;
 import cn.think.in.java.open.exp.client.TenantCallback;
@@ -54,6 +55,16 @@ public class ExpAppContextMock implements ExpAppContext {
 
     @Override
     public <P> List<P> get(Class<P> pClass, TenantCallback callback) {
+        return null;
+    }
+
+    @Override
+    public <R, P> R listStream(Class<P> pClass, Ec<R, List<P>> ecs) {
+        return null;
+    }
+
+    @Override
+    public <R, P> R stream(Class<P> clazz, String pluginId, Ec<R, P> ec) {
         return null;
     }
 }
