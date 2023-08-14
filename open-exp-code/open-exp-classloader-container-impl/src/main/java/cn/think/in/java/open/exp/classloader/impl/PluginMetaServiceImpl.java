@@ -59,7 +59,9 @@ public class PluginMetaServiceImpl implements PluginMetaService {
         pluginMetaFat.setClassLoader(classLoader);
 
         Class<ExpBoot> aClass = (Class<ExpBoot>) classLoader.loadClass(meta.getPluginBootClass());
-        PluginObjectScanner register = aClass.newInstance().getRegister();
+        ExpBoot expBoot = aClass.newInstance();
+        PluginObjectScanner register = expBoot.getRegister();
+        expBoot.setPluginId(meta.getPluginId());
 
         pluginMetaFat.setScanner(register);
         pluginMetaFat.setExtensionMappings(mapping);
