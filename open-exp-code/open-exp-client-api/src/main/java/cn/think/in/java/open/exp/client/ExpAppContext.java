@@ -3,7 +3,6 @@ package cn.think.in.java.open.exp.client;
 import java.io.File;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * @author cxs
@@ -13,7 +12,7 @@ public interface ExpAppContext extends StreamAppContext, TenantService {
     /**
      * 获取当前所有的插件 id
      */
-    Set<String> getAllPluginId();
+    List<String> getAllPluginId();
 
     /**
      * 加载插件

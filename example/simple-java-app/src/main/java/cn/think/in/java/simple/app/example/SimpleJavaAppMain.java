@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import java.util.function.Consumer;
 
 @Slf4j
 public class SimpleJavaAppMain {
@@ -50,6 +49,9 @@ public class SimpleJavaAppMain {
 
         String listName = expAppContext.listStream(UserService.class, SimpleJavaAppMain::run);
         System.out.println(listName);
+
+        List<String> allPluginId = expAppContext.getAllPluginId();
+        System.out.println(allPluginId);
     }
 
     private static String run(List<UserService> userServices) {

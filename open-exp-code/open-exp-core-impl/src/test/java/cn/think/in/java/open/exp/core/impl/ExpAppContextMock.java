@@ -19,7 +19,7 @@ import java.util.Set;
 public class ExpAppContextMock implements ExpAppContext {
 
     @Override
-    public Set<String> getAllPluginId() {
+    public List<String> getAllPluginId() {
         return null;
     }
 

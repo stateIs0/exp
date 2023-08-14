@@ -18,11 +18,11 @@ public class ExpAppContextImpl implements ExpAppContext {
 
     private PluginMetaService metaService;
     private ObjectStore objectStore;
-    private Set<String> all = new HashSet<>();
+    private List<String> all = new ArrayList<>();
 
 
     @Override
-    public Set<String> getAllPluginId() {
+    public List<String> getAllPluginId() {
         return all;
     }
 
