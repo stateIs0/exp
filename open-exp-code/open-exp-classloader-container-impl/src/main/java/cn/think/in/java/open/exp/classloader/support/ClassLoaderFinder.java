@@ -15,6 +15,7 @@ public class ClassLoaderFinder {
     public static ClassLoader find(File file, String dir) {
         ClassLoader classLoader = null;
         try {
+            // springboot launcher classloader
             ClassLoader parent = Thread.currentThread().getContextClassLoader();
 
             if (file.getName().endsWith(".jar")) {
