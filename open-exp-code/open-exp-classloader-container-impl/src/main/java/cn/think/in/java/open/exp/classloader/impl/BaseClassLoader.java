@@ -22,7 +22,8 @@ public class BaseClassLoader extends ClassLoader implements PluginClassLoader {
     private final Path extractPath;
     boolean definePackage = false;
 
-    public BaseClassLoader(String extractDir) throws Exception {
+    public BaseClassLoader(String extractDir, ClassLoader parent) throws Exception {
+        super(parent);
         this.extractPath = Paths.get(extractDir);
     }
 

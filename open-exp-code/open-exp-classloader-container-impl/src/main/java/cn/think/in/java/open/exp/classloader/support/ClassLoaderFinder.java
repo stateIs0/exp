@@ -2,24 +2,27 @@ package cn.think.in.java.open.exp.classloader.support;
 
 import cn.think.in.java.open.exp.classloader.impl.JarClassLoader;
 import cn.think.in.java.open.exp.classloader.impl.ZipClassLoader;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 
 /**
  * @Author cxs
  **/
+@Slf4j
 public class ClassLoaderFinder {
 
     public static ClassLoader find(File file, String dir) {
         ClassLoader classLoader = null;
         try {
+            ClassLoader parent = Thread.currentThread().getContextClassLoader();
 
             if (file.getName().endsWith(".jar")) {
                 classLoader =
-                        new JarClassLoader(file.getPath(), dir);
+                        new JarClassLoader(file.getPath(), dir, parent);
             } else if (file.getName().endsWith(".zip")) {
                 classLoader =
-                        new ZipClassLoader(file.getPath(), dir);
+                        new ZipClassLoader(file.getPath(), dir, parent);
             }
 
             if (classLoader == null) {
