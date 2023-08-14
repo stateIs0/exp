@@ -10,6 +10,7 @@ import cn.think.in.java.open.exp.classloader.support.MetaConfigReader;
 import cn.think.in.java.open.exp.classloader.support.PluginMetaInnerModel;
 import cn.think.in.java.open.exp.client.ExpBoot;
 import cn.think.in.java.open.exp.client.PluginObjectScanner;
+import cn.think.in.java.open.exp.client.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -124,7 +125,13 @@ public class PluginMetaServiceImpl implements PluginMetaService {
     @Override
     public <T> ExpClass<T> get(String extCode, String pluginId) throws ClassNotFoundException {
         PluginMetaFat pluginMetaFat = cache.get(pluginId);
+        if (pluginMetaFat == null) {
+            return null;
+        }
         String extImpl = pluginMetaFat.getExtensionMappings().get(extCode);
+        if (StringUtil.isEmpty(extImpl)) {
+            return null;
+        }
         Class<T> aClass = (Class<T>) pluginMetaFat.getClassLoader().loadClass(extImpl);
         return new ExpClass<>(aClass, pluginId);
     }
