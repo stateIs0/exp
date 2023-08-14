@@ -261,4 +261,4 @@ exp_object_field_config_json={插件动态增加字段json, json 结构定义见
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=stateis0/exp&type=Date)](https://star-history.com/#stateis0/exp&Date)
+![star-history]( https://starchart.cc/stateis0/exp.svg)
