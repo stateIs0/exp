@@ -10,3 +10,8 @@ exp_object_field_config_json: '[
 	}]
 }
 ]'
+exp:
+  document:
+    doc:
+      scan:
+        path: cn.think.in.java.open.exp.adapter.springboot2.example

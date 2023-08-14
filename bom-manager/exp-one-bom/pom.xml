@@ -42,6 +42,11 @@
             </dependency>
             <dependency>
                 <groupId>cn.think.in.java</groupId>
+                <artifactId>open-exp-document-core-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.think.in.java</groupId>
                 <artifactId>open-exp-plugin-depend</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -63,6 +68,11 @@
             <dependency>
                 <groupId>cn.think.in.java</groupId>
                 <artifactId>example-extension-define</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.think.in.java</groupId>
+                <artifactId>open-exp-document-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

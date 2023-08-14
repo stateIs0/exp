@@ -32,11 +32,8 @@ public class Listener implements SpringApplicationRunListener, BeanDefinitionReg
         ExpApplicationListener listener = new ExpApplicationListener();
         context.addApplicationListener(listener);
         context.addBeanFactoryPostProcessor(new ExpBeanDefinitionRegistryPostProcessor(listener));
-        ExtFieldJsonConfigHandler.
-                builder().
-                environment(context.getEnvironment()).
-                build().
-                run();
+        ExtFieldJsonConfigHandler.builder().environment(context.getEnvironment()).build().run();
+        DocHandler.builder().environment(context.getEnvironment()).build().init();
     }
 
     private boolean isEnabled(ConfigurableApplicationContext context) {
