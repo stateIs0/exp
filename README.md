@@ -2,6 +2,7 @@
 
 EXP (`Ex`tension `P`lugin) 扩展点插件系统
 
+相关文章[EXP 一款 Java 插件化热插拔框架](http://thinkinjava.cn/2023/08/15/2023/exp/)
 
 名词定义:
 
