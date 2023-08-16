@@ -1,24 +1,24 @@
-## Introduction
+## ⭐️⭐️⭐️Introduction
 
-EXP (`Ex`tension `P`lugin) 扩展点插件系统
+🚕🚕🚕EXP (`Ex`tension `P`lugin) 扩展点插件系统
 
-相关文章[EXP 一款 Java 插件化热插拔框架](http://thinkinjava.cn/2023/08/15/2023/exp/)
+相关文章🎯🎯🎯[EXP 一款 Java 插件化热插拔框架](http://thinkinjava.cn/2023/08/15/2023/exp/)
 
 名词定义:
 
-1. 主应用
+1. 🏅主应用
     - exp 需要运行在一个 jvm 之上, 通常, 这是一个 springboot, 这个 springboot 就是主应用;
-2. 扩展点
+2. 🎖扩展点
     - 主应用定义的接口, 可被插件实现;
     - 注意：插件是扩展点的具体实现集合，扩展点，仅仅是接口定义。一个插件里，可以有多个扩展点的实现，一个扩展点，可以有多个插件的实现。
-3. 插件
+3. 🥇插件
     - 扩展功能使用插件的方式支持，你可以理解为 idea、eclipse 里的插件。
     - 插件里的代码写法和 spring 一样（如果你的程序是在 spring 里运行）
-4. 热插拔
+4. 🥈热插拔
     - 插件支持从 jvm 和 spring 容器里摘除.
     - 支持运行时动态安装 jar 和 zip;
 
-## Example
+## 🎧Example
 
 - 贵州茅台和五粮液都购买了你司的标准产品, 但是. 由于客户有定制需求. 需要开发新功能.
 
