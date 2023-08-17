@@ -47,7 +47,7 @@ public class SimpleJavaAppMain {
         String name = expAppContext.stream(UserService.class, "example.plugin.a_1.0.0", UserService::getName);
         System.out.println(name);
 
-        String listName = expAppContext.listStream(UserService.class, SimpleJavaAppMain::run);
+        String listName = expAppContext.streamList(UserService.class, SimpleJavaAppMain::run);
         System.out.println(listName);
 
         List<String> allPluginId = expAppContext.getAllPluginId();

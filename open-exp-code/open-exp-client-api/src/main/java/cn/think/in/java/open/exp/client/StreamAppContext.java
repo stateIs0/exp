@@ -12,7 +12,7 @@ public interface StreamAppContext {
     /**
      * 针对有返回值的 api, 需要支持流式调用
      */
-    <R, P> R listStream(Class<P> pClass, Ec<R, List<P>> ecs);
+    <R, P> R streamList(Class<P> pClass, Ec<R, List<P>> ecs);
 
     /**
      * 针对有返回值的 api, 需要支持流式调用

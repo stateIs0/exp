@@ -58,7 +58,7 @@ public class ExpAppContextMock implements ExpAppContext {
     }
 
     @Override
-    public <R, P> R listStream(Class<P> pClass, Ec<R, List<P>> ecs) {
+    public <R, P> R streamList(Class<P> pClass, Ec<R, List<P>> ecs) {
         return null;
     }
 
