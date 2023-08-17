@@ -15,6 +15,5 @@ public interface Constant {
     String PLUGIN_DESC_KEY = "plugin.desc";
     String PLUGIN_VERSION_KEY = "plugin.version";
     String PLUGIN_EXT_KEY = "plugin.ext";
-    String PLUGIN_CONFIG_KEY = "plugin.config";
     String PLUGIN_BOOT_CLASS = "plugin.boot.class";
 }
