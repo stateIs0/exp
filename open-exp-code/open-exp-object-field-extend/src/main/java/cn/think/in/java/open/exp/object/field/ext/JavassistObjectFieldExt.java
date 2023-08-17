@@ -6,10 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 
 /**
+ * @version 1.0
  * @Author cxs
  * @Description
  * @date 2023/8/13
- * @version 1.0
  **/
 @Slf4j
 public class JavassistObjectFieldExt implements ObjectFieldExt {
@@ -18,6 +18,13 @@ public class JavassistObjectFieldExt implements ObjectFieldExt {
 
     public JavassistObjectFieldExt() {
         pool.appendClassPath(new LoaderClassPath(Thread.currentThread().getContextClassLoader()));
+    }
+
+    public static String capitalizeFirstLetter(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        return Character.toUpperCase(str.charAt(0)) + str.substring(1);
     }
 
     @Override
@@ -45,13 +52,6 @@ public class JavassistObjectFieldExt implements ObjectFieldExt {
 
         ctClass.toClass();
 
-    }
-
-    public static String capitalizeFirstLetter(String str) {
-        if (str == null || str.isEmpty()) {
-            return str;
-        }
-        return Character.toUpperCase(str.charAt(0)) + str.substring(1);
     }
 
 }

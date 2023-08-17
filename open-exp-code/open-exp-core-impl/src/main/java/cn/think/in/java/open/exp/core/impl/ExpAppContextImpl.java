@@ -7,7 +7,9 @@ import cn.think.in.java.open.exp.client.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -32,7 +34,7 @@ public class ExpAppContextImpl implements ExpAppContext {
         List<Class<?>> classes = fat.getScanner().scan();
         objectStore.startRegister(classes, fat.getPluginId());
         all.add(fat.getPluginId());
-        log.info("安装加载插件, 插件 ID = [{}]", fat.getPluginId());
+        log.info("安装加载插件, 插件 ID = [{}], 配置={}", fat.getPluginId(), fat.getConfigSupportList());
         return fat.conv();
     }
 

@@ -4,7 +4,6 @@ import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtField;
 import javassist.Loader;
-import lombok.Data;
 import org.junit.Test;
 
 import java.lang.reflect.Field;

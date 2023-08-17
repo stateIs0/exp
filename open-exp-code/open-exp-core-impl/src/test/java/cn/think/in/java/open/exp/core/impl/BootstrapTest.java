@@ -1,9 +1,11 @@
 package cn.think.in.java.open.exp.core.impl;
 
 import cn.think.in.java.open.exp.adapter.springboot2.example.UserService;
-import cn.think.in.java.open.exp.client.*;
+import cn.think.in.java.open.exp.client.ExpAppContext;
+import cn.think.in.java.open.exp.client.ObjectStore;
+import cn.think.in.java.open.exp.client.TenantCallback;
+import cn.think.in.java.open.exp.client.TenantObjectProxyFactory;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.cglib.core.DefaultNamingPolicy;
 import net.sf.cglib.core.NamingPolicy;
 import net.sf.cglib.core.Predicate;
 import net.sf.cglib.proxy.Enhancer;

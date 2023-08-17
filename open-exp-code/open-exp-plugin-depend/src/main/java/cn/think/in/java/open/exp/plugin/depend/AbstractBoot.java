@@ -4,7 +4,6 @@ import cn.think.in.java.open.exp.client.ExpBoot;
 import cn.think.in.java.open.exp.client.PluginClassLoader;
 import cn.think.in.java.open.exp.client.PluginObjectScanner;
 import cn.think.in.java.open.exp.client.StringUtil;
-import cn.think.in.java.open.exp.plugin.depend.support.PluginIdUtil;
 
 /**
  * @Author cxs
@@ -37,6 +36,8 @@ public abstract class AbstractBoot implements ExpBoot {
         return this.pluginBeanRegister;
     }
 
-    protected abstract String getScanPath();
+    protected String getScanPath() {
+        return getClass().getPackage().getName();
+    }
 
 }

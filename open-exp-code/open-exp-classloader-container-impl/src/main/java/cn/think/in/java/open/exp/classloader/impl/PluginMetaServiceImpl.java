@@ -8,6 +8,7 @@ import cn.think.in.java.open.exp.classloader.support.ClassLoaderFinder;
 import cn.think.in.java.open.exp.classloader.support.DirectoryCleaner;
 import cn.think.in.java.open.exp.classloader.support.MetaConfigReader;
 import cn.think.in.java.open.exp.classloader.support.PluginMetaInnerModel;
+import cn.think.in.java.open.exp.client.ConfigSupport;
 import cn.think.in.java.open.exp.client.ExpBoot;
 import cn.think.in.java.open.exp.client.PluginObjectScanner;
 import cn.think.in.java.open.exp.client.StringUtil;
@@ -15,6 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @Author cxs
@@ -30,6 +33,24 @@ public class PluginMetaServiceImpl implements PluginMetaService {
     private Map<String/* extCode */, Set<String/* pluginId */>> extCache = new HashMap<>();
 
     private Set<String> ids = new HashSet<>();
+
+    public static List<ConfigSupport> getConfigSupportFields(Class<?> clazz, String pluginId) {
+        return Stream.of(clazz.getDeclaredFields())
+                .filter(field -> java.lang.reflect.Modifier.isStatic(field.getModifiers()))
+                .filter(field -> field.getType().equals(ConfigSupport.class))
+                .peek(field -> field.setAccessible(true))
+                .map(field -> {
+                    try {
+                        ConfigSupport c = (ConfigSupport) field.get(clazz);
+                        c.setPluginId(pluginId);
+                        return c;
+                    } catch (IllegalAccessException e) {
+                        log.error(e.getMessage(), e);
+                        return null;
+                    }
+                })
+                .collect(Collectors.toList());
+    }
 
     @Override
     public void setConfig(PluginMetaConfig pluginMetaConfig) {
@@ -61,7 +82,6 @@ public class PluginMetaServiceImpl implements PluginMetaService {
         Class<ExpBoot> aClass = (Class<ExpBoot>) classLoader.loadClass(meta.getPluginBootClass());
         ExpBoot expBoot = aClass.newInstance();
         PluginObjectScanner register = expBoot.getRegister();
-        expBoot.setPluginId(meta.getPluginId());
 
         pluginMetaFat.setScanner(register);
         pluginMetaFat.setExtensionMappings(mapping);
@@ -70,9 +90,9 @@ public class PluginMetaServiceImpl implements PluginMetaService {
         pluginMetaFat.setPluginDesc(meta.getPluginDesc());
         pluginMetaFat.setPluginVersion(meta.getPluginVersion());
         pluginMetaFat.setPluginExt(meta.getPluginExt());
-        pluginMetaFat.setPluginConfig(meta.getPluginConfig());
         pluginMetaFat.setPluginBootClass(meta.getPluginBootClass());
         pluginMetaFat.setLocation(new File(dir));
+        pluginMetaFat.setConfigSupportList(getConfigSupportFields(aClass, meta.getPluginId()));
 
         cache.put(pluginMetaFat.getPluginId(), pluginMetaFat);
 
@@ -137,4 +157,5 @@ public class PluginMetaServiceImpl implements PluginMetaService {
         Class<T> aClass = (Class<T>) pluginMetaFat.getClassLoader().loadClass(extImpl);
         return new ExpClass<>(aClass, pluginId);
     }
+
 }

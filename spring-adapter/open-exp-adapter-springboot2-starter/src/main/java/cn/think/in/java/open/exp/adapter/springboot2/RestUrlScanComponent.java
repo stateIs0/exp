@@ -23,8 +23,8 @@ public class RestUrlScanComponent {
     private final RequestMappingHandlerMapping handlerMapping;
     private final RequestMappingHandlerAdapter handlerAdapter;
     private final Object obj;
-    private List<RequestMappingInfoWrapper> scan;
     private final String pluginsSpringUrlReplaceKey;
+    private List<RequestMappingInfoWrapper> scan;
     private String pluginId;
 
     public RestUrlScanComponent(Object obj,

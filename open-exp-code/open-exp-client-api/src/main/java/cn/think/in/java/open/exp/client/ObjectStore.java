@@ -10,7 +10,8 @@ public interface ObjectStore extends TenantObjectStore {
 
     /**
      * 注册插件到对象仓库
-     * @param list 插件里的核心 class, expBean 标记的 class.
+     *
+     * @param list     插件里的核心 class, expBean 标记的 class.
      * @param pluginId 插件 id;
      */
     void startRegister(List<Class<?>> list, String pluginId) throws Exception;

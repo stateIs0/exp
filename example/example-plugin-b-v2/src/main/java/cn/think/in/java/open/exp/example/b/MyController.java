@@ -5,19 +5,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * @version 1.0
  * @Author cxs
  * @Description
  * @date 2023/8/9
- * @version 1.0
  **/
 @RestController
 @RequestMapping("/hello")
 public class MyController {
 
-    @RequestMapping("/bb2")
-    public String hello(@RequestParam(name = "key") String key) {
+    @RequestMapping("/bv2")
+    public String hello() {
 
-        return Boot.get(key, "default") + "hello2 " + getClass().getClassLoader() + getClass().getProtectionDomain()
-                .getCodeSource().getLocation();
+        return Boot.configSupport.getProperty();
     }
 }

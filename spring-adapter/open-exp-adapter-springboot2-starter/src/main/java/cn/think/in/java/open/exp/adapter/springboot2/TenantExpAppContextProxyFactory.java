@@ -18,6 +18,20 @@ import java.lang.reflect.Method;
 public class TenantExpAppContextProxyFactory {
 
 
+    public static <P> P getProxy(final MethodInterceptor callback, Class<P> c, String pluginId) {
+        Enhancer enhancer = new Enhancer();
+        enhancer.setInterfaces(new Class[]{Sort.class});
+        enhancer.setSuperclass(c);
+        enhancer.setNamingPolicy(new SpringNamingPolicy() {
+            @Override
+            protected String getTag() {
+                return super.getTag() + "$$EXP$$" + pluginId;
+            }
+        });
+        enhancer.setCallback(callback);
+        return (P) enhancer.create();
+    }
+
     public static class ExpMethodInterceptor implements MethodInterceptor {
         Object bean;
         String pluginId;
@@ -44,19 +58,5 @@ public class TenantExpAppContextProxyFactory {
                 throw e;
             }
         }
-    }
-
-    public static <P> P getProxy(final MethodInterceptor callback, Class<P> c, String pluginId) {
-        Enhancer enhancer = new Enhancer();
-        enhancer.setInterfaces(new Class[]{Sort.class});
-        enhancer.setSuperclass(c);
-        enhancer.setNamingPolicy(new SpringNamingPolicy() {
-            @Override
-            protected String getTag() {
-                return super.getTag() + "$$EXP$$" + pluginId;
-            }
-        });
-        enhancer.setCallback(callback);
-        return (P) enhancer.create();
     }
 }

@@ -12,7 +12,11 @@ public class SpiFactory {
 
     private static Map<Class<?>, Object> cache = new HashMap<>();
 
-    public static <T> T get(Class<?> c) {
+    public static <T> T get(Class<T> c) {
+        return get(c, null);
+    }
+
+    public static <T> T get(Class<T> c, T d) {
         if (cache.get(c) != null) {
             return (T) cache.get(c);
         }
@@ -21,12 +25,12 @@ public class SpiFactory {
                 return (T) cache.get(c);
             }
 
-            ServiceLoader<T> load = (ServiceLoader<T>) ServiceLoader.load(c);
+            ServiceLoader<T> load = ServiceLoader.load(c);
             for (T obj : load) {
                 cache.put(c, obj);
                 return obj;
             }
-            return null;
+            return d;
         }
     }
 }

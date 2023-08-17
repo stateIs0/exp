@@ -8,7 +8,6 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.util.Assert;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
@@ -19,6 +18,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 /**
+ *
  **/
 @Slf4j
 @SuppressWarnings("unchecked")
@@ -27,14 +27,10 @@ public class SpringBootObjectStore implements ObjectStore {
     private final Map<String, RestUrlScanComponent> cache = new HashMap<>();
 
     private final BeanDefinitionRegistry beanDefinitionRegistry;
-
-    private ConfigurableListableBeanFactory beanFactory;
-
     private final Map<String, List<Class<?>>> classesCache = new HashMap<>();
-
-    private Supplier<String> pluginsSpringUrlReplaceKey;
-
     private final SpringBootTenantObjectPostProcessorFactory tenantObjectProxy = new SpringBootTenantObjectPostProcessorFactory();
+    private ConfigurableListableBeanFactory beanFactory;
+    private Supplier<String> pluginsSpringUrlReplaceKey;
 
     public SpringBootObjectStore(BeanDefinitionRegistry beanDefinitionRegistry, Supplier<String> pluginsSpringUrlReplaceKey) {
         this.beanDefinitionRegistry = beanDefinitionRegistry;

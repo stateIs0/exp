@@ -15,10 +15,10 @@ import java.util.jar.JarFile;
 
 
 /**
+ * @version 1.0
  * @Author cxs
  * @Description
  * @date 2023/8/9
- * @version 1.0
  **/
 public class MetaConfigReader {
 
@@ -28,9 +28,8 @@ public class MetaConfigReader {
         String desc = properties.getProperty(Constant.PLUGIN_DESC_KEY);
         String version = properties.getProperty(Constant.PLUGIN_VERSION_KEY);
         String ext = properties.getProperty(Constant.PLUGIN_EXT_KEY);
-        String config = properties.getProperty(Constant.PLUGIN_CONFIG_KEY);
         String boot = properties.getProperty(Constant.PLUGIN_BOOT_CLASS);
-        return new PluginMetaInnerModel(code, desc, version, ext, config, boot);
+        return new PluginMetaInnerModel(code, desc, version, ext, boot);
     }
 
     public static Map<String, String> getMapping(File file) {

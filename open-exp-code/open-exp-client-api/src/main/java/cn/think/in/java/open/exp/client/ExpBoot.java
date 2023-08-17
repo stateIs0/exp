@@ -6,7 +6,4 @@ package cn.think.in.java.open.exp.client;
 public interface ExpBoot {
 
     PluginObjectScanner getRegister() throws Throwable;
-
-    default void setPluginId(String pluginId) {
-    }
 }

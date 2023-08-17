@@ -5,13 +5,12 @@ import cn.think.in.java.open.exp.client.ExpAppContext;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.function.Consumer;
 
 /**
+ * @version 1.0
  * @Author cxs
  * @Description
  * @date 2023/8/12
- * @version 1.0
  **/
 public class BootstrapTest3 {
 

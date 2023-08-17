@@ -26,10 +26,7 @@
 - 五粮液客户定制了 3 个插件;
 - 程序运行时, 会根据客户的租户 id 进行逻辑切换.
 
-
-
 ![](desc.png)
-
 
 场景:
 
@@ -46,7 +43,7 @@
 3. 支持多租户场景下的单个扩展点有多实现, 业务支持租户过滤, 租户多个实现可自定义排序
 4. 支持 springboot2.x/1.x 依赖
 5. 支持插件内对外暴露 Spring Controller Rest, 可热插拔;
-6. 支持插件覆盖 spring 主程序 Controller. 
+6. 支持插件覆盖 spring 主程序 Controller.
 7. 支持插件获取独有的配置, 支持自定义设计插件配置热更新逻辑;
 8. 支持插件和主应用绑定事务.
 9. 提供流式 api，使主应用在接入扩展点时更干净。
@@ -121,9 +118,11 @@ public String unInstall(String pluginId) throws Exception {
     - [exp-third-bom](bom-manager%2Fexp-third-bom) 三方包管理
 3. [open-exp-code](open-exp-code) exp 核心代码
     - [open-exp-classloader-container](open-exp-code%2Fopen-exp-classloader-container) classloader 隔离 API
-    - [open-exp-classloader-container-impl](open-exp-code%2Fopen-exp-classloader-container-impl) classloader 隔离 API 具体实现
+    - [open-exp-classloader-container-impl](open-exp-code%2Fopen-exp-classloader-container-impl) classloader 隔离 API
+      具体实现
     - [open-exp-client-api](open-exp-code%2Fopen-exp-client-api) 核心 api 模块
-    - [open-exp-core-impl](open-exp-code%2Fopen-exp-core-impl) 核心 api 实现; 内部 shade cglib 动态代理, 可不以来 spring 实现;
+    - [open-exp-core-impl](open-exp-code%2Fopen-exp-core-impl) 核心 api 实现; 内部 shade cglib 动态代理, 可不以来 spring
+      实现;
     - [open-exp-document-api](open-exp-code%2Fopen-exp-document-api) 扩展点文档 api
     - [open-exp-document-core-impl](open-exp-code%2Fopen-exp-document-core-impl) 扩展点文档导出实现
     - [open-exp-object-field-extend](open-exp-code%2Fopen-exp-object-field-extend) 字节码动态扩展字段模块
@@ -197,7 +196,6 @@ public interface StreamAppContext {
 }
 ```
 
-
 ## 扩展
 
 cn.think.in.java.open.exp.client.TenantCallback
@@ -243,31 +241,19 @@ Optional<UserService> optional = userServices.stream().findFirst();
 ````
 
 插件获取配置示例代码:
+
 ```java
 public class Boot extends AbstractBoot {
-    private static String selfPluginId;
-
-    @Override
-    protected String getScanPath() {
-        return Boot.class.getPackage().getName();
-    }
-
-    @Override
-    public void setPluginId(String pluginId) {
-        // 系统自动注入自身的插件 id;
-        selfPluginId = pluginId;
-    }
-
-    public static String get(String key, String value) {
-        //  简化操作, 读取配置
-        return PluginConfig.getSpi().getProperty(selfPluginId, key, value);
-    }
-
+    // 定义配置, key name 和 Default value;
+   public static ConfigSupport configSupport = new ConfigSupport("bv2", null);
+}
+public String hello() {
+   return configSupport.getProperty();
 }
 ```
 
+springboot 配置项(-D 或 application.yml 都支持):
 
-springboot 配置项(-D 或 application.yml 都支持): 
 ```java
 plugins_path={springboot 启动时, exp主动加载的插件目录}
 plugins_work_dir={exp 的工作目录, 其会将代码解压达成这个目录里,子目录名为插件 id}
@@ -276,12 +262,9 @@ plugins_spring_url_replace_enable={插件是否可以覆盖主程序 url, 注意
 exp_object_field_config_json={插件动态增加字段json, json 结构定义见: cn.think.in.java.open.exp.object.field.ext.ExtMetaBean}
 ```
 
-
 ## License
 
 [Apache 2.0 License.](https://github.com/stateIs0/exp/blob/master/LICENSE)
-
-
 
 ## Stargazers over time
 

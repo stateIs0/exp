@@ -5,10 +5,10 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
+ * @version 1.0
  * @Author cxs
  * @Description
  * @date 2023/8/12
- * @version 1.0
  **/
 public class IOUtils {
 

@@ -7,10 +7,11 @@ import java.util.List;
 
 /**
  * todo
+ *
+ * @version 1.0
  * @Author cxs
  * @Description
  * @date 2023/8/12
- * @version 1.0
  **/
 public class GuiceObjectStore implements ObjectStore {
 

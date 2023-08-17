@@ -8,10 +8,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
+ * @version 1.0
  * @Author cxs
  * @Description
  * @date 2023/8/11
- * @version 1.0
  **/
 @Slf4j
 public class ExpPluginIdInterceptor implements MethodInterceptor {

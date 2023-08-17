@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ *
  **/
 @Getter
 @AllArgsConstructor

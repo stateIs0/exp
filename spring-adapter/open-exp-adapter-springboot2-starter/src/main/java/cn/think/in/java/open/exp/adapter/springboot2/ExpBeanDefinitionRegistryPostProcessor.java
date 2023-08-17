@@ -6,10 +6,10 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 
 /**
+ * @version 1.0
  * @Author cxs
  * @Description
  * @date 2023/8/9
- * @version 1.0
  **/
 public class ExpBeanDefinitionRegistryPostProcessor implements BeanDefinitionRegistryPostProcessor {
 

@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * @version 1.0
  * @Author cxs
  * @Description
  * @date 2023/8/13
- * @version 1.0
  **/
 @Builder
 public class ExtFieldJsonConfigHandler {

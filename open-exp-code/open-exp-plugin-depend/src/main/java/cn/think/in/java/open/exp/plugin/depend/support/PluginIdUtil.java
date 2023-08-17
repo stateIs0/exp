@@ -2,20 +2,18 @@ package cn.think.in.java.open.exp.plugin.depend.support;
 
 
 import cn.think.in.java.open.exp.client.Constant;
-import cn.think.in.java.open.exp.client.ExpBoot;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Properties;
 
 /**
+ * @version 1.0
  * @Author cxs
  * @Description
  * @date 2023/8/12
- * @version 1.0
  **/
 public class PluginIdUtil {
 

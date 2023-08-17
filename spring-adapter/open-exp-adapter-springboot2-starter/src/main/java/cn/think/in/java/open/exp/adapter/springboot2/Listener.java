@@ -13,10 +13,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.io.IOException;
 
 /**
+ * @version 1.0
  * @Author cxs
  * @Description
  * @date 2023/8/8
- * @version 1.0
  **/
 @Slf4j
 public class Listener implements SpringApplicationRunListener, BeanDefinitionRegistryPostProcessor {

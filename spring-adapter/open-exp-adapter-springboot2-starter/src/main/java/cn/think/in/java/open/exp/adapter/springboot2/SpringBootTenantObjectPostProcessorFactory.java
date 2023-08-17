@@ -5,10 +5,10 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
 /**
+ * @version 1.0
  * @Author cxs
  * @Description
  * @date 2023/8/10
- * @version 1.0
  **/
 public class SpringBootTenantObjectPostProcessorFactory implements BeanPostProcessor, TenantObjectProxyFactory {
 

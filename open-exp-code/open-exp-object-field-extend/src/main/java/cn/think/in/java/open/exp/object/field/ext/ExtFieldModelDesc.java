@@ -5,10 +5,10 @@ import lombok.Data;
 import java.util.LinkedList;
 
 /**
+ * @version 1.0
  * @Author cxs
  * @Description
  * @date 2023/8/13
- * @version 1.0
  **/
 @Data
 public class ExtFieldModelDesc {

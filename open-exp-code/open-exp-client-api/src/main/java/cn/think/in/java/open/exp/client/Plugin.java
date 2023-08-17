@@ -2,13 +2,14 @@ package cn.think.in.java.open.exp.client;
 
 import lombok.Data;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
+ * @version 1.0
  * @Author cxs
  * @Description
  * @date 2023/8/8
- * @version 1.0
  **/
 @Data
 public class Plugin {
@@ -26,9 +27,9 @@ public class Plugin {
 
     String pluginExt;
 
-    String pluginConfig;
-
     String pluginBootClass;
+
+    private List<ConfigSupport> configSupportList;
 
 
     @Override

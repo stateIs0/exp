@@ -9,7 +9,6 @@ import cn.think.in.java.open.exp.document.api.ExtApiInterface;
 public interface UserService {
 
 
-
     void createUserExt();
 
     default String getName() {

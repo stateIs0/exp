@@ -9,10 +9,10 @@ import org.springframework.core.env.Environment;
 import java.util.List;
 
 /**
+ * @version 1.0
  * @Author cxs
  * @Description
  * @date 2023/8/14
- * @version 1.0
  **/
 @Builder
 public class DocHandler {
