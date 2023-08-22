@@ -109,9 +109,9 @@ public class SpringBootObjectStore implements ObjectStore {
         RestUrlScanComponent urlComponent = cache.get(name);
         if (urlComponent != null) {
             urlComponent.unRegister();
-            beanDefinitionRegistry.removeBeanDefinition(name);
-            cache.remove(name);
         }
+        cache.remove(name);
+        beanDefinitionRegistry.removeBeanDefinition(name);
     }
 
     @Override
