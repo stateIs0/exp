@@ -2,6 +2,8 @@
 
 🚕🚕🚕EXP (Extension Plugin) Extension Point Plugin System
 
+[⭐️⭐️⭐️⭐️⭐️中文文档⭐️⭐️⭐️⭐️⭐️](README_cn.md)
+
 
 Related Articles 🎯🎯🎯[EXP: A Java Plugin Hot-Swapping Framework](http://thinkinjava.cn/2023/08/15/2023/exp/)
 
