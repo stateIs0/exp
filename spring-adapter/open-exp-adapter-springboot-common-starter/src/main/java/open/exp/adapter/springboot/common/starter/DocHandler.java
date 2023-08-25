@@ -1,4 +1,4 @@
-package cn.think.in.java.open.exp.adapter.springboot2;
+package open.exp.adapter.springboot.common.starter;
 
 import cn.think.in.java.open.exp.client.StringUtil;
 import cn.think.in.java.open.exp.document.api.ExpDocContext;

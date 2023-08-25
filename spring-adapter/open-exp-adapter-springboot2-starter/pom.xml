@@ -71,6 +71,14 @@
             <groupId>cn.think.in.java</groupId>
             <artifactId>open-exp-document-core-impl</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.think.in.java</groupId>
+            <artifactId>open-exp-adapter-springboot-common-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.think.in.java</groupId>
+            <artifactId>open-exp-rest-support-springboot2</artifactId>
+        </dependency>
     </dependencies>
 
 

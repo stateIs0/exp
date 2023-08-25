@@ -41,7 +41,7 @@
 1. 支持 热插拔 or 启动时加载(spring or 普通 jvm)
 2. 基于 classloader Parent First 的类隔离机制
 3. 支持多租户场景下的单个扩展点有多实现, 业务支持租户过滤, 租户多个实现可自定义排序
-4. 支持 springboot2.x/1.x 依赖
+4. 支持 springboot3.x/2.x/1.x 依赖
 5. 支持插件内对外暴露 Spring Controller Rest, 可热插拔;
 6. 支持插件覆盖 spring 主程序 Controller.
 7. 支持插件获取独有的配置, 支持自定义设计插件配置热更新逻辑;
@@ -136,6 +136,7 @@ public String unInstall(String pluginId) throws Exception {
 5. [spring-adapter](spring-adapter) springboot starter, exp 适配 spring boot
     - [open-exp-adapter-springboot2](spring-adapter%2Fopen-exp-adapter-springboot2-starter)  springboot2 依赖
     - [open-exp-adapter-springboot1-starter](spring-adapter%2Fopen-exp-adapter-springboot1-starter) springboot1 依赖
+    - https://github.com/stateIs0/open-exp-springboot3 springboot3 依赖
 
 ## 模块依赖
 

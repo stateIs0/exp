@@ -29,7 +29,8 @@ public class BootstrapTest {
             public void startRegister(List<Class<?>> list, String pluginId) throws Exception {
                 Map<String, Object> store = new HashMap<>();
                 for (Class<?> aClass : list) {
-                    Object proxy = getTenantObjectProxyFactory().getProxy(aClass.newInstance(), pluginId);
+                    Object proxy = null;
+                    //getTenantObjectProxyFactory().getProxy(aClass.newInstance(), pluginId);
                     store.put(aClass.getName(), proxy);
                 }
                 pluginIdMapping.put(pluginId, store);
@@ -45,8 +46,13 @@ public class BootstrapTest {
                 return (T) pluginIdMapping.get(pluginId).get(c.getName());
             }
 
-
             @Override
+            public Object getOrigin() {
+                return null;
+            }
+
+
+            //@Override
             public TenantObjectProxyFactory getTenantObjectProxyFactory() {
                 return new TenantObjectProxyFactory() {
 

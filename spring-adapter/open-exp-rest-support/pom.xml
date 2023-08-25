@@ -5,13 +5,28 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cn.think.in.java</groupId>
-        <artifactId>open-exp</artifactId>
+        <artifactId>spring-adapter</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <groupId>com.timevale.eep.template</groupId>
-    <artifactId>open-exp-adapter-springboot3-starter</artifactId>
+    <artifactId>open-exp-rest-support</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>open-exp-rest-support-springboot2</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>cn.think.in.java</groupId>
+                <artifactId>exp-one-bom</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

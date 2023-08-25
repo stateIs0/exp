@@ -18,4 +18,65 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>1.5.21.RELEASE</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>cn.think.in.java</groupId>
+                <artifactId>exp-one-bom</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.think.in.java</groupId>
+            <artifactId>open-exp-client-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.think.in.java</groupId>
+            <artifactId>open-exp-core-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.think.in.java</groupId>
+            <artifactId>open-exp-object-field-extend</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.think.in.java</groupId>
+            <artifactId>open-exp-document-core-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.think.in.java</groupId>
+            <artifactId>open-exp-adapter-springboot-common-starter</artifactId>
+        </dependency>
+    </dependencies>
+
+
 </project>

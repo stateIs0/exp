@@ -25,4 +25,6 @@ public interface ObjectStore extends TenantObjectStore {
      * 从对象仓库获取某个对象
      */
     <T> T getObject(Class<?> c, String pluginId);
+
+    Object getOrigin();
 }

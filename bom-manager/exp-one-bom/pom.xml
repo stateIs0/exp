@@ -75,6 +75,38 @@
                 <artifactId>open-exp-document-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>cn.think.in.java</groupId>
+                <artifactId>open-exp-adapter-springboot-common-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.think.in.java</groupId>
+                <artifactId>open-exp-adapter-springboot3-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.think.in.java</groupId>
+                <artifactId>open-exp-json-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>cn.think.in.java</groupId>
+                <artifactId>open-exp-json-impl-jackson</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.think.in.java</groupId>
+                <artifactId>open-exp-rest-support-springboot2</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 </project>

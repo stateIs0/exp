@@ -46,6 +46,11 @@ public class SimpleObjectStore implements ObjectStore {
     }
 
     @Override
+    public Object getOrigin() {
+        return pluginIdMapping;
+    }
+
+    //@Override
     public TenantObjectProxyFactory getTenantObjectProxyFactory() {
         return PluginIdNetSfCglibProxyEnhancer::getEnhancer;
     }

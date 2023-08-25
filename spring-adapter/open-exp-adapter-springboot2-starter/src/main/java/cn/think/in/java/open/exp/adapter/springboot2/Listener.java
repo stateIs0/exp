@@ -1,6 +1,9 @@
 package cn.think.in.java.open.exp.adapter.springboot2;
 
 import lombok.extern.slf4j.Slf4j;
+import open.exp.adapter.springboot.common.starter.DocHandler;
+import open.exp.adapter.springboot.common.starter.ExpApplicationListener;
+import open.exp.adapter.springboot.common.starter.ExtFieldJsonConfigHandler;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -26,18 +29,15 @@ public class Listener implements SpringApplicationRunListener, BeanDefinitionReg
 
     @Override
     public void contextPrepared(ConfigurableApplicationContext context) {
-        if (!isEnabled(context)) {
-            return;
+        if (!(context instanceof AnnotationConfigApplicationContext)) {
+            context.addApplicationListener(new ExpApplicationListener());
+            ExtFieldJsonConfigHandler.builder().environment(context.getEnvironment()).build().run();
+            DocHandler.builder().environment(context.getEnvironment()).build().init();
         }
-        ExpApplicationListener listener = new ExpApplicationListener();
-        context.addApplicationListener(listener);
-        context.addBeanFactoryPostProcessor(new ExpBeanDefinitionRegistryPostProcessor(listener));
-        ExtFieldJsonConfigHandler.builder().environment(context.getEnvironment()).build().run();
-        DocHandler.builder().environment(context.getEnvironment()).build().init();
     }
 
     private boolean isEnabled(ConfigurableApplicationContext context) {
-        return !(context instanceof AnnotationConfigApplicationContext);
+        return (context instanceof AnnotationConfigApplicationContext);
     }
 
     @Override

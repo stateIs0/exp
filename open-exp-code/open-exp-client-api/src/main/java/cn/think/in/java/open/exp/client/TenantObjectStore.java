@@ -11,5 +11,5 @@ public interface TenantObjectStore {
     /**
      * 获取代理租户对象工厂.
      */
-    TenantObjectProxyFactory getTenantObjectProxyFactory();
+    //TenantObjectProxyFactory getTenantObjectProxyFactory();
 }

@@ -33,7 +33,8 @@ public class GuiceObjectStore implements ObjectStore {
     }
 
     @Override
-    public TenantObjectProxyFactory getTenantObjectProxyFactory() {
+    public Object getOrigin() {
         return null;
     }
+
 }

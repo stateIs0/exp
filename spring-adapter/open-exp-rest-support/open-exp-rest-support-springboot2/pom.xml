@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>cn.think.in.java</groupId>
+        <artifactId>open-exp-rest-support</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>open-exp-rest-support-springboot2</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>cn.think.in.java</groupId>
+            <artifactId>open-exp-adapter-springboot-common-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <!-- 用基线的版本 , 可能会导致冲突, 这里冲突的类, 不大可能, 因为使用了 spi;
+            这里只用了一些基本的 api
+             org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+             org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter-->
+            <version>5.3.23</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+</project>
