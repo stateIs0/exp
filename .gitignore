@@ -40,3 +40,6 @@ build/
 .DS_Store
 
 *.jar
+
+exp-plugins/
+exp-workdir
