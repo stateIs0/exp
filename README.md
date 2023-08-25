@@ -19,7 +19,7 @@ Supports extending functionality through a plugin mechanism, similar to plugins 
 🥈 Hot Swapping:
 Plugins have the ability to be removed from the JVM and Spring container. They support dynamic installation of JAR and ZIP files at runtime. This means you can add, remove, or replace plugins while the application is running, enabling dynamic extension and upgrades of the system.
 
-The above translations describe the terms and definitions related to the EXP (Extension Plugin) Extension Point Plugin System. This system allows you to build applications with dynamic extension capabilities, adding and managing new functional modules through the use of plugins in the main application.
+The above describe the terms and definitions related to the EXP (Extension Plugin) Extension Point Plugin System. This system allows you to build applications with dynamic extension capabilities, adding and managing new functional modules through the use of plugins in the main application.
 
 ## 🎧Example
 
