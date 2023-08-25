@@ -1,56 +1,61 @@
 ## ⭐️⭐️⭐️Introduction
 
-🚕🚕🚕EXP (`Ex`tension `P`lugin) 扩展点插件系统
+🚕🚕🚕EXP (Extension Plugin) Extension Point Plugin System
 
-相关文章🎯🎯🎯[EXP 一款 Java 插件化热插拔框架](http://thinkinjava.cn/2023/08/15/2023/exp/)
 
-名词定义:
+Related Articles 🎯🎯🎯[EXP: A Java Plugin Hot-Swapping Framework](http://thinkinjava.cn/2023/08/15/2023/exp/)
 
-1. 🏅主应用
-    - exp 需要运行在一个 jvm 之上, 通常, 这是一个 springboot, 这个 springboot 就是主应用;
-2. 🎖扩展点
-    - 主应用定义的接口, 可被插件实现;
-    - 注意：插件是扩展点的具体实现集合，扩展点，仅仅是接口定义。一个插件里，可以有多个扩展点的实现，一个扩展点，可以有多个插件的实现。
-3. 🥇插件
-    - 扩展功能使用插件的方式支持，你可以理解为 idea、eclipse 里的插件。
-    - 插件里的代码写法和 spring 一样（如果你的程序是在 spring 里运行）
-4. 🥈热插拔
-    - 插件支持从 jvm 和 spring 容器里摘除.
-    - 支持运行时动态安装 jar 和 zip;
+Noun Definitions:
+
+🏅 Main Application:
+EXP needs to run on a JVM, typically as a Spring Boot application, which is referred to as the main application.
+
+🎖 Extension Point:
+An interface defined by the main application that can be implemented by plugins. It's important to note that plugins are concrete implementations of extension points, while extension points themselves are merely interface definitions. A plugin can contain implementations for multiple extension points, and a single extension point can have implementations from multiple plugins.
+
+🥇 Plugin:
+Supports extending functionality through a plugin mechanism, similar to plugins in tools like IDEA or Eclipse. The code within a plugin follows a format similar to Spring (if your application operates within a Spring environment).
+
+🥈 Hot Swapping:
+Plugins have the ability to be removed from the JVM and Spring container. They support dynamic installation of JAR and ZIP files at runtime. This means you can add, remove, or replace plugins while the application is running, enabling dynamic extension and upgrades of the system.
+
+The above translations describe the terms and definitions related to the EXP (Extension Plugin) Extension Point Plugin System. This system allows you to build applications with dynamic extension capabilities, adding and managing new functional modules through the use of plugins in the main application.
 
 ## 🎧Example
 
-- 贵州茅台和五粮液都购买了你司的标准产品, 但是. 由于客户有定制需求. 需要开发新功能.
+Both Guizhou Maotai and Wuliangye have purchased your company's standard products. However, due to custom requirements from the clients, new features need to be developed.
 
-- 贵州茅台客户定制了 2 个插件;
-- 五粮液客户定制了 3 个插件;
-- 程序运行时, 会根据客户的租户 id 进行逻辑切换.
+- Guizhou Maotai has customized 2 plugins.
+- Wuliangye has customized 3 plugins.
+- During runtime, the program will perform logic switching based on the client's tenant ID.
 
 ![](img.png)
 
-场景:
+Scenario:
 
-1. B 端大客户对业务进行定制, 需要对主代码扩展.
-    - 传统做法是 git 拉取分支.
-    - 现在基于扩展点的方式进行定制, 可热插拔
-2. 需要多个程序可分可合, 支持将多个 springboot 应用合并部署, 或拆开部署.
-3. 扩展点类似 swagger 文档 doc, 用于类插件系统管理平台进行展示.
+- Large B2B customers customize their business processes, requiring extensions to the main codebase.
+
+  - The conventional approach involves pulling branches from Git.
+  - The current method employs an extension point-based approach for customization, allowing hot-swapping.
+- Multiple programs need to be divisible and combinable, supporting the deployment of multiple Spring Boot applications as a single unit or separately.
+
+- Extension points are similar to Swagger documentation, serving as documentation for the plugin system, which is showcased on the management platform.
 
 ## Feature
 
-1. 支持 热插拔 or 启动时加载(spring or 普通 jvm)
-2. 基于 classloader Parent First 的类隔离机制
-3. 支持多租户场景下的单个扩展点有多实现, 业务支持租户过滤, 租户多个实现可自定义排序
-4. 支持 springboot3.x/2.x/1.x 依赖
-5. 支持插件内对外暴露 Spring Controller Rest, 可热插拔;
-6. 支持插件覆盖 spring 主程序 Controller.
-7. 支持插件获取独有的配置, 支持自定义设计插件配置热更新逻辑;
-8. 支持插件和主应用绑定事务.
-9. 提供流式 api，使主应用在接入扩展点时更干净。
+1. Support hot-swapping or loading during startup (Spring or regular JVM).
+2. Based on the classloader Parent First isolation mechanism.
+3. Support multiple implementations for a single extension point in a multi-tenant scenario, with tenant-based filtering for business logic, and customizable sorting for multiple tenant implementations.
+4. Compatible with Spring Boot 3.x/2.x/1.x dependencies.
+5. Enable plugins to expose Spring Controller REST endpoints externally, with hot-swapping capability.
+6. Allow plugins to override Spring main application Controllers.
+7. Provide support for plugins to access exclusive configurations, enabling customizable design for hot-reloading plugin configurations.
+8. Support transaction binding between plugins and the main application.
+9. Offer a fluent API to ensure a cleaner integration of extension points into the main application.
 
 ## USE
 
-环境准备:
+Environment:
 
 1. JDK 1.8
 2. Maven
@@ -61,18 +66,18 @@ cd all-package
 mvn clean package
 ```
 
-主程序依赖(springboot starter)
+Main Application Dependencies(springboot starter)
 
 ```xml
 
 <dependency>
     <groupId>cn.think.in.java</groupId>
-    <!-- 这里是 springboot 2 例子, 如果是普通应用或者 springboot 1 应用, 请进行 artifactId 更换  -->
+    <!-- Here is a Spring Boot 2 example. If it's a regular application or a Spring Boot 1/3 application, please replace the artifactId.  -->
     <artifactId>open-exp-adapter-springboot2-starter</artifactId>
 </dependency>
 ```
 
-插件依赖
+Plugin Dependencies
 
 ```xml
 <dependency>
@@ -81,7 +86,7 @@ mvn clean package
 </dependency>
 ```
 
-## 编程界面 API 使用
+## Using the Programming Interface API
 
 ```java
 ExpAppContext expAppContext = ExpAppContextSpiFactory.getFirst();
@@ -138,71 +143,71 @@ public String unInstall(String pluginId) throws Exception {
     - [open-exp-adapter-springboot1-starter](spring-adapter%2Fopen-exp-adapter-springboot1-starter) springboot1 依赖
     - https://github.com/stateIs0/open-exp-springboot3 springboot3 依赖
 
-## 模块依赖
+## module dependency
 
 ![](ar.png)
 
-## 核心 API
+## core API
 
 ```java
 public interface ExpAppContext {
    /**
-    * 获取当前所有的插件 id
+    * Gets all current plug-in ids
     */
    List<String> getAllPluginId();
    
    /**
-    * 预加载, 只读取元信息和 load boot class 和配置, 不做 bean 加载.
+    * Preload reads only the meta information and load boot class and configuration, and does not load beans.
     */
    Plugin preLoad(File file);
    
    /**
-    * 加载插件
+    * loading plugin
     */
    Plugin load(File file) throws Throwable;
 
    /**
-    * 卸载插件
+    * Uninstall plugin
     */
    void unload(String pluginId) throws Exception;
 
    /**
-    * 获取多个扩展点的插件实例
+    * Gets plug-in instances for multiple extension points
     */
    <P> List<P> get(String extCode);
 
 
    /**
-    * 简化操作, code 就是全路径类名
+    * To simplify the operation, code is the full path class name
     */
    <P> List<P> get(Class<P> pClass);
 
 
    /**
-    * 获取单个插件实例.
+    * Gets a single plug-in instance.
     */
    <P> Optional<P> get(String extCode, String pluginId);
 }
 ```
 
-## 流式 API
+## Streaming API
 
 ```java
 public interface StreamAppContext {
 
    /**
-    * 针对有返回值的 api, 需要支持流式调用
+    * For apis with return values, you need to support streaming calls
     */
    <R, P> R streamList(Class<P> pClass, Ec<R, List<P>> ecs);
 
    /**
-    * 针对有返回值的 api, 需要支持流式调用
+    * For apis with return values, you need to support streaming calls
     */
    <R, P> R stream(Class<P> clazz, String pluginId, Ec<R, P> ec);
 }
 ```
 
-## 扩展
+## extension
 
 cn.think.in.java.open.exp.client.TenantCallback
 
@@ -210,43 +215,43 @@ cn.think.in.java.open.exp.client.TenantCallback
 public interface TenantCallback {
 
    /**
-    * 返回这个插件的序号, 默认 0; 
+    * Returns the serial number of the plugin, default 0;
     * {@link  cn.think.in.java.open.exp.client.ExpAppContext#get(java.lang.Class)} 函数返回的List 的第一位就是 sort 最高的.
     */
    int getSort(String pluginId);
 
    /**
-    * 这个插件是否属于当前租户, 默认是;
-    * 这个返回值, 会影响 {@link  cn.think.in.java.open.exp.client.ExpAppContext#get(java.lang.Class)} 的结果
-    * 即进行过滤, 返回为 true 的 plugin 实现, 才会被返回.
+    * Whether the plug-in belongs to the current tenant. The default is yes. 
+    * the return value, it will affect {@ link cn. Think. In. Java. Open. Exp. Client. ExpAppContext# get (Java. Lang. Class)} 
+    * If the plugin implementation is filtered and returns true, it will be returned.
     */
    boolean filter(String pluginId);
 }
 ```
 
-租户过滤示例代码:
+Tenant filtering example code:
 
 ````java
 TenantCallback registerCallback = new TenantCallback() {
    @Override
    public int getSort(String pluginId) {
-       // 获取这个插件的排序
-       return sortMap.get(pluginId);
+       // Getting the Sorting of This Plugin
+        return sortMap.get(pluginId);
    }
 
    @Override
    public boolean filter(String pluginId) {
-       // 判断当前租户是不是这个匹配这个插件
-       return context.get().equals(pluginIdTenantIdMap.get(pluginId));
+       // Determine if the current tenant matches this plugin
+        return context.get().equals(pluginIdTenantIdMap.get(pluginId));
    }
 }
 ;
 List<UserService> userServices = expAppContext.get(UserService.class, registerCallback);
-// first 第一个就是这个租户优先级最高的.
+// first The first is the tenant's highest priority.
 Optional<UserService> optional = userServices.stream().findFirst();
 ````
 
-插件获取配置示例代码:
+Here's an example code snippet demonstrating how a plugin can retrieve configuration:
 
 ```java
 public class Boot extends AbstractBoot {
@@ -258,14 +263,14 @@ public String hello() {
 }
 ```
 
-springboot 配置项(-D 或 application.yml 都支持):
+springboot config(-D or application.yml):
 
 ```java
-plugins_path={springboot 启动时, exp主动加载的插件目录}
-plugins_work_dir={exp 的工作目录, 其会将代码解压达成这个目录里,子目录名为插件 id}
-plugins_auto_delete_enable={是否自动删除已经存在的 plugin 目录}
-plugins_spring_url_replace_enable={插件是否可以覆盖主程序 url, 注意, 目前无法支持多租户级别的覆盖}
-exp_object_field_config_json={插件动态增加字段json, json 结构定义见: cn.think.in.java.open.exp.object.field.ext.ExtMetaBean}
+plugins_path={Plugin directory that exp actively loads when springboot starts}
+plugins_work_dir={exp's working directory, which will extract the code into this directory, subdirectory named plugin id}
+plugins_auto_delete_enable={Whether to automatically delete the existing plugin directory}
+plugins_spring_url_replace_enable={Whether the plug-in can override the main program url, note that multi-tenant level override is not currently supported}
+exp_object_field_config_json={The plug-in dynamically adds fields json, json 结构定义见: cn.think.in.java.open.exp.object.field.ext.ExtMetaBean}
 ```
 
 ## License
