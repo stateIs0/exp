@@ -115,7 +115,7 @@ public String unInstall(String pluginId) throws Exception {
 }
 ```
 
-## 模块
+## Module
 
 1. [all-package](all-package) Packaging module
 2. [bom-manager](bom-manager) pom management, self-management and tripartite dependency management
