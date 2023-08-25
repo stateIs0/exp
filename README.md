@@ -93,7 +93,7 @@ ExpAppContext expAppContext = ExpAppContextSpiFactory.getFirst();
 
 public String run(String tenantId) {
    List<UserService> userServices = expAppContext.get(UserService.class, TenantCallback.DEFAULT);
-   // first 第一个就是这个租户优先级最高的.
+   // first The first is the tenant with the highest priority.
    Optional<UserService> optional = userServices.stream().findFirst();
    if (optional.isPresent()) {
        optional.get().createUserExt();
@@ -117,31 +117,31 @@ public String unInstall(String pluginId) throws Exception {
 
 ## 模块
 
-1. [all-package](all-package) 打包模块
-2. [bom-manager](bom-manager) pom 管理, 自身管理和三方依赖管理
-    - [exp-one-bom](bom-manager%2Fexp-one-bom) 自身包管理
-    - [exp-third-bom](bom-manager%2Fexp-third-bom) 三方包管理
-3. [open-exp-code](open-exp-code) exp 核心代码
-    - [open-exp-classloader-container](open-exp-code%2Fopen-exp-classloader-container) classloader 隔离 API
-    - [open-exp-classloader-container-impl](open-exp-code%2Fopen-exp-classloader-container-impl) classloader 隔离 API
-      具体实现
-    - [open-exp-client-api](open-exp-code%2Fopen-exp-client-api) 核心 api 模块
-    - [open-exp-core-impl](open-exp-code%2Fopen-exp-core-impl) 核心 api 实现; 内部 shade cglib 动态代理, 可不以来 spring
-      实现;
-    - [open-exp-document-api](open-exp-code%2Fopen-exp-document-api) 扩展点文档 api
-    - [open-exp-document-core-impl](open-exp-code%2Fopen-exp-document-core-impl) 扩展点文档导出实现
-    - [open-exp-object-field-extend](open-exp-code%2Fopen-exp-object-field-extend) 字节码动态扩展字段模块
-    - [open-exp-plugin-depend](open-exp-code%2Fopen-exp-plugin-depend) exp 插件依赖
-4. [example](example) exp 使用示例代码
-    - [example-extension-define](example%2Fexample-extension-define) 示例扩展点定义
-    - [example-plugin1](example%2Fexample-plugin1) 示例插件实现 1
-    - [example-plugin2](example%2Fexample-plugin2) 示例插件实现 2
-    - [example-springboot1](example%2Fexample-springboot1) 示例 springboot 1.x 例子
-    - [example-springboot2](example%2Fexample-springboot2) 示例 springboot 2.x 例子; 使用 spring cglib 动态代理
-5. [spring-adapter](spring-adapter) springboot starter, exp 适配 spring boot
-    - [open-exp-adapter-springboot2](spring-adapter%2Fopen-exp-adapter-springboot2-starter)  springboot2 依赖
-    - [open-exp-adapter-springboot1-starter](spring-adapter%2Fopen-exp-adapter-springboot1-starter) springboot1 依赖
-    - https://github.com/stateIs0/open-exp-springboot3 springboot3 依赖
+1. [all-package](all-package) Packaging module
+2. [bom-manager](bom-manager) pom management, self-management and tripartite dependency management
+    - [exp-one-bom](bom-manager%2Fexp-one-bom) Self-package management
+     - [exp-third-bom](bom-manager%2Fexp-third-bom) Three-party package management
+3. [open-exp-code](open-exp-code) exp core
+    - [open-exp-classloader-container](open-exp-code%2Fopen-exp-classloader-container) classloader isolation API
+    - [open-exp-classloader-container-impl](open-exp-code%2Fopen-exp-classloader-container-impl) classloader isolation API
+      Implementation
+    - [open-exp-client-api](open-exp-code%2Fopen-exp-client-api) core api module
+    - [open-exp-core-impl](open-exp-code%2Fopen-exp-core-impl) core api imple; inside shade cglib Dynamic Proxy, can not spring
+      impl;
+    - [open-exp-document-api](open-exp-code%2Fopen-exp-document-api) Extension point document api
+    - [open-exp-document-core-impl](open-exp-code%2Fopen-exp-document-core-impl) Extension point document export implementation
+    - [open-exp-object-field-extend](open-exp-code%2Fopen-exp-object-field-extend) Bytecode dynamic extension field module
+    - [open-exp-plugin-depend](open-exp-code%2Fopen-exp-plugin-depend) exp dependency
+4. [example](example) exp Use sample code
+    - [example-extension-define](example%2Fexample-extension-define) Example extension point definition
+     - [example-plugin1](example%2Fexample-plugin1) Sample plug-in implementation 1
+    - [example-plugin2](example%2Fexample-plugin2) Sample plug-in implementation 2
+    - [example-springboot1](example%2Fexample-springboot1) Examples springboot 1.x Examples
+    - [example-springboot2](example%2Fexample-springboot2) Examples springboot 2.x Examples; use spring cglib Dynamic Proxy
+5. [spring-adapter](spring-adapter) springboot starter, exp Adaptive spring boot
+    - [open-exp-adapter-springboot2](spring-adapter%2Fopen-exp-adapter-springboot2-starter)  springboot2 dependency
+    - [open-exp-adapter-springboot1-starter](spring-adapter%2Fopen-exp-adapter-springboot1-starter) springboot1 dependency
+    - https://github.com/stateIs0/open-exp-springboot3 springboot3 dependency
 
 ## module dependency
 
