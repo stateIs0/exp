@@ -11,6 +11,7 @@
 
     <modules>
         <module>all-package</module>
+        <module>spring-adapter/open-exp-adapter-springboot3-starter</module>
     </modules>
 
     <properties>
