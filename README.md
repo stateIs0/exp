@@ -39,7 +39,7 @@
 ## Feature
 
 1. 支持 热插拔 or 启动时加载(spring or 普通 jvm)
-2. 基于 classloader 双亲委派的类隔离机制
+2. 基于 classloader Parent First 的类隔离机制
 3. 支持多租户场景下的单个扩展点有多实现, 业务支持租户过滤, 租户多个实现可自定义排序
 4. 支持 springboot2.x/1.x 依赖
 5. 支持插件内对外暴露 Spring Controller Rest, 可热插拔;
