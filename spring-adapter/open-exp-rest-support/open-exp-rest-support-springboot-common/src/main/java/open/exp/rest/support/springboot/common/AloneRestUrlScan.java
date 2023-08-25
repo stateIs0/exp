@@ -1,4 +1,4 @@
-package open.exp.rest.support.springboot2;
+package open.exp.rest.support.springboot.common;
 
 /**
  * @Author cxs

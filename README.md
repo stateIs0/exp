@@ -150,7 +150,12 @@ public interface ExpAppContext {
     * 获取当前所有的插件 id
     */
    List<String> getAllPluginId();
-
+   
+   /**
+    * 预加载, 只读取元信息和 load boot class 和配置, 不做 bean 加载.
+    */
+   Plugin preLoad(File file);
+   
    /**
     * 加载插件
     */

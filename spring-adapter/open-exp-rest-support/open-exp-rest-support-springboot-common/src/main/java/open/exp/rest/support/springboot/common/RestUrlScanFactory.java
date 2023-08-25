@@ -1,8 +1,6 @@
-package open.exp.rest.support.springboot2;
+package open.exp.rest.support.springboot.common;
 
 import cn.think.in.java.open.exp.client.SpiFactory;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.util.function.Supplier;
 
@@ -13,8 +11,8 @@ public interface RestUrlScanFactory {
     }
 
     AloneRestUrlScan create(Object obj,
-                            RequestMappingHandlerMapping handlerMapping,
-                            RequestMappingHandlerAdapter handlerAdapter,
+                            Object requestMappingHandlerMapping,
+                            Object requestMappingHandlerAdapter,
                             String pluginId,
                             Supplier<String> replaceEnabled);
 }

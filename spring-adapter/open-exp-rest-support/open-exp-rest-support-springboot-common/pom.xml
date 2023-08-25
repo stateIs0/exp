@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>open-exp-rest-support-springboot2</artifactId>
+    <artifactId>open-exp-rest-support-springboot-common</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -20,21 +20,8 @@
     <dependencies>
         <dependency>
             <groupId>cn.think.in.java</groupId>
-            <artifactId>open-exp-adapter-springboot-common-starter</artifactId>
+            <artifactId>open-exp-client-api</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>5.3.29</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>cn.think.in.java</groupId>
-            <artifactId>open-exp-rest-support-springboot-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
     </dependencies>
 
 </project>

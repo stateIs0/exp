@@ -1,4 +1,4 @@
-package open.exp.rest.support.springboot2;
+package open.exp.rest.support.springboot1;
 
 import cn.think.in.java.open.exp.classloader.support.UniqueNameUtil;
 import cn.think.in.java.open.exp.client.ObjectStore;
@@ -18,7 +18,7 @@ import java.util.Map;
  * @Description
  * @date 2023/8/25
  **/
-public class ObjectScanSB2 implements open.exp.adapter.springboot.common.starter.spi.ObjectScan{
+public class ObjectScanSB1 implements open.exp.adapter.springboot.common.starter.spi.ObjectScan{
 
     private Map<String, List<Class<?>>> cache = new HashMap<>();
 

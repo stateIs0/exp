@@ -1,8 +1,9 @@
-package cn.think.in.java.open.exp.adapter.springboot2;
+package cn.think.in.java.open.exp.adapter.springboot1;
 
-import lombok.extern.slf4j.Slf4j;
 import open.exp.rest.support.springboot.common.AloneRestUrlScan;
 import open.exp.rest.support.springboot.common.RestUrlScanFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
@@ -22,8 +23,9 @@ import java.util.function.Supplier;
  * @Description
  * @date 2023/8/25
  **/
-@Slf4j
 public class RestUrlScanFactoryImpl implements RestUrlScanFactory {
+
+    static Logger log = LoggerFactory.getLogger(RestUrlScanFactoryImpl.class);
 
     @Override
     public AloneRestUrlScan create(Object obj,

@@ -82,6 +82,13 @@
                 <version>${project.version}</version>
             </dependency>
 
+
+            <dependency>
+                <groupId>cn.think.in.java</groupId>
+                <artifactId>open-exp-rest-support-springboot1</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>cn.think.in.java</groupId>
                 <artifactId>open-exp-adapter-springboot3-starter</artifactId>

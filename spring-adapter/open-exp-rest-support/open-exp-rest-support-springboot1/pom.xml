@@ -9,13 +9,15 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>open-exp-rest-support-springboot2</artifactId>
+    <artifactId>open-exp-rest-support-springboot1</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+
 
     <dependencies>
         <dependency>
@@ -26,7 +28,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>5.3.29</version>
+            <version>4.3.30.RELEASE</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

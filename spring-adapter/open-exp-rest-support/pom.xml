@@ -13,6 +13,8 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>open-exp-rest-support-springboot-common</module>
+        <module>open-exp-rest-support-springboot1</module>
         <module>open-exp-rest-support-springboot2</module>
     </modules>
 
