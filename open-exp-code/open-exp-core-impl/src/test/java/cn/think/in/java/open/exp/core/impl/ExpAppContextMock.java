@@ -23,6 +23,11 @@ public class ExpAppContextMock implements ExpAppContext {
     }
 
     @Override
+    public Plugin preLoad(File file) {
+        return null;
+    }
+
+    @Override
     public Plugin load(File file) throws Throwable {
         return null;
     }

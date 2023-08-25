@@ -1,9 +1,6 @@
 package cn.think.in.java.open.exp.classloader.impl;
 
-import cn.think.in.java.open.exp.classloader.ExpClass;
-import cn.think.in.java.open.exp.classloader.PluginMetaConfig;
-import cn.think.in.java.open.exp.classloader.PluginMetaFat;
-import cn.think.in.java.open.exp.classloader.PluginMetaService;
+import cn.think.in.java.open.exp.classloader.*;
 import cn.think.in.java.open.exp.classloader.support.ClassLoaderFinder;
 import cn.think.in.java.open.exp.classloader.support.DirectoryCleaner;
 import cn.think.in.java.open.exp.classloader.support.MetaConfigReader;
@@ -56,6 +53,13 @@ public class PluginMetaServiceImpl implements PluginMetaService {
     public void setConfig(PluginMetaConfig pluginMetaConfig) {
         this.pluginMetaConfig = pluginMetaConfig;
     }
+
+    @Override
+    public PluginMetaThin parse(File file) {
+        PluginMetaInnerModel meta = MetaConfigReader.getMeta(file);
+        return meta.conv();
+    }
+
 
     @Override
     public PluginMetaFat install(File file) throws Throwable {

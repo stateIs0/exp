@@ -14,6 +14,12 @@ public interface ExpAppContext extends StreamAppContext, TenantService {
      */
     List<String> getAllPluginId();
 
+
+    /**
+     * 预加载, 只读取元信息和 load boot class, 不做 bean 加载.
+     */
+    Plugin preLoad(File file);
+
     /**
      * 加载插件
      */

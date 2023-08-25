@@ -4,6 +4,7 @@ import cn.think.in.java.open.exp.classloader.ExpClass;
 import cn.think.in.java.open.exp.classloader.PluginMetaFat;
 import cn.think.in.java.open.exp.classloader.PluginMetaService;
 import cn.think.in.java.open.exp.client.*;
+import cn.think.in.java.open.exp.core.impl.support.PluginModelMapper;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -22,10 +23,21 @@ public class ExpAppContextImpl implements ExpAppContext {
     private ObjectStore objectStore;
     private List<String> all = new ArrayList<>();
 
+    public ExpAppContextImpl() {
+    }
+
+    public ExpAppContextImpl(PluginMetaService metaService) {
+        this.metaService = metaService;
+    }
 
     @Override
     public List<String> getAllPluginId() {
-        return all;
+        return new ArrayList<>(all);
+    }
+
+    @Override
+    public Plugin preLoad(File file) {
+        return PluginModelMapper.instance.conv(metaService.parse(file));
     }
 
     @Override

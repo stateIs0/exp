@@ -1,5 +1,6 @@
 package cn.think.in.java.open.exp.classloader.support;
 
+import cn.think.in.java.open.exp.client.ConfigSupport;
 import cn.think.in.java.open.exp.client.Constant;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
@@ -8,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.jar.JarEntry;
@@ -23,13 +25,18 @@ import java.util.jar.JarFile;
 public class MetaConfigReader {
 
     public static PluginMetaInnerModel getMeta(File file) {
-        Properties properties = loadProperties(file.getAbsolutePath(), Constant.PLUGIN_META_FILE_NAME);
-        String code = properties.getProperty(Constant.PLUGIN_CODE_KEY);
-        String desc = properties.getProperty(Constant.PLUGIN_DESC_KEY);
-        String version = properties.getProperty(Constant.PLUGIN_VERSION_KEY);
-        String ext = properties.getProperty(Constant.PLUGIN_EXT_KEY);
-        String boot = properties.getProperty(Constant.PLUGIN_BOOT_CLASS);
-        return new PluginMetaInnerModel(code, desc, version, ext, boot);
+        try {
+            Properties properties = loadProperties(file.getAbsolutePath(), Constant.PLUGIN_META_FILE_NAME);
+            String code = properties.getProperty(Constant.PLUGIN_CODE_KEY);
+            String desc = properties.getProperty(Constant.PLUGIN_DESC_KEY);
+            String version = properties.getProperty(Constant.PLUGIN_VERSION_KEY);
+            String ext = properties.getProperty(Constant.PLUGIN_EXT_KEY);
+            String boot = properties.getProperty(Constant.PLUGIN_BOOT_CLASS);
+            List<ConfigSupport> list = new ConfigSupportClassLoader(file).get();
+            return new PluginMetaInnerModel(code, desc, version, ext, boot, list);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static Map<String, String> getMapping(File file) {

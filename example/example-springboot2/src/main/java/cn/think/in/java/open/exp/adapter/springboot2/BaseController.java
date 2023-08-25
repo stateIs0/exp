@@ -77,6 +77,18 @@ public class BaseController {
         }
     }
 
+    @RequestMapping("/preload")
+    public Plugin preload(String path) throws Throwable {
+        if (path.startsWith("http")) {
+            File tempFile = File.createTempFile("exp-" + UUID.randomUUID(), ".jar");
+            HttpFileDownloader.download(path, tempFile.getAbsolutePath());
+            path = tempFile.getAbsolutePath();
+        }
+
+        return expAppContext.preLoad(new File(path));
+    }
+
+
 
     @RequestMapping("/install")
     public String install(String path, String tenantId) throws Throwable {
@@ -85,6 +97,7 @@ public class BaseController {
             HttpFileDownloader.download(path, tempFile.getAbsolutePath());
             path = tempFile.getAbsolutePath();
         }
+
         Plugin plugin = expAppContext.load(new File(path));
 
         sortMap.put(plugin.getPluginId(), Math.abs(new Random().nextInt(100)));

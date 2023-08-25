@@ -1,6 +1,6 @@
 package cn.think.in.java.open.exp.client;
 
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * @version 1.0
@@ -8,21 +8,17 @@ import lombok.Setter;
  * @Description
  * @date 2023/8/17
  **/
+@Data
 public class ConfigSupport {
 
-    @Setter
     private String keyName;
 
-    @Setter
     private String defaultValue;
 
-    @Setter
     private String desc;
 
-    @Setter
     private boolean required;
 
-    @Setter
     private String pluginId;
 
     public ConfigSupport(String keyName) {
@@ -36,16 +32,5 @@ public class ConfigSupport {
 
     public String getProperty() {
         return PluginConfig.getSpi().getProperty(pluginId, keyName, defaultValue);
-    }
-
-    @Override
-    public String toString() {
-        return "ConfigSupport{" +
-                "keyName='" + keyName + '\'' +
-                ", defaultValue='" + defaultValue + '\'' +
-                ", desc='" + desc + '\'' +
-                ", required=" + required +
-                ", pluginId='" + pluginId + '\'' +
-                '}';
     }
 }

@@ -16,6 +16,8 @@ public interface PluginMetaService {
 
     void setConfig(PluginMetaConfig pluginMetaConfig);
 
+    PluginMetaThin parse(File file);
+
     PluginMetaFat install(File file) throws Throwable;
 
     void unInstall(String pluginId) throws Exception;

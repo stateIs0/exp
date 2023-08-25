@@ -1,6 +1,10 @@
 package cn.think.in.java.open.exp.classloader.support;
 
+import cn.think.in.java.open.exp.classloader.PluginMetaThin;
+import cn.think.in.java.open.exp.client.ConfigSupport;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * @version 1.0
@@ -11,9 +15,6 @@ import lombok.Data;
 @Data
 public class PluginMetaInnerModel {
 
-    /**
-     *
-     */
     String pluginId;
 
     String pluginCode;
@@ -26,10 +27,10 @@ public class PluginMetaInnerModel {
 
     String pluginBootClass;
 
+    List<ConfigSupport> configSupportList;
 
-    public PluginMetaInnerModel(String pluginCode, String pluginDesc,
-                                String pluginVersion, String pluginExt,
-                                String pluginBootClass) {
+
+    public PluginMetaInnerModel(String pluginCode, String pluginDesc, String pluginVersion, String pluginExt, String pluginBootClass, List<ConfigSupport> configSupportList) {
 
         this.pluginId = pluginCode + UniqueNameUtil.getSplit() + pluginVersion;
         this.pluginCode = pluginCode;
@@ -37,5 +38,11 @@ public class PluginMetaInnerModel {
         this.pluginVersion = pluginVersion;
         this.pluginExt = pluginExt;
         this.pluginBootClass = pluginBootClass;
+        this.configSupportList = configSupportList;
     }
+
+    public PluginMetaThin conv() {
+        return new PluginMetaThin(this.pluginId, this.pluginCode, this.pluginDesc, this.pluginVersion, this.pluginExt, this.pluginBootClass, this.configSupportList);
+    }
+
 }

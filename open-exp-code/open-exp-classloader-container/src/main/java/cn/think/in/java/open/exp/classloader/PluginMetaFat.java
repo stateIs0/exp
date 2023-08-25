@@ -16,32 +16,13 @@ import java.util.Map;
  * @date 2023/8/9
  **/
 @Data
-public class PluginMetaFat {
-
-    private String pluginId;
-
-    private String pluginCode;
-
-    private String pluginDesc;
-
-    private String pluginVersion;
-
-    private String pluginExt;
-
-    private String pluginBootClass;
+public class PluginMetaFat extends PluginMetaThin {
 
     private PluginObjectScanner scanner;
-
-    /**
-     * 扩展点映射关系
-     */
     private Map<String, String> extensionMappings;
-
     private File location;
-
     private ClassLoader classLoader;
 
-    private List<ConfigSupport> configSupportList;
 
     public Plugin conv() {
         Plugin plugin = new Plugin();
