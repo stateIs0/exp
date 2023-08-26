@@ -14,6 +14,7 @@
         <module>../open-exp-code</module>
         <module>../spring-adapter</module>
         <module>../example</module>
+        <module>../open-exp-code/auto-install-exp-maven-plugin</module>
     </modules>
 
 </project>

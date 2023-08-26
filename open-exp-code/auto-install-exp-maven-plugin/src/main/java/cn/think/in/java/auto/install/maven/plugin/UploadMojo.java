@@ -1,0 +1,121 @@
+package cn.think.in.java.auto.install.maven.plugin;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.codehaus.plexus.util.StringUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.Properties;
+
+@Mojo(name = "upload", defaultPhase = LifecyclePhase.PACKAGE)
+public class UploadMojo extends AbstractMojo {
+
+    @Parameter(defaultValue = "${project.build.directory}", property = "outputDir", required = true)
+    private File outputDirectory;
+
+    @Parameter(property = "jarName", required = true)
+    private String jarName;
+
+    @Parameter(property = "uploadUrl", required = true)
+    private String uploadUrl;
+
+    @Parameter(property = "uninstallUrl", required = false)
+    private String uninstallUrl;
+
+    @Parameter(defaultValue = "false", property = "skipUpload", required = true)
+    private boolean skipUpload;
+
+    public void execute() throws MojoExecutionException {
+        if (skipUpload) {
+            getLog().info("Skipping upload.");
+            return;
+        }
+
+        File jarFile = new File(outputDirectory, jarName);
+        if (!jarFile.exists()) {
+            throw new MojoExecutionException("Jar file does not exist: " + jarFile);
+        }
+
+        URLClassLoader urlClassLoader = null;
+        try {
+            urlClassLoader = new URLClassLoader(new URL[]{jarFile.toURL()}, Thread.currentThread().getContextClassLoader());
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        URL resource = urlClassLoader.findResource("pluginInfo.properties");
+        URL resource2 = urlClassLoader.findResource("eep.config");
+        Properties properties = new Properties();
+        try {
+            properties.load(resource.openStream());
+            properties.load(resource2.openStream());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        Object o = properties.get("esign.plugin.code");
+        Object o2 = properties.get("esign.plugin.version");
+
+        String id = o + "_" + o2;
+
+        getLog().info("插件 id = " + id);
+        tryUninstall(id);
+
+        uploadFile(jarFile);
+    }
+
+    void tryUninstall(String pluginId) throws MojoExecutionException {
+        if (StringUtils.isEmpty(uninstallUrl)) {
+            return;
+        }
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            HttpGet uploadFile = new HttpGet(uninstallUrl + "?pluginid=" + pluginId);
+
+            CloseableHttpResponse response = httpClient.execute(uploadFile);
+            HttpEntity responseEntity = response.getEntity();
+
+            getLog().info("卸载结束. Server response: " + EntityUtils.toString(responseEntity));
+        } catch (Exception e) {
+            throw new MojoExecutionException("Error uploading file", e);
+        }
+
+    }
+
+    private void uploadFile(File file) throws MojoExecutionException {
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            HttpPost uploadFile = new HttpPost(uploadUrl);
+            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+            builder.addBinaryBody("file", file);
+            HttpEntity multipart = builder.build();
+            uploadFile.setEntity(multipart);
+
+            CloseableHttpResponse response = httpClient.execute(uploadFile);
+            HttpEntity responseEntity = response.getEntity();
+
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode != 200) {
+                String reasonPhrase = response.getStatusLine().getReasonPhrase();
+                throw new MojoExecutionException("Failed to upload file. Server returned status code: " + statusCode
+                        + ", reasonPhrase = " + reasonPhrase);
+            }
+
+            getLog().info("File uploaded successfully. Server response: " + EntityUtils.toString(responseEntity));
+        } catch (Exception e) {
+            throw new MojoExecutionException("Error uploading file", e);
+        }
+    }
+}
