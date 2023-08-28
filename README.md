@@ -228,7 +228,7 @@ public interface PluginFilterService {
 Tenant filtering example code:
 
 ````java
-PluginFilter filter = new TenantCallback() {
+PluginFilter filter = new PluginFilter() {
    @Override
    public <T> List<FModel<T>> filter(List<FModel<T>> list) {
       return list;
