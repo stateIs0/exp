@@ -239,7 +239,13 @@ Optional<UserService> optional = userServices.stream().findFirst();
 
 #### cn.think.in.java.open.exp.client.PluginConfig
 
-插件配置 SPI
+插件配置 SPI, 相较于普通的 config api, 会多出一个 pluginId 维度, 方便基线管理各个插件的配置
+
+```java
+public interface PluginConfig {
+    String getProperty(String pluginId, String key, String defaultValue);
+}
+```
 
 插件获取配置示例代码:
 
@@ -252,6 +258,8 @@ public String hello() {
    return configSupport.getProperty();
 }
 ```
+
+## 插件核心其他配置
 
 springboot 配置项(-D 或 application.yml 都支持):
 
