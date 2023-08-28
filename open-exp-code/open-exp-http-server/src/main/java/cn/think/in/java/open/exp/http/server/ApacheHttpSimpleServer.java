@@ -43,7 +43,7 @@ public class ApacheHttpSimpleServer {
         }
         HttpProcessor httpProcessor = HttpProcessorBuilder.create()
                 .add(new ResponseDate())
-                .add(new ResponseServer("EEP-Server/1.1"))
+                .add(new ResponseServer("ExP-Server/1.1"))
                 .add(new ResponseContent())
                 .add(new ResponseConnControl()).build();
 
@@ -101,7 +101,7 @@ public class ApacheHttpSimpleServer {
                 conn.bind(socket);
 
                 Thread t = new RequestListenerThread(httpService, conn);
-                t.setName("eep-http-server-" + conn.getRemoteAddress() + ":" + conn.getRemotePort());
+                t.setName("exp-http-server-" + conn.getRemoteAddress() + ":" + conn.getRemotePort());
                 t.setDaemon(true);
                 t.start();
             }

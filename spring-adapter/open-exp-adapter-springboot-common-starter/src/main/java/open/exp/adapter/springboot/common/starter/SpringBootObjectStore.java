@@ -55,7 +55,6 @@ public class SpringBootObjectStore implements ObjectStore {
 
 
         objectScans.forEach(i -> i.registerApis(list, pluginId));
-
         classesCache.put(pluginId, list);
     }
 
@@ -83,7 +82,7 @@ public class SpringBootObjectStore implements ObjectStore {
         if (beanFactory == null) {
             return null;
         }
-        String name = UniqueNameUtil.getName(c.getName(), pluginId);
+        String name = UniqueNameUtil.getName(c, pluginId);
         return (T) beanFactory.getBean(name);
     }
 

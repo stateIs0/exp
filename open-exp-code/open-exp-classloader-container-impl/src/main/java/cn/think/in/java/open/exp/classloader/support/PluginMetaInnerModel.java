@@ -36,7 +36,7 @@ public class PluginMetaInnerModel {
             pluginVersion, String pluginExt, String pluginBootClass,
                                 List<ConfigSupport> configSupportList, String classLoaderMode) {
 
-        this.pluginId = pluginCode + UniqueNameUtil.getSplit() + pluginVersion;
+        this.pluginId = pluginCode + UniqueNameUtil.getPluginIdSplit() + pluginVersion;
         this.pluginCode = pluginCode;
         this.pluginDesc = pluginDesc;
         this.pluginVersion = pluginVersion;

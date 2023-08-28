@@ -1,6 +1,8 @@
 package cn.think.in.java.open.exp.classloader.impl;
 
+import cn.think.in.java.open.exp.classloader.LogSpi;
 import cn.think.in.java.open.exp.client.PluginClassLoader;
+import cn.think.in.java.open.exp.client.SpiFactory;
 
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -24,6 +26,9 @@ public class BaseClassLoader extends URLClassLoader implements PluginClassLoader
     private final Path extractPath;
     boolean definePackage = false;
     private boolean isParentMode;
+    private LogSpi logSpi = SpiFactory.get(LogSpi.class, c -> {
+
+    });
 
     public BaseClassLoader(String extractDir, ClassLoader parent, boolean isParentMode) throws Exception {
         super(new URL[]{Paths.get(extractDir).toUri().toURL()}, parent);
@@ -65,7 +70,9 @@ public class BaseClassLoader extends URLClassLoader implements PluginClassLoader
                 definePackage(name.substring(0, name.lastIndexOf(".")), null, null, null, null, null, null, null);
                 definePackage = true;
             }
-            return defineClass(name, classData, 0, classData.length, protectionDomain);
+            Class<?> aClass = defineClass(name, classData, 0, classData.length, protectionDomain);
+            logSpi.enhance(aClass);
+            return aClass;
         } catch (Exception e) {
             throw new ClassNotFoundException(name, e);
         }

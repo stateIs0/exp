@@ -8,17 +8,23 @@ package cn.think.in.java.open.exp.classloader.support;
  **/
 public class UniqueNameUtil {
 
-
-    public static String getSplit() {
+    public static String getPluginIdSplit() {
         return "_";
     }
 
-    public static String getName(Class<?> c, String pluginId) {
-        return c.getName() + getSplit() + pluginId;
+    public static String getNameSplit() {
+        return "___";
     }
 
-    public static String getName(String c, String pluginId) {
-        return c + getSplit() + pluginId;
+    public static String getName(Class<?> c, String pluginId) {
+        return c.getName() + getNameSplit() + pluginId;
+    }
+
+    public static String getPluginId(String name) {
+        if (!name.contains(getNameSplit())) {
+            return null;
+        }
+        return name.split(getNameSplit())[1];
     }
 
 }
