@@ -1,5 +1,6 @@
 package cn.think.in.java.auto.install.maven.plugin;
 
+import cn.think.in.java.open.exp.client.Constant;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -21,6 +22,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Properties;
+
+import static cn.think.in.java.open.exp.client.Constant.PLUGIN_META_FILE_NAME;
 
 @Mojo(name = "upload", defaultPhase = LifecyclePhase.PACKAGE)
 public class UploadMojo extends AbstractMojo {
@@ -57,7 +60,7 @@ public class UploadMojo extends AbstractMojo {
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
-        URL resource = urlClassLoader.findResource("pluginMeta.properties");
+        URL resource = urlClassLoader.findResource(PLUGIN_META_FILE_NAME);
         Properties properties = new Properties();
         try {
             properties.load(resource.openStream());
@@ -65,8 +68,8 @@ public class UploadMojo extends AbstractMojo {
             throw new RuntimeException(e);
         }
 
-        Object o = properties.get("exp.plugin.code");
-        Object o2 = properties.get("exp.plugin.version");
+        Object o = properties.get(Constant.PLUGIN_CODE_KEY);
+        Object o2 = properties.get(Constant.PLUGIN_VERSION_KEY);
 
         String id = o + "_" + o2;
 
