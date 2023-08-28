@@ -14,6 +14,7 @@
 3. 🥇插件
     - 扩展功能使用插件的方式支持，你可以理解为 idea、eclipse 里的插件。
     - 插件里的代码写法和 spring 一样（如果你的程序是在 spring 里运行）
+    - 插件是类隔离的,支持 parent-first 或 self-first 模式.
 4. 🥈热插拔
     - 插件支持从 jvm 和 spring 容器里摘除.
     - 支持运行时动态安装 jar 和 zip;
