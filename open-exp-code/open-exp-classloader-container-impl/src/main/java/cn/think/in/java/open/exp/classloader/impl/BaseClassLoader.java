@@ -23,10 +23,28 @@ public class BaseClassLoader extends URLClassLoader implements PluginClassLoader
 
     private final Path extractPath;
     boolean definePackage = false;
+    private boolean isParentMode;
 
-    public BaseClassLoader(String extractDir, ClassLoader parent) throws Exception {
+    public BaseClassLoader(String extractDir, ClassLoader parent, boolean isParentMode) throws Exception {
         super(new URL[]{Paths.get(extractDir).toUri().toURL()}, parent);
         this.extractPath = Paths.get(extractDir);
+        this.isParentMode = isParentMode;
+    }
+
+    @Override
+    public Class<?> loadClass(String name) throws ClassNotFoundException {
+        if (isParentMode) {
+            return super.loadClass(name);
+        }
+        Class<?> loadedClass = findLoadedClass(name);
+        if (loadedClass != null) {
+            return loadedClass;
+        }
+        try {
+            return findClass(name);
+        } catch (Exception e) {
+            return getParent().loadClass(name);
+        }
     }
 
     @Override

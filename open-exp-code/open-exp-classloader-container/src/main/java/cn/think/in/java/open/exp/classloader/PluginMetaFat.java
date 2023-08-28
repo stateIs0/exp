@@ -1,12 +1,10 @@
 package cn.think.in.java.open.exp.classloader;
 
-import cn.think.in.java.open.exp.client.ConfigSupport;
 import cn.think.in.java.open.exp.client.Plugin;
 import cn.think.in.java.open.exp.client.PluginObjectScanner;
 import lombok.Data;
 
 import java.io.File;
-import java.util.List;
 import java.util.Map;
 
 /**

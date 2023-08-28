@@ -27,10 +27,14 @@ public class PluginMetaInnerModel {
 
     String pluginBootClass;
 
+    String classLoaderMode;
+
     List<ConfigSupport> configSupportList;
 
 
-    public PluginMetaInnerModel(String pluginCode, String pluginDesc, String pluginVersion, String pluginExt, String pluginBootClass, List<ConfigSupport> configSupportList) {
+    public PluginMetaInnerModel(String pluginCode, String pluginDesc, String
+            pluginVersion, String pluginExt, String pluginBootClass,
+                                List<ConfigSupport> configSupportList, String classLoaderMode) {
 
         this.pluginId = pluginCode + UniqueNameUtil.getSplit() + pluginVersion;
         this.pluginCode = pluginCode;
@@ -39,10 +43,13 @@ public class PluginMetaInnerModel {
         this.pluginExt = pluginExt;
         this.pluginBootClass = pluginBootClass;
         this.configSupportList = configSupportList;
+        this.classLoaderMode = classLoaderMode;
     }
 
     public PluginMetaThin conv() {
-        return new PluginMetaThin(this.pluginId, this.pluginCode, this.pluginDesc, this.pluginVersion, this.pluginExt, this.pluginBootClass, this.configSupportList);
+        return new PluginMetaThin(this.pluginId, this.pluginCode,
+                this.pluginDesc, this.pluginVersion, this.pluginExt,
+                this.pluginBootClass, this.configSupportList, this.classLoaderMode);
     }
 
 }

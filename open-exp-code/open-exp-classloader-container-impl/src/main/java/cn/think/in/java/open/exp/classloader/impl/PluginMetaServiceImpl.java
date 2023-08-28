@@ -5,10 +5,7 @@ import cn.think.in.java.open.exp.classloader.support.ClassLoaderFinder;
 import cn.think.in.java.open.exp.classloader.support.DirectoryCleaner;
 import cn.think.in.java.open.exp.classloader.support.MetaConfigReader;
 import cn.think.in.java.open.exp.classloader.support.PluginMetaInnerModel;
-import cn.think.in.java.open.exp.client.ConfigSupport;
-import cn.think.in.java.open.exp.client.ExpBoot;
-import cn.think.in.java.open.exp.client.PluginObjectScanner;
-import cn.think.in.java.open.exp.client.StringUtil;
+import cn.think.in.java.open.exp.client.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -80,7 +77,11 @@ public class PluginMetaServiceImpl implements PluginMetaService {
         }
 
         PluginMetaFat pluginMetaFat = new PluginMetaFat();
-        ClassLoader classLoader = ClassLoaderFinder.find(file, dir);
+        String mode = meta.getClassLoaderMode();
+        if (StringUtil.isEmpty(mode)) {
+            mode = Constant.PLUGIN_CLASS_LOADER_MODE_PARENT;
+        }
+        ClassLoader classLoader = ClassLoaderFinder.find(file, dir, mode);
         pluginMetaFat.setClassLoader(classLoader);
 
         Class<ExpBoot> aClass = (Class<ExpBoot>) classLoader.loadClass(meta.getPluginBootClass());
@@ -95,6 +96,8 @@ public class PluginMetaServiceImpl implements PluginMetaService {
         pluginMetaFat.setPluginVersion(meta.getPluginVersion());
         pluginMetaFat.setPluginExt(meta.getPluginExt());
         pluginMetaFat.setPluginBootClass(meta.getPluginBootClass());
+        pluginMetaFat.setClassLoaderMode(meta.getClassLoaderMode());
+
         pluginMetaFat.setLocation(new File(dir));
         pluginMetaFat.setConfigSupportList(getConfigSupportFields(aClass, meta.getPluginId()));
 

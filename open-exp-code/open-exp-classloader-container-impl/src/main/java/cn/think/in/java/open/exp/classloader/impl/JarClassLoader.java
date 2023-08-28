@@ -18,8 +18,8 @@ import java.util.jar.JarFile;
  */
 public class JarClassLoader extends BaseClassLoader implements PluginClassLoader {
 
-    public JarClassLoader(String jarFilePath, String extractDir, ClassLoader parent) throws Exception {
-        super(extractDir, parent);
+    public JarClassLoader(String jarFilePath, String extractDir, ClassLoader parent, boolean isParentMode) throws Exception {
+        super(extractDir, parent, isParentMode);
         extractJar(jarFilePath, extractDir);
     }
 

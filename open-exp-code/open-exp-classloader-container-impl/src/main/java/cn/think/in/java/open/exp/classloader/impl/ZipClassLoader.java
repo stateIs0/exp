@@ -15,8 +15,8 @@ import java.util.zip.ZipFile;
 
 public class ZipClassLoader extends BaseClassLoader implements PluginClassLoader {
 
-    public ZipClassLoader(String zipFilePath, String extractDir, ClassLoader parent) throws Exception {
-        super(extractDir, parent);
+    public ZipClassLoader(String zipFilePath, String extractDir, ClassLoader parent, boolean isParentMode) throws Exception {
+        super(extractDir, parent, isParentMode);
         extractZip(zipFilePath, extractDir);
     }
 

@@ -2,6 +2,7 @@ package cn.think.in.java.open.exp.classloader.support;
 
 import cn.think.in.java.open.exp.classloader.impl.JarClassLoader;
 import cn.think.in.java.open.exp.classloader.impl.ZipClassLoader;
+import cn.think.in.java.open.exp.client.Constant;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -12,18 +13,19 @@ import java.io.File;
 @Slf4j
 public class ClassLoaderFinder {
 
-    public static ClassLoader find(File file, String dir) {
+    public static ClassLoader find(File file, String dir, String modeString) {
         ClassLoader classLoader = null;
         try {
             // springboot launcher classloader
             ClassLoader parent = Thread.currentThread().getContextClassLoader();
 
+            boolean isParentMode = !Constant.PLUGIN_CLASS_LOADER_MODE_SELF.equals(modeString);
+            log.info("dir {} isParentMode = {}", dir, modeString);
+
             if (file.getName().endsWith(".jar")) {
-                classLoader =
-                        new JarClassLoader(file.getPath(), dir, parent);
+                classLoader = new JarClassLoader(file.getPath(), dir, parent, isParentMode);
             } else if (file.getName().endsWith(".zip")) {
-                classLoader =
-                        new ZipClassLoader(file.getPath(), dir, parent);
+                classLoader = new ZipClassLoader(file.getPath(), dir, parent, isParentMode);
             }
 
             if (classLoader == null) {

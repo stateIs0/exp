@@ -31,4 +31,6 @@ public class PluginMetaThin {
     protected String pluginBootClass;
 
     protected List<ConfigSupport> configSupportList;
+
+    protected String classLoaderMode;
 }

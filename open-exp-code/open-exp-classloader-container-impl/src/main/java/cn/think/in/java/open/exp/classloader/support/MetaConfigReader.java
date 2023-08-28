@@ -2,6 +2,7 @@ package cn.think.in.java.open.exp.classloader.support;
 
 import cn.think.in.java.open.exp.client.ConfigSupport;
 import cn.think.in.java.open.exp.client.Constant;
+import cn.think.in.java.open.exp.client.StringUtil;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 
@@ -32,8 +33,9 @@ public class MetaConfigReader {
             String version = properties.getProperty(Constant.PLUGIN_VERSION_KEY);
             String ext = properties.getProperty(Constant.PLUGIN_EXT_KEY);
             String boot = properties.getProperty(Constant.PLUGIN_BOOT_CLASS);
+            String mode = properties.getProperty(Constant.PLUGIN_CLASS_LOADER_MODE);
             List<ConfigSupport> list = new ConfigSupportClassLoader(file).get();
-            return new PluginMetaInnerModel(code, desc, version, ext, boot, list);
+            return new PluginMetaInnerModel(code, desc, version, ext, boot, list, mode);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
