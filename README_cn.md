@@ -272,6 +272,24 @@ plugins_spring_url_replace_enable={插件是否可以覆盖主程序 url, 注意
 exp_object_field_config_json={插件动态增加字段json, json 结构定义见: cn.think.in.java.open.exp.object.field.ext.ExtMetaBean}
 ```
 
+
+## 插件配置
+
+```properties
+# 插件 boot class
+plugin.boot.class=cn.think.in.java.open.exp.example.empty.Boot
+# code 名 不能为空
+plugin.code=example.plugin.empty
+# 描述
+plugin.desc=this a plugin a empty demo
+# 版本
+plugin.version=1.0.0
+# 扩展
+plugin.ext=null
+# 类加载模式,默认 parent-first
+plugin.classLoader.mode=self-first
+```
+
 ## License
 
 [Apache 2.0 License.](https://github.com/stateIs0/exp/blob/master/LICENSE)
