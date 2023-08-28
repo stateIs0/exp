@@ -6,7 +6,7 @@ import java.util.List;
  * 对象存储仓库, 默认是存在 spring 容器里.
  * 可以实现为 map 之类的.
  **/
-public interface ObjectStore extends TenantObjectStore {
+public interface ObjectStore {
 
     /**
      * 注册插件到对象仓库

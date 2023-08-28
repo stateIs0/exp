@@ -6,7 +6,9 @@ import java.util.List;
 
 /**
  * @Author cxs
+ *
  **/
+@ExpSpi
 public interface PluginFilter {
 
     <T> List<FModel<T>> filter(List<FModel<T>> list);

@@ -1,8 +1,6 @@
 package cn.think.in.java.open.exp.core.impl;
 
 import cn.think.in.java.open.exp.client.ObjectStore;
-import cn.think.in.java.open.exp.client.TenantObjectProxyFactory;
-import cn.think.in.java.open.exp.core.impl.proxy.PluginIdNetSfCglibProxyEnhancer;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,13 +18,11 @@ public class SimpleObjectStore implements ObjectStore {
     public void startRegister(List<Class<?>> list, String pluginId) throws Exception {
         Map<String, Object> store = new HashMap<>();
         list.forEach(aClass -> {
-            Object proxy;
             try {
-                proxy = getTenantObjectProxyFactory().getProxy(aClass.newInstance(), pluginId);
-            } catch (Exception e) {
+                store.put(aClass.getName(), aClass.newInstance());
+            } catch (InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
-            store.put(aClass.getName(), proxy);
         });
         pluginIdMapping.put(pluginId, store);
     }
@@ -48,10 +44,5 @@ public class SimpleObjectStore implements ObjectStore {
     @Override
     public Object getOrigin() {
         return pluginIdMapping;
-    }
-
-    //@Override
-    public TenantObjectProxyFactory getTenantObjectProxyFactory() {
-        return PluginIdNetSfCglibProxyEnhancer::getEnhancer;
     }
 }

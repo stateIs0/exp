@@ -3,21 +3,17 @@ package open.exp.adapter.springboot.common.starter;
 import cn.think.in.java.open.exp.classloader.support.UniqueNameUtil;
 import cn.think.in.java.open.exp.client.ObjectStore;
 import cn.think.in.java.open.exp.client.SpiFactory;
-import cn.think.in.java.open.exp.client.TenantObjectProxyFactory;
 import lombok.extern.slf4j.Slf4j;
 import open.exp.adapter.springboot.common.starter.spi.ObjectScan;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-//import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
-//import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
 
 /**
  *
@@ -63,26 +59,6 @@ public class SpringBootObjectStore implements ObjectStore {
         classesCache.put(pluginId, list);
     }
 
-//    private void handleMappings(String pluginId, List<Class<?>> classes) {
-//        RequestMappingHandlerMapping mapping = (RequestMappingHandlerMapping) beanFactory.getBean("requestMappingHandlerMapping");
-//        RequestMappingHandlerAdapter adapter = (RequestMappingHandlerAdapter) beanFactory.getBean("requestMappingHandlerAdapter");
-//        for (Class<?> aClass : classes) {
-//            try {
-//                beanFactory.getBean(UniqueNameUtil.getName(aClass, pluginId));
-//            } catch (Exception e) {
-//                // ignore
-//            }
-//        }
-//        for (Class<?> aClass : classes) {
-//            Object bean = beanFactory.getBean(UniqueNameUtil.getName(aClass, pluginId));
-//
-//            RestUrlScanComponent r = new RestUrlScanComponent(bean, mapping, adapter,
-//                    pluginsSpringUrlReplaceKey.get(), pluginId);
-//            r.register();
-//            cache.put(UniqueNameUtil.getName(aClass, pluginId), r);
-//        }
-//    }
-
     @Override
     public void unRegister(String pluginId) {
         List<Class<?>> classes = classesCache.get(pluginId);
@@ -99,12 +75,6 @@ public class SpringBootObjectStore implements ObjectStore {
 
     private void unRegisterCallback(Class<?> aClass, String pluginId) {
         String name = UniqueNameUtil.getName(aClass, pluginId);
-//        RestUrlScanComponent urlComponent = cache.get(name);
-//        if (urlComponent != null) {
-//            urlComponent.unRegister();
-//        }
-
-        //cache.remove(name);
         beanDefinitionRegistry.removeBeanDefinition(name);
     }
 
@@ -122,8 +92,4 @@ public class SpringBootObjectStore implements ObjectStore {
         return beanFactory;
     }
 
-//    @Override
-//    public TenantObjectProxyFactory getTenantObjectProxyFactory() {
-//        return tenantObjectProxy;
-//    }
 }

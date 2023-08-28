@@ -6,6 +6,7 @@ package cn.think.in.java.open.exp.client;
  * @Description
  * @date 2023/8/12
  **/
+@ExpSpi
 public interface PluginConfig {
 
     static PluginConfig getSpi() {
