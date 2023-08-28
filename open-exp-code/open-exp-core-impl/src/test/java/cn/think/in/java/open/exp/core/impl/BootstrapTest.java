@@ -98,7 +98,7 @@ public class BootstrapTest {
         };
 
         // 调用逻辑
-        expAppContext.get(UserService.class, callback).stream().findFirst().ifPresent(userService -> {
+        expAppContext.get(UserService.class).stream().findFirst().ifPresent(userService -> {
             System.out.println("---->>> " + userService.getClass().getName());
             userService.createUserExt();
             // Assert

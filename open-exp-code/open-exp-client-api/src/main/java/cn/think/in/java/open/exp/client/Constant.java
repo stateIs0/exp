@@ -15,4 +15,7 @@ public interface Constant {
     String PLUGIN_VERSION_KEY = "plugin.version";
     String PLUGIN_EXT_KEY = "plugin.ext";
     String PLUGIN_BOOT_CLASS = "plugin.boot.class";
+    String PLUGIN_CLASS_LOADER_MODE = "plugin.classLoader.mode";
+    String PLUGIN_CLASS_LOADER_MODE_SELF = "self-first";
+    String PLUGIN_CLASS_LOADER_MODE_PARENT = "parent-first";
 }

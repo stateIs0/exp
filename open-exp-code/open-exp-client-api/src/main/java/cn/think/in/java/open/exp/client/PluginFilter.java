@@ -9,8 +9,6 @@ import java.util.List;
  **/
 public interface PluginFilter {
 
-    PluginFilter MOCK = new PluginFilterMock();
-
     <T> List<FModel<T>> filter(List<FModel<T>> list);
 
     @Data
@@ -21,13 +19,6 @@ public interface PluginFilter {
         public FModel(T t, String pluginId) {
             this.t = t;
             this.pluginId = pluginId;
-        }
-    }
-
-    class PluginFilterMock implements PluginFilter {
-        @Override
-        public <T> List<FModel<T>> filter(List<FModel<T>> list) {
-            return list;
         }
     }
 }

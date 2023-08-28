@@ -23,6 +23,7 @@ public class ExpAppContextImpl implements ExpAppContext {
     private PluginMetaService metaService;
     private ObjectStore objectStore = new SimpleObjectStore();
     private final List<String> all = new ArrayList<>();
+    private PluginFilter filter = SpiFactory.get(PluginFilter.class);
 
     public ExpAppContextImpl() {
     }
@@ -61,11 +62,6 @@ public class ExpAppContextImpl implements ExpAppContext {
 
     @Override
     public <P> List<P> get(String extCode) {
-        return get(extCode, PluginFilter.MOCK);
-    }
-
-    @Override
-    public <P> List<P> get(String extCode, PluginFilter filter) {
         try {
             List<ExpClass<P>> classes = metaService.get(extCode);
 
@@ -85,17 +81,11 @@ public class ExpAppContextImpl implements ExpAppContext {
                 Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
     public <P> List<P> get(Class<P> pClass) {
         return get(pClass.getName());
-    }
-
-    @Override
-    public <P> List<P> get(Class<P> pClass, PluginFilter callback) {
-        return get(pClass.getName(), callback);
     }
 
     @Override

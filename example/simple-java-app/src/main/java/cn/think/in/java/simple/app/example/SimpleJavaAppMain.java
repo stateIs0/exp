@@ -2,30 +2,21 @@ package cn.think.in.java.simple.app.example;
 
 import cn.think.in.java.open.exp.adapter.springboot2.example.UserService;
 import cn.think.in.java.open.exp.client.ExpAppContext;
-import cn.think.in.java.open.exp.client.PluginFilter;
 import cn.think.in.java.open.exp.core.impl.Bootstrap;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 @Slf4j
 public class SimpleJavaAppMain {
     static ExpAppContext expAppContext;
-    static PluginFilter callback = new PluginFilter() {
-
-        @Override
-        public <T> List<FModel<T>> filter(List<FModel<T>> list) {
-            return list;
-        }
-    };
 
     public static void main(String[] args) throws Throwable {
         Class<UserService> extensionClass = UserService.class;
         expAppContext = Bootstrap.bootstrap("exp-plugins/", "workdir-simple-java-app");
 
-        expAppContext.get(extensionClass, callback).stream().findFirst().ifPresent(userService -> {
+        expAppContext.get(extensionClass).stream().findFirst().ifPresent(userService -> {
             System.out.println(userService.getClass());
             System.out.println(userService.getClass().getClassLoader());
             userService.createUserExt();

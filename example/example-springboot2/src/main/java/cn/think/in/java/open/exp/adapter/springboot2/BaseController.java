@@ -56,7 +56,7 @@ public class BaseController {
         // 上下文设置租户 id
         context.set(tenantId);
         try {
-            List<UserService> userServices = expAppContext.get(UserService.class, callback);
+            List<UserService> userServices = expAppContext.get(UserService.class);
             // first 第一个就是这个租户优先级最高的.
             Optional<UserService> optional = userServices.stream().findFirst();
             if (optional.isPresent()) {

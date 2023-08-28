@@ -53,16 +53,6 @@ public class ExpAppContextMock implements ExpAppContext {
     }
 
     @Override
-    public <P> List<P> get(String extCode, PluginFilter filter) {
-        return null;
-    }
-
-    @Override
-    public <P> List<P> get(Class<P> pClass, PluginFilter callback) {
-        return null;
-    }
-
-    @Override
     public <R, P> R streamList(Class<P> pClass, Ec<R, List<P>> ecs) {
         return null;
     }

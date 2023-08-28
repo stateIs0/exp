@@ -7,7 +7,7 @@ import java.util.Optional;
 /**
  * @author cxs
  */
-public interface ExpAppContext extends StreamAppContext, PluginFilterService {
+public interface ExpAppContext extends StreamAppContext {
 
     /**
      * 获取当前所有的插件 id
