@@ -173,12 +173,6 @@ public interface ExpAppContext {
 
 
    /**
-    * 简化操作, code 就是全路径类名
-    */
-   <P> List<P> get(Class<P> pClass);
-
-
-   /**
     * 获取单个插件实例.
     */
    <P> Optional<P> get(String extCode, String pluginId);
@@ -188,7 +182,17 @@ public interface ExpAppContext {
 ## 流式 API
 
 ```java
+/**
+ * 流式 API, 优雅处理.
+ *
+ * @Author cxs
+ **/
 public interface StreamAppContext {
+
+   /**
+    * 简化操作, code 就是全路径类名
+    */
+   <P> List<P> streamOne(Class<P> pClass);
 
    /**
     * 针对有返回值的 api, 需要支持流式调用
@@ -202,34 +206,33 @@ public interface StreamAppContext {
 }
 ```
 
-## 扩展
+## SPI 扩展
 
 cn.think.in.java.open.exp.client.PluginFilter
 
+可在获取实例过程中过滤`扩展点实现`
+
 ```java
-/**
- * @Author cxs
- **/
-public interface PluginFilterService {
+public interface PluginFilter {
 
-   <P> List<P> get(String extCode, PluginFilter filter);
+   <T> List<FModel<T>> filter(List<FModel<T>> list);
 
-   <P> List<P> get(Class<P> pClass, PluginFilter callback);
+   @Data
+   class FModel<T> {
+      T t;
+      String pluginId;
+
+      public FModel(T t, String pluginId) {
+         this.t = t;
+         this.pluginId = pluginId;
+      }
+   }
 }
 ```
 
-租户过滤示例代码:
-
 ````java
-PluginFilter filter = new PluginFilter() {
-
-@Override
-public <T> List<FModel<T>> filter(List<FModel<T>> list) {
-        return list;
-   }
- }
-
-List<UserService> userServices = expAppContext.get(UserService.class, filter);
+// 假如实现了 PluginFilter SPI 接口, 可进行自定义过滤
+List<UserService> userServices = expAppContext.get(UserService.class);
 // first 第一个就是这个租户优先级最高的.
 Optional<UserService> optional = userServices.stream().findFirst();
 ````

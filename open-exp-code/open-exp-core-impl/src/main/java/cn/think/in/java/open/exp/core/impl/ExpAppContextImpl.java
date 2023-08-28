@@ -84,7 +84,7 @@ public class ExpAppContextImpl implements ExpAppContext {
     }
 
     @Override
-    public <P> List<P> get(Class<P> pClass) {
+    public <P> List<P> streamOne(Class<P> pClass) {
         return get(pClass.getName());
     }
 
@@ -111,7 +111,7 @@ public class ExpAppContextImpl implements ExpAppContext {
 
     @Override
     public <R, P> R streamList(Class<P> pClass, Ec<R, List<P>> ecs) {
-        List<P> list = get(pClass);
+        List<P> list = this.streamOne(pClass);
         if (list == null) {
             return null;
         }

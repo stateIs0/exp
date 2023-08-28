@@ -35,13 +35,6 @@ public interface ExpAppContext extends StreamAppContext {
      */
     <P> List<P> get(String extCode);
 
-
-    /**
-     * 简化操作, code 就是全路径类名
-     */
-    <P> List<P> get(Class<P> pClass);
-
-
     /**
      * 获取单个插件实例.
      */

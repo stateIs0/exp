@@ -16,7 +16,7 @@ public class SimpleJavaAppMain {
         Class<UserService> extensionClass = UserService.class;
         expAppContext = Bootstrap.bootstrap("exp-plugins/", "workdir-simple-java-app");
 
-        expAppContext.get(extensionClass).stream().findFirst().ifPresent(userService -> {
+        expAppContext.streamOne(extensionClass).stream().findFirst().ifPresent(userService -> {
             System.out.println(userService.getClass());
             System.out.println(userService.getClass().getClassLoader());
             userService.createUserExt();

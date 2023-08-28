@@ -43,7 +43,7 @@ public class ExpAppContextMock implements ExpAppContext {
     }
 
     @Override
-    public <P> List<P> get(Class<P> pClass) {
+    public <P> List<P> streamOne(Class<P> pClass) {
         return null;
     }
 

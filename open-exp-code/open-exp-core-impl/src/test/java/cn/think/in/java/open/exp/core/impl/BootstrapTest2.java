@@ -15,7 +15,7 @@ public class BootstrapTest2 {
                 "../../exp-plugins", "exp-workdir", "true");
 
         // 调用逻辑
-        expAppContext.get(UserService.class).stream().findFirst().ifPresent(userService -> {
+        expAppContext.streamOne(UserService.class).stream().findFirst().ifPresent(userService -> {
             System.out.println("---->>> " + userService.getClass().getName());
             userService.createUserExt();
             // Assert
