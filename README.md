@@ -53,7 +53,7 @@ Scenario:
 6. Allow plugins to override Spring main application Controllers.
 7. Provide support for plugins to access exclusive configurations, enabling customizable design for hot-reloading plugin configurations.
 8. Support transaction binding between plugins and the main application.
-9. Offer a fluent API to ensure a cleaner integration of extension points into the main application.
+9. Offer a stream API to ensure a cleaner integration of extension points into the main application.
 
 ## USE
 
