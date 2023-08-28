@@ -207,41 +207,29 @@ public interface StreamAppContext {
 cn.think.in.java.open.exp.client.PluginFilter
 
 ```java
-public interface TenantCallback {
+/**
+ * @Author cxs
+ **/
+public interface PluginFilterService {
 
-   /**
-    * 返回这个插件的序号, 默认 0; 
-    * {@link  cn.think.in.java.open.exp.client.ExpAppContext#get(java.lang.Class)} 函数返回的List 的第一位就是 sort 最高的.
-    */
-   int getSort(String pluginId);
+   <P> List<P> get(String extCode, PluginFilter filter);
 
-   /**
-    * 这个插件是否属于当前租户, 默认是;
-    * 这个返回值, 会影响 {@link  cn.think.in.java.open.exp.client.ExpAppContext#get(java.lang.Class)} 的结果
-    * 即进行过滤, 返回为 true 的 plugin 实现, 才会被返回.
-    */
-   boolean filter(String pluginId);
+   <P> List<P> get(Class<P> pClass, PluginFilter callback);
 }
 ```
 
 租户过滤示例代码:
 
 ````java
-TenantCallback registerCallback = new TenantCallback() {
-   @Override
-   public int getSort(String pluginId) {
-       // 获取这个插件的排序
-       return sortMap.get(pluginId);
-   }
+PluginFilter filter = new PluginFilter() {
 
-   @Override
-   public boolean filter(String pluginId) {
-       // 判断当前租户是不是这个匹配这个插件
-       return context.get().equals(pluginIdTenantIdMap.get(pluginId));
+@Override
+public <T> List<FModel<T>> filter(List<FModel<T>> list) {
+        return list;
    }
-}
-;
-List<UserService> userServices = expAppContext.get(UserService.class, registerCallback);
+ }
+
+List<UserService> userServices = expAppContext.get(UserService.class, filter);
 // first 第一个就是这个租户优先级最高的.
 Optional<UserService> optional = userServices.stream().findFirst();
 ````
