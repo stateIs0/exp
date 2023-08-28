@@ -1,6 +1,8 @@
 package open.exp.adapter.springboot.common.starter;
 
 import cn.think.in.java.open.exp.client.Constant;
+import cn.think.in.java.open.exp.client.PluginManager;
+import cn.think.in.java.open.exp.client.SpiFactory;
 import cn.think.in.java.open.exp.core.impl.Bootstrap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -30,6 +32,8 @@ public class ExpApplicationListener implements ApplicationListener<ApplicationRe
             String extPluginAutoDelete = event.getApplicationContext().getEnvironment().getProperty(Constant.PLUGINS_AUTO_DELETE_KEY, "true");
 
             Bootstrap.bootstrap(objectStore, pluginPath, workDir, extPluginAutoDelete);
+            SpiFactory.get(PluginManager.class, new PluginManager.PluginManagerMock() {
+            }).start();
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }
