@@ -214,41 +214,28 @@ public interface StreamAppContext {
 cn.think.in.java.open.exp.client.PluginFilter
 
 ```java
-public interface TenantCallback {
+/**
+ * @Author cxs
+ **/
+public interface PluginFilterService {
 
-   /**
-    * Returns the serial number of the plugin, default 0;
-    * {@link  cn.think.in.java.open.exp.client.ExpAppContext#get(java.lang.Class)} 函数返回的List 的第一位就是 sort 最高的.
-    */
-   int getSort(String pluginId);
+   <P> List<P> get(String extCode, PluginFilter filter);
 
-   /**
-    * Whether the plug-in belongs to the current tenant. The default is yes. 
-    * the return value, it will affect {@ link cn. Think. In. Java. Open. Exp. Client. ExpAppContext# get (Java. Lang. Class)} 
-    * If the plugin implementation is filtered and returns true, it will be returned.
-    */
-   boolean filter(String pluginId);
+   <P> List<P> get(Class<P> pClass, PluginFilter callback);
 }
 ```
 
 Tenant filtering example code:
 
 ````java
-TenantCallback registerCallback = new TenantCallback() {
+PluginFilter filter = new TenantCallback() {
    @Override
-   public int getSort(String pluginId) {
-       // Getting the Sorting of This Plugin
-        return sortMap.get(pluginId);
-   }
-
-   @Override
-   public boolean filter(String pluginId) {
-       // Determine if the current tenant matches this plugin
-        return context.get().equals(pluginIdTenantIdMap.get(pluginId));
+   public <T> List<FModel<T>> filter(List<FModel<T>> list) {
+      return list;
    }
 }
 ;
-List<UserService> userServices = expAppContext.get(UserService.class, registerCallback);
+List<UserService> userServices = expAppContext.get(UserService.class, filter);
 // first The first is the tenant's highest priority.
 Optional<UserService> optional = userServices.stream().findFirst();
 ````
