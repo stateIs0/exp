@@ -2,7 +2,7 @@ package cn.think.in.java.simple.app.example;
 
 import cn.think.in.java.open.exp.adapter.springboot2.example.UserService;
 import cn.think.in.java.open.exp.client.ExpAppContext;
-import cn.think.in.java.open.exp.client.TenantCallback;
+import cn.think.in.java.open.exp.client.PluginFilter;
 import cn.think.in.java.open.exp.core.impl.Bootstrap;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,17 +13,11 @@ import java.util.Random;
 @Slf4j
 public class SimpleJavaAppMain {
     static ExpAppContext expAppContext;
-    static TenantCallback callback = new TenantCallback() {
-        @Override
-        public int getSort(String pluginId) {
-            int sort = new Random().nextInt(10);
-            log.info(pluginId + " >>>>>>> " + sort);
-            return sort;
-        }
+    static PluginFilter callback = new PluginFilter() {
 
         @Override
-        public boolean filter(String pluginId) {
-            return true;
+        public <T> List<FModel<T>> filter(List<FModel<T>> list) {
+            return list;
         }
     };
 

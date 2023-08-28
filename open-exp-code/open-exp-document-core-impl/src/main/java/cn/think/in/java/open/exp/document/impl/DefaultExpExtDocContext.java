@@ -6,13 +6,7 @@ import cn.think.in.java.open.exp.document.api.model.ExtDocInterface;
 
 import java.util.List;
 
-/**
- * @version 1.0
- * @Author cxs
- * @Description
- * @date 2023/8/6
- **/
-public class DefaultEEPExtDocContext implements ExpDocContext {
+public class DefaultExpExtDocContext implements ExpDocContext {
 
     private volatile List<ExtDocInterface> list;
 

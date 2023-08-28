@@ -3,7 +3,7 @@ package cn.think.in.java.open.exp.core.impl;
 import cn.think.in.java.open.exp.adapter.springboot2.example.UserService;
 import cn.think.in.java.open.exp.client.ExpAppContext;
 import cn.think.in.java.open.exp.client.ObjectStore;
-import cn.think.in.java.open.exp.client.TenantCallback;
+import cn.think.in.java.open.exp.client.PluginFilter;
 import cn.think.in.java.open.exp.client.TenantObjectProxyFactory;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.cglib.core.NamingPolicy;
@@ -90,19 +90,10 @@ public class BootstrapTest {
 
 
         // 业务逻辑实现
-        TenantCallback callback = new TenantCallback() {
+        PluginFilter callback = new PluginFilter() {
             @Override
-            public int getSort(String pluginId) {
-                // 测试用, 随便写的.
-                if (pluginId.endsWith("1.0.0")) {
-                    return 2;
-                }
-                return 1;
-            }
-
-            @Override
-            public boolean filter(String pluginId) {
-                return true;
+            public <T> List<FModel<T>> filter(List<FModel<T>> list) {
+                return list;
             }
         };
 

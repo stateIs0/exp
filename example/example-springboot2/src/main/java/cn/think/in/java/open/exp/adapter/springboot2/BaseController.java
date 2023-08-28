@@ -4,7 +4,7 @@ import cn.think.in.java.open.exp.adapter.springboot2.example.UserService;
 import cn.think.in.java.open.exp.client.ExpAppContext;
 import cn.think.in.java.open.exp.client.ExpAppContextSpiFactory;
 import cn.think.in.java.open.exp.client.Plugin;
-import cn.think.in.java.open.exp.client.TenantCallback;
+import cn.think.in.java.open.exp.client.PluginFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +27,7 @@ public class BaseController {
     Map<String, Integer> sortMap = new HashMap<>();
     Map<String, String> pluginIdTenantIdMap = new HashMap<>();
 
-    TenantCallback callback;
+    PluginFilter callback;
 
     public BaseController() {
         sortMap.put("example-plugin1_1.0.0", 1);
@@ -35,17 +35,11 @@ public class BaseController {
         pluginIdTenantIdMap.put("example-plugin2_2.0.0", "12345");
         pluginIdTenantIdMap.put("example-plugin1_1.0.0", "12345");
 
-        callback = new TenantCallback() {
-            @Override
-            public int getSort(String pluginId) {
-                // 获取这个插件的排序
-                return sortMap.get(pluginId);
-            }
+        callback = new PluginFilter() {
 
             @Override
-            public boolean filter(String pluginId) {
-                // 判断当前租户是不是这个匹配这个插件
-                return context.get().equals(pluginIdTenantIdMap.get(pluginId));
+            public <T> List<FModel<T>> filter(List<FModel<T>> list) {
+                return list;
             }
         };
 

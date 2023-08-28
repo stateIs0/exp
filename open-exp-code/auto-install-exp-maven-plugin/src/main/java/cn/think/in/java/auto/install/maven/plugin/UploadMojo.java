@@ -57,18 +57,16 @@ public class UploadMojo extends AbstractMojo {
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
-        URL resource = urlClassLoader.findResource("pluginInfo.properties");
-        URL resource2 = urlClassLoader.findResource("eep.config");
+        URL resource = urlClassLoader.findResource("pluginMeta.properties");
         Properties properties = new Properties();
         try {
             properties.load(resource.openStream());
-            properties.load(resource2.openStream());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        Object o = properties.get("esign.plugin.code");
-        Object o2 = properties.get("esign.plugin.version");
+        Object o = properties.get("exp.plugin.code");
+        Object o2 = properties.get("exp.plugin.version");
 
         String id = o + "_" + o2;
 

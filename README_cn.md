@@ -204,7 +204,7 @@ public interface StreamAppContext {
 
 ## 扩展
 
-cn.think.in.java.open.exp.client.TenantCallback
+cn.think.in.java.open.exp.client.PluginFilter
 
 ```java
 public interface TenantCallback {
