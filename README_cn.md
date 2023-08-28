@@ -208,7 +208,7 @@ public interface StreamAppContext {
 
 ## SPI 扩展
 
-cn.think.in.java.open.exp.client.PluginFilter
+#### cn.think.in.java.open.exp.client.PluginFilter
 
 可在获取实例过程中过滤`扩展点实现`
 
@@ -236,6 +236,10 @@ List<UserService> userServices = expAppContext.get(UserService.class);
 // first 第一个就是这个租户优先级最高的.
 Optional<UserService> optional = userServices.stream().findFirst();
 ````
+
+#### cn.think.in.java.open.exp.client.PluginConfig
+
+插件配置 SPI
 
 插件获取配置示例代码:
 
