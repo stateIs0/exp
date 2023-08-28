@@ -275,6 +275,8 @@ exp_object_field_config_json={插件动态增加字段json, json 结构定义见
 
 ## 插件配置
 
+1. [pluginMeta.properties](example%2Fexample-plugin-empty%2Fsrc%2Fmain%2Fresources%2FpluginMeta.properties)
+
 ```properties
 # 插件 boot class
 plugin.boot.class=cn.think.in.java.open.exp.example.empty.Boot
@@ -288,6 +290,15 @@ plugin.version=1.0.0
 plugin.ext=null
 # 类加载模式,默认 parent-first
 plugin.classLoader.mode=self-first
+```
+
+2. [extension.properties](example%2Fexample-plugin-b-v2%2Fsrc%2Fmain%2Fresources%2Fextension.properties)
+
+扩展点映射
+
+```properties
+cn.think.in.java.open.exp.adapter.springboot2.example.UserService=\
+  cn.think.in.java.open.exp.example.b.UserPlugin
 ```
 
 ## License
