@@ -1,5 +1,6 @@
 package cn.think.in.java.open.exp.classloader;
 
+import cn.think.in.java.open.exp.client.ExpBoot;
 import cn.think.in.java.open.exp.client.Plugin;
 import cn.think.in.java.open.exp.client.PluginObjectScanner;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class PluginMetaFat extends PluginMetaThin {
     private Map<String, String> extensionMappings;
     private File location;
     private ClassLoader classLoader;
+    private ExpBoot expBoot;
 
 
     public Plugin conv() {

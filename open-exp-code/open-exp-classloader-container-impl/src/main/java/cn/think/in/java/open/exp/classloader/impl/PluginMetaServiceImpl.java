@@ -87,7 +87,9 @@ public class PluginMetaServiceImpl implements PluginMetaService {
         Class<ExpBoot> aClass = (Class<ExpBoot>) classLoader.loadClass(meta.getPluginBootClass());
         ExpBoot expBoot = aClass.newInstance();
         PluginObjectScanner register = expBoot.getRegister();
+        expBoot.start(meta.getPluginId());
 
+        pluginMetaFat.setExpBoot(expBoot);
         pluginMetaFat.setScanner(register);
         pluginMetaFat.setExtensionMappings(mapping);
         pluginMetaFat.setPluginId(meta.getPluginId());
@@ -128,6 +130,7 @@ public class PluginMetaServiceImpl implements PluginMetaService {
             entry.getValue().removeIf(s -> s.equals(pluginId));
         }
 
+        pluginMetaFat.getExpBoot().stop();
         ids.remove(pluginId);
     }
 

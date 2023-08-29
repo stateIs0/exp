@@ -23,7 +23,7 @@ public class ExpAppContextImpl implements ExpAppContext {
     private PluginMetaService metaService;
     private ObjectStore objectStore = new SimpleObjectStore();
     private final List<String> all = new ArrayList<>();
-    private PluginFilter filter = SpiFactory.get(PluginFilter.class);
+    private final PluginFilter filter = SpiFactory.get(PluginFilter.class);
 
     public ExpAppContextImpl() {
     }
