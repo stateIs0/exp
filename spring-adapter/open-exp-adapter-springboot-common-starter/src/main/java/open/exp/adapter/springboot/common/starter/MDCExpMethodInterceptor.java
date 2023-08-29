@@ -38,6 +38,7 @@ public class MDCExpMethodInterceptor implements MethodInterceptor {
             Object r;
             try {
                 pushPluginId(pluginId);
+                method.setAccessible(true);
                 r = method.invoke(target, objects);
             } finally {
                 popPluginId();
