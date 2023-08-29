@@ -74,8 +74,8 @@ public class ApacheHttpSimpleServer {
         Executors.newScheduledThreadPool(1).schedule(() -> {
             String url = "http://localhost:" + Integer.parseInt(configSpi.getProperty("exp.plugin.manager.port", "8888"));
             String uploadAndInstall2 = (url + uploadAndInstall);
-            String install2 = url + install + "?path=xxxx";
-            String uninstall2 = url + uninstall + "?pluginId=xxxx";
+            String install2 = url + install + "?path={path}";
+            String uninstall2 = url + uninstall + "?pluginId={pluginId}";
             String getAll2 = url + getAll;
             log.info("插件管理模块:先卸载后安装 URL : {}", uploadAndInstall2);
             log.info("插件管理模块: 安装 URL : {}", install2);
