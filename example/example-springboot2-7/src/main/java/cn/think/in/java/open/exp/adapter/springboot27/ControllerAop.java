@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Component
 public class ControllerAop {
 
-    @Pointcut("@annotation(controller)")
-    public void loggableMethods(RestController controller) {}
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
+    public void loggableMethods() {}
 
-    @Before("loggableMethods(controller)")
-    public void logBeforeControllerMethodCall(JoinPoint joinPoint, RestController controller) {
+    @Before("loggableMethods()")
+    public void logBeforeControllerMethodCall(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().toShortString();
         System.out.println("调用Controller方法：" + methodName);
     }
