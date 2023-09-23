@@ -4,6 +4,11 @@
 
 [⭐️⭐️⭐️⭐️⭐️中文文档⭐️⭐️⭐️⭐️⭐️](README_cn.md)
 
+⭐️⭐️⭐️⭐️⭐️钉钉开源社区⭐️⭐️⭐️⭐️⭐️
+
+![](https://github.com/stateIs0/exp/assets/24973360/c33f99b9-198c-4aeb-9f69-d987d0340937)
+
+
 
 Related Articles 🎯🎯🎯[EXP: A Java Plugin Hot-Swapping Framework](http://thinkinjava.cn/2023/08/15/2023/exp/)
 
