@@ -36,10 +36,6 @@ public class Listener implements SpringApplicationRunListener, BeanDefinitionReg
         }
     }
 
-    private boolean isEnabled(ConfigurableApplicationContext context) {
-        return (context instanceof AnnotationConfigApplicationContext);
-    }
-
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
 
