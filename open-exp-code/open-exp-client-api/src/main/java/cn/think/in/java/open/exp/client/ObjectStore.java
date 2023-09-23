@@ -26,5 +26,6 @@ public interface ObjectStore {
      */
     <T> T getObject(Class<?> c, String pluginId);
 
+    @Beta
     Object getOrigin();
 }
