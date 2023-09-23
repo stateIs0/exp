@@ -1,0 +1,17 @@
+plugins_path: exp-plugins
+plugins_work_dir: exp-workdir
+plugins_spring_url_replace_enable: true
+exp_object_field_config_json: '[
+{
+	"className": "cn.think.in.java.open.exp.adapter.springboot27.ResModel",
+	"fieldModelsDesc": [{
+		"fieldType": "java.lang.String",
+		"fieldName": "email"
+	}]
+}
+]'
+exp:
+  document:
+    doc:
+      scan:
+        path: cn.think.in.java.open.exp.adapter.springboot27.example

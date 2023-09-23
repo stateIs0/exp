@@ -91,7 +91,7 @@ public class RestUrlScanFactoryImpl implements RestUrlScanFactory {
         public List<RequestMappingInfoWrapper> scan(Class<?> aClass) {
             List<RequestMappingInfoWrapper> result = new ArrayList<>();
             Annotation[] annotations = aClass.getDeclaredAnnotations();
-            if (aClass.getName().contains("$$EnhancerBySpringCGLIB$$")) {
+            if (aClass.getName().contains("$$Enhancer")) {
                 // spring cglib
                 annotations = aClass.getSuperclass().getDeclaredAnnotations();
                 aClass = aClass.getSuperclass();

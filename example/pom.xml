@@ -12,6 +12,7 @@
     <artifactId>example</artifactId>
     <packaging>pom</packaging>
     <modules>
+        <module>example-springboot2-7</module>
         <module>example-springboot2</module>
         <module>example-springboot1</module>
         <module>example-extension-define</module>

@@ -16,6 +16,7 @@
         <module>open-exp-adapter-springboot-common-starter</module>
         <module>open-exp-adapter-springboot1-starter</module>
         <module>open-exp-adapter-springboot2-starter</module>
+        <module>open-exp-adapter-springboot27-starter</module>
         <module>open-exp-rest-support</module>
         <module>open-exp-json-impl-jackson</module>
     </modules>
