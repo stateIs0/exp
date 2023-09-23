@@ -3,7 +3,7 @@ package cn.think.in.java.open.exp.client;
 import java.lang.annotation.*;
 
 /**
- * @Author cxs
+ * beta 功能，随时删除
  * @Description
  * @date 2023/9/23
  * @version 1.0
