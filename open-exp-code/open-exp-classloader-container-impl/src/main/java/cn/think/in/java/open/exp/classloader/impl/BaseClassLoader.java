@@ -4,6 +4,7 @@ import cn.think.in.java.open.exp.classloader.LogSpi;
 import cn.think.in.java.open.exp.client.PluginClassLoader;
 import cn.think.in.java.open.exp.client.SpiFactory;
 
+import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Files;
@@ -31,7 +32,7 @@ public class BaseClassLoader extends URLClassLoader implements PluginClassLoader
     });
 
     public BaseClassLoader(String extractDir, ClassLoader parent, boolean isParentMode) throws Exception {
-        super(new URL[]{Paths.get(extractDir).toUri().toURL()}, parent);
+        super(new URL[]{new URL("file:" + new File(extractDir).getAbsolutePath() + "/")}, parent);
         this.extractPath = Paths.get(extractDir);
         this.isParentMode = isParentMode;
     }
@@ -67,7 +68,11 @@ public class BaseClassLoader extends URLClassLoader implements PluginClassLoader
             ProtectionDomain protectionDomain = new ProtectionDomain(codeSource, permissions);
 
             if (!definePackage) {
-                definePackage(name.substring(0, name.lastIndexOf(".")), null, null, null, null, null, null, null);
+                try {
+                    definePackage(name.substring(0, name.lastIndexOf(".")), null, null, null, null, null, null, null);
+                } catch (Exception e) {
+                    // ignore
+                }
                 definePackage = true;
             }
             Class<?> aClass = defineClass(name, classData, 0, classData.length, protectionDomain);
