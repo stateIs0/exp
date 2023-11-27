@@ -1,8 +1,9 @@
 package cn.think.in.java.open.exp.example.b;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * @version 1.0
@@ -14,8 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/hello")
 public class MyController {
 
+    @Resource
+    MybatisSupport mybatisSupport;
+
     @RequestMapping("/bv2")
     public String hello() {
+
+        MyMapper myMapper = mybatisSupport.doGetMapper(MyMapper.class);
+
+        MyTable myTable = myMapper.selectById(1L);
 
         return Boot.configSupport.getProperty();
     }

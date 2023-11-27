@@ -3,8 +3,10 @@ package cn.think.in.java.open.exp.example.b;
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
+import javax.annotation.Resource;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,28 +17,29 @@ import java.util.Set;
  * @date 2023/8/25
  **/
 @Slf4j
-//@Component
-public class MybatisUtil {
+@Component
+public class MybatisSupport {
 
 
-    //@Autowired
+    @Resource
     private SqlSessionTemplate sqlSessionTemplate;
 
-    private static MybatisUtil instance;
+    private static MybatisSupport instance;
 
-    static Set<Class> cache = new HashSet<>();
+    static Set<Class<?>> cache = new HashSet<>();
 
-    public MybatisUtil() {
+    public MybatisSupport() {
         instance = this;
     }
 
     /**
      * 获取 mapper
+     *
      * @param clazz
-     * @return
      * @param <T>
+     * @return
      */
-    public static <T> T doGetMapper(Class<T> clazz) {
+    public <T> T doGetMapper(Class<T> clazz) {
         ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
         Thread.currentThread().setContextClassLoader(Boot.class.getClassLoader());
         instance.sqlSessionTemplate.getConfiguration().addMapper(clazz);
@@ -53,7 +56,7 @@ public class MybatisUtil {
         log.info("MybatisUtil PreDestroy------>>>>");
         if (instance.sqlSessionTemplate.getConfiguration() instanceof MybatisConfiguration) {
             MybatisConfiguration mpc = (MybatisConfiguration) instance.sqlSessionTemplate.getConfiguration();
-            for (Class aClass : cache) {
+            for (Class<?> aClass : cache) {
                 mpc.removeMapper(aClass);
                 log.info("removeMapper {} ------>>>>", aClass.getName());
             }
