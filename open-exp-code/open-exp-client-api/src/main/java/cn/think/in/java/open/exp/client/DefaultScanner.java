@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @Author cxs
  **/
-public class DefaultScaner implements PluginObjectScanner {
+public class DefaultScanner implements PluginObjectScanner {
 
     private String scanPath;
     private ClassLoader pluginClassLoader;

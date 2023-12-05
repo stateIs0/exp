@@ -101,16 +101,15 @@ public class PluginMetaServiceImpl implements PluginMetaService {
         }
         BaseClassLoader classLoader = ClassLoaderFinder.find(file, dir, mode);
         pluginMetaFat.setClassLoader(classLoader);
-        DefaultScaner scanner;
+        DefaultScanner scanner = new DefaultScanner();
         if (meta.getPluginBootClass() != null) {
             Class<ExpBoot> aClass = (Class<ExpBoot>) classLoader.loadClass(meta.getPluginBootClass());
             pluginMetaFat.setConfigSupportList(getConfigSupportFields(aClass, meta.getPluginId()));
             ExpBoot expBoot = aClass.newInstance();
-            scanner = (DefaultScaner) expBoot.getRegister();
+            scanner = (DefaultScanner) expBoot.getRegister();
             expBoot.start(meta.getPluginId());
             pluginMetaFat.setExpBoot(expBoot);
         } else {
-            scanner = new DefaultScaner();
             scanner.setPluginClassLoader(classLoader);
             scanner.setScanPath(meta.getPluginCode());
             scanner.setLocation(classLoader.getPath());

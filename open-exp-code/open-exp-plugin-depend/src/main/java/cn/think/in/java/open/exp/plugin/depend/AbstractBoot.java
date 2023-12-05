@@ -9,7 +9,7 @@ public abstract class AbstractBoot implements ExpBoot {
 
     private final ClassLoader pluginClassLoader;
     private final String classLocation;
-    private final DefaultScaner pluginBeanRegister;
+    private final DefaultScanner pluginBeanRegister;
 
     public AbstractBoot() {
         if (getClass().getClassLoader() instanceof PluginClassLoader) {
@@ -18,7 +18,7 @@ public abstract class AbstractBoot implements ExpBoot {
             throw new RuntimeException("classLocation 非法");
         }
         this.pluginClassLoader = getClass().getClassLoader();
-        this.pluginBeanRegister = new DefaultScaner();
+        this.pluginBeanRegister = new DefaultScanner();
         this.pluginBeanRegister.setPluginClassLoader(this.pluginClassLoader);
         this.pluginBeanRegister.setLocation(this.classLocation);
         String scanPath = getScanPath();
