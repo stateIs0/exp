@@ -35,6 +35,9 @@ public class ConfigSupportClassLoader extends URLClassLoader {
             Properties properties = new Properties();
             properties.load(resourceAsStream);
             Object name = properties.get(Constant.PLUGIN_BOOT_CLASS);
+            if (name == null) {
+                return new ArrayList<>();
+            }
             Class<?> aClass = loadClass(name.toString());
             if (aClass != null) {
                 for (Field field : aClass.getDeclaredFields()) {

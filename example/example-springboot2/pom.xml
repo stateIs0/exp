@@ -82,13 +82,33 @@
             <version>3.5.6</version>
             <scope>compile</scope>
         </dependency>
+
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-core</artifactId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.2</version>
-            <scope>compile</scope>
+        </dependency>
+        <!--druid-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.6</version>
         </dependency>
 
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.think.in.java</groupId>
+            <artifactId>open-exp-adapter-springboot2-starter</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

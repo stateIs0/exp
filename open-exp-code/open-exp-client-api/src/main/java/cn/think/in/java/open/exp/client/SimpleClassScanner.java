@@ -1,4 +1,4 @@
-package cn.think.in.java.open.exp.plugin.depend;
+package cn.think.in.java.open.exp.client;
 
 import lombok.extern.slf4j.Slf4j;
 

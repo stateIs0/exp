@@ -1,7 +1,4 @@
-package cn.think.in.java.open.exp.plugin.depend;
-
-import cn.think.in.java.open.exp.client.ExPBean;
-import cn.think.in.java.open.exp.client.PluginObjectScanner;
+package cn.think.in.java.open.exp.client;
 
 import java.util.List;
 

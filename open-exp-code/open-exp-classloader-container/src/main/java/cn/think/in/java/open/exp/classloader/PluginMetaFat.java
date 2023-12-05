@@ -3,7 +3,8 @@ package cn.think.in.java.open.exp.classloader;
 import cn.think.in.java.open.exp.client.ExpBoot;
 import cn.think.in.java.open.exp.client.Plugin;
 import cn.think.in.java.open.exp.client.PluginObjectScanner;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.File;
 import java.util.Map;
@@ -14,7 +15,8 @@ import java.util.Map;
  * @Description
  * @date 2023/8/9
  **/
-@Data
+@Getter
+@Setter
 public class PluginMetaFat extends PluginMetaThin {
 
     private PluginObjectScanner scanner;

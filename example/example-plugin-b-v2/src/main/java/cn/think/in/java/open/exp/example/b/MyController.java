@@ -1,5 +1,6 @@
 package cn.think.in.java.open.exp.example.b;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,13 +19,13 @@ public class MyController {
     @Resource
     MybatisSupport mybatisSupport;
 
-    @RequestMapping("/bv2")
+    @GetMapping("/bv2")
     public String hello() {
 
         MyMapper myMapper = mybatisSupport.doGetMapper(MyMapper.class);
 
         MyTable myTable = myMapper.selectById(1L);
 
-        return Boot.configSupport.getProperty();
+        return myTable.name;
     }
 }

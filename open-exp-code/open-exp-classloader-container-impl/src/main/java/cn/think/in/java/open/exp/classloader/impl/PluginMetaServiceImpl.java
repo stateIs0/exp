@@ -99,16 +99,24 @@ public class PluginMetaServiceImpl implements PluginMetaService {
         if (StringUtil.isEmpty(mode)) {
             mode = Constant.PLUGIN_CLASS_LOADER_MODE_PARENT;
         }
-        ClassLoader classLoader = ClassLoaderFinder.find(file, dir, mode);
+        BaseClassLoader classLoader = ClassLoaderFinder.find(file, dir, mode);
         pluginMetaFat.setClassLoader(classLoader);
+        DefaultScaner scanner;
+        if (meta.getPluginBootClass() != null) {
+            Class<ExpBoot> aClass = (Class<ExpBoot>) classLoader.loadClass(meta.getPluginBootClass());
+            pluginMetaFat.setConfigSupportList(getConfigSupportFields(aClass, meta.getPluginId()));
+            ExpBoot expBoot = aClass.newInstance();
+            scanner = (DefaultScaner) expBoot.getRegister();
+            expBoot.start(meta.getPluginId());
+            pluginMetaFat.setExpBoot(expBoot);
+        } else {
+            scanner = new DefaultScaner();
+            scanner.setPluginClassLoader(classLoader);
+            scanner.setScanPath(meta.getPluginCode());
+            scanner.setLocation(classLoader.getPath());
+        }
 
-        Class<ExpBoot> aClass = (Class<ExpBoot>) classLoader.loadClass(meta.getPluginBootClass());
-        ExpBoot expBoot = aClass.newInstance();
-        PluginObjectScanner register = expBoot.getRegister();
-        expBoot.start(meta.getPluginId());
-
-        pluginMetaFat.setExpBoot(expBoot);
-        pluginMetaFat.setScanner(register);
+        pluginMetaFat.setScanner(scanner);
         pluginMetaFat.setExtensionMappings(mapping);
         pluginMetaFat.setPluginId(meta.getPluginId());
         pluginMetaFat.setPluginCode(meta.getPluginCode());
@@ -119,7 +127,7 @@ public class PluginMetaServiceImpl implements PluginMetaService {
         pluginMetaFat.setClassLoaderMode(meta.getClassLoaderMode());
 
         pluginMetaFat.setLocation(new File(dir));
-        pluginMetaFat.setConfigSupportList(getConfigSupportFields(aClass, meta.getPluginId()));
+
 
         cache.put(pluginMetaFat.getPluginId(), pluginMetaFat);
 
@@ -148,7 +156,7 @@ public class PluginMetaServiceImpl implements PluginMetaService {
             entry.getValue().removeIf(s -> s.equals(pluginId));
         }
 
-        pluginMetaFat.getExpBoot().stop();
+        Optional.of(pluginMetaFat.getExpBoot()).ifPresent(ExpBoot::stop);
         ids.remove(pluginId);
     }
 

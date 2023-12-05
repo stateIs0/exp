@@ -143,7 +143,7 @@ public class ObjectStoreSpringboot implements ObjectStore {
     static class GraceShutDownThread extends Thread {
 
         public GraceShutDownThread(Runnable runnable) {
-            super(runnable, "eepGraceStop");
+            super(runnable, "expGraceStop");
         }
     }
 }

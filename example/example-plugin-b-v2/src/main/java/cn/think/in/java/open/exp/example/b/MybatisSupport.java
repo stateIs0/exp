@@ -24,12 +24,9 @@ public class MybatisSupport {
     @Resource
     private SqlSessionTemplate sqlSessionTemplate;
 
-    private static MybatisSupport instance;
-
     static Set<Class<?>> cache = new HashSet<>();
 
     public MybatisSupport() {
-        instance = this;
     }
 
     /**
@@ -41,11 +38,11 @@ public class MybatisSupport {
      */
     public <T> T doGetMapper(Class<T> clazz) {
         ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
-        Thread.currentThread().setContextClassLoader(Boot.class.getClassLoader());
-        instance.sqlSessionTemplate.getConfiguration().addMapper(clazz);
+        Thread.currentThread().setContextClassLoader(MybatisSupport.class.getClassLoader());
+        sqlSessionTemplate.getConfiguration().addMapper(clazz);
         Thread.currentThread().setContextClassLoader(contextClassLoader);
         cache.add(clazz);
-        return instance.sqlSessionTemplate.getMapper(clazz);
+        return sqlSessionTemplate.getMapper(clazz);
     }
 
     /**
@@ -54,8 +51,8 @@ public class MybatisSupport {
     @PreDestroy
     public void dest() {
         log.info("MybatisUtil PreDestroy------>>>>");
-        if (instance.sqlSessionTemplate.getConfiguration() instanceof MybatisConfiguration) {
-            MybatisConfiguration mpc = (MybatisConfiguration) instance.sqlSessionTemplate.getConfiguration();
+        if (sqlSessionTemplate.getConfiguration() instanceof MybatisConfiguration) {
+            MybatisConfiguration mpc = (MybatisConfiguration) sqlSessionTemplate.getConfiguration();
             for (Class<?> aClass : cache) {
                 mpc.removeMapper(aClass);
                 log.info("removeMapper {} ------>>>>", aClass.getName());

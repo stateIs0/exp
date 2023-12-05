@@ -1,5 +1,6 @@
 package cn.think.in.java.open.exp.classloader.support;
 
+import cn.think.in.java.open.exp.classloader.impl.BaseClassLoader;
 import cn.think.in.java.open.exp.classloader.impl.JarClassLoader;
 import cn.think.in.java.open.exp.classloader.impl.ZipClassLoader;
 import cn.think.in.java.open.exp.client.Constant;
@@ -13,8 +14,8 @@ import java.io.File;
 @Slf4j
 public class ClassLoaderFinder {
 
-    public static ClassLoader find(File file, String dir, String modeString) {
-        ClassLoader classLoader = null;
+    public static BaseClassLoader find(File file, String dir, String modeString) {
+        BaseClassLoader classLoader = null;
         try {
             // springboot launcher classloader
             ClassLoader parent = Thread.currentThread().getContextClassLoader();
