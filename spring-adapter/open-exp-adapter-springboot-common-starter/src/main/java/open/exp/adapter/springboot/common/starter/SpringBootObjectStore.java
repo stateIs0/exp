@@ -47,7 +47,12 @@ public class SpringBootObjectStore implements ObjectStore {
                 rollbackList.add(aClass);
             } catch (Exception e) {
                 for (Class<?> a : rollbackList) {
-                    unRegisterCallback(a, pluginId);
+                    try {
+                        unRegisterCallback(a, pluginId);
+                    } catch (Exception exception) {
+                        // ignore
+                        log.warn(exception.getMessage(), exception);
+                    }
                 }
                 throw e;
             }
