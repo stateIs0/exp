@@ -1,5 +1,7 @@
 package cn.think.in.java.open.exp.plugin.depend;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -12,6 +14,7 @@ import java.util.jar.JarFile;
 /**
  *
  **/
+@Slf4j
 public class SimpleClassScanner {
 
     public static List<Class<?>> doScan(String scanPath,
@@ -61,6 +64,11 @@ public class SimpleClassScanner {
                                      Class<?> extenderService, ClassLoader classLoader) throws ClassNotFoundException {
 
         File[] files = scanFile.listFiles();
+
+        if (files == null) {
+            log.warn("---->> files is null, scanFile = {}", scanFile);
+            return;
+        }
 
         for (File file : files) {
             if (file.isDirectory()) {
