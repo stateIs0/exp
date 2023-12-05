@@ -9,6 +9,12 @@ import cn.think.in.java.open.exp.client.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -70,7 +76,19 @@ public class PluginMetaServiceImpl implements PluginMetaService {
         if (new File(dir).exists()) {
             log.warn("---->>>>> 插件目录已经存在, 删除 = {}", dir);
             if (Boolean.parseBoolean(pluginMetaConfig.getAutoDelete())) {
-                new File(dir).delete();
+                Files.walkFileTree(new File(dir).toPath(), new SimpleFileVisitor<Path>() {
+                    @Override
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) throws IOException {
+                        Files.delete(file);
+                        return FileVisitResult.CONTINUE;
+                    }
+
+                    @Override
+                    public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                        Files.delete(dir);
+                        return FileVisitResult.CONTINUE;
+                    }
+                });
             } else {
                 throw new RuntimeException("插件目录已经存在, 请先卸载再安装.");
             }
