@@ -15,7 +15,7 @@ public class SimpleObjectStore implements ObjectStore {
     Map<String, Map<String, Object>> pluginIdMapping = new HashMap<>();
 
     @Override
-    public void startRegister(List<Class<?>> list, String pluginId) throws Exception {
+    public void registerCallback(List<Class<?>> list, String pluginId) throws Exception {
         Map<String, Object> store = new HashMap<>();
         list.forEach(aClass -> {
             try {
@@ -28,7 +28,7 @@ public class SimpleObjectStore implements ObjectStore {
     }
 
     @Override
-    public void unRegister(String pluginId) {
+    public void unRegisterCallback(String pluginId) {
         pluginIdMapping.remove(pluginId);
     }
 

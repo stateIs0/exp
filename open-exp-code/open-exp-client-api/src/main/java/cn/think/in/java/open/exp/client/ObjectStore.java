@@ -14,12 +14,12 @@ public interface ObjectStore {
      * @param list     插件里的核心 class, expBean 标记的 class.
      * @param pluginId 插件 id;
      */
-    void startRegister(List<Class<?>> list, String pluginId) throws Exception;
+    void registerCallback(List<Class<?>> list, String pluginId) throws Exception;
 
     /**
      * 从对象仓库将这个插件的东西全部删除.
      */
-    void unRegister(String pluginId);
+    void unRegisterCallback(String pluginId);
 
     /**
      * 从对象仓库获取某个对象

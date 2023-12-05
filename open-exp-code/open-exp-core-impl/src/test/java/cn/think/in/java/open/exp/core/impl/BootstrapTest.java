@@ -19,7 +19,7 @@ public class BootstrapTest {
     public void bootstrap() throws Throwable {
         ExpAppContext expAppContext = Bootstrap.bootstrap(new ObjectStore() {
             @Override
-            public void startRegister(List<Class<?>> list, String pluginId) throws Exception {
+            public void registerCallback(List<Class<?>> list, String pluginId) throws Exception {
                 Map<String, Object> store = new HashMap<>();
                 for (Class<?> aClass : list) {
                     Object proxy = null;
@@ -29,7 +29,7 @@ public class BootstrapTest {
             }
 
             @Override
-            public void unRegister(String pluginId) {
+            public void unRegisterCallback(String pluginId) {
                 pluginIdMapping.remove(pluginId);
             }
 

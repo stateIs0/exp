@@ -46,17 +46,19 @@ public class ExpAppContextImpl implements ExpAppContext {
     public Plugin load(File file) throws Throwable {
         PluginMetaFat fat = metaService.install(file);
         List<Class<?>> classes = fat.getScanner().scan();
-        objectStore.startRegister(classes, fat.getPluginId());
+        objectStore.registerCallback(classes, fat.getPluginId());
         all.add(fat.getPluginId());
+        PluginLifeCycleHookManager.addHook(fat.getPluginId());
         log.info("安装加载插件, 插件 ID = [{}], 配置={}", fat.getPluginId(), fat.getConfigSupportList());
         return fat.conv();
     }
 
     @Override
     public void unload(String pluginId) throws Exception {
-        objectStore.unRegister(pluginId);
+        objectStore.unRegisterCallback(pluginId);
         metaService.unInstall(pluginId);
         all.remove(pluginId);
+        PluginLifeCycleHookManager.removeHook(pluginId);
         log.info("卸载插件 {}", pluginId);
     }
 
