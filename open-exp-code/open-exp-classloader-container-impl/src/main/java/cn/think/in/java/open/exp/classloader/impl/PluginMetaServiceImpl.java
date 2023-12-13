@@ -155,7 +155,10 @@ public class PluginMetaServiceImpl implements PluginMetaService {
             entry.getValue().removeIf(s -> s.equals(pluginId));
         }
 
-        Optional.of(pluginMetaFat.getExpBoot()).ifPresent(ExpBoot::stop);
+        //如果含Boot启动类则停止
+        if(pluginMetaFat.getExpBoot()!=null) {
+            Optional.of(pluginMetaFat.getExpBoot()).ifPresent(ExpBoot::stop);
+        }
         ids.remove(pluginId);
     }
 
