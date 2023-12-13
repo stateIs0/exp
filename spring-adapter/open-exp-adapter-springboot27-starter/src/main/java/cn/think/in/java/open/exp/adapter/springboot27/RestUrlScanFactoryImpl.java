@@ -4,6 +4,8 @@ package cn.think.in.java.open.exp.adapter.springboot27;
 import lombok.extern.slf4j.Slf4j;
 import open.exp.rest.support.springboot.common.AloneRestUrlScan;
 import open.exp.rest.support.springboot.common.RestUrlScanFactory;
+import org.springframework.util.Assert;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
@@ -27,7 +29,7 @@ public class RestUrlScanFactoryImpl implements RestUrlScanFactory {
         private List<ScanProcessor.RequestMappingInfoWrapper> requestMappingInfoWrappers;
         private final Supplier<String> replaceEnabled;
         private final String pluginId;
-
+        private RequestMappingInfo.BuilderConfiguration config = new RequestMappingInfo.BuilderConfiguration();
 
         public AloneRestUrlScanImpl(Object handlerMapping,
                                     Object handlerAdapter,
@@ -38,11 +40,23 @@ public class RestUrlScanFactoryImpl implements RestUrlScanFactory {
             this.obj = obj;
             this.replaceEnabled = replaceEnabled;
             this.pluginId = pluginId;
+            this.config.setTrailingSlashMatch(this.handlerMapping.useTrailingSlashMatch());
+            this.config.setContentNegotiationManager(this.handlerMapping.getContentNegotiationManager());
+
+            if (this.handlerMapping.getPatternParser() != null) {
+                this.config.setPatternParser(this.handlerMapping.getPatternParser());
+                Assert.isTrue(!this.handlerMapping.useSuffixPatternMatch() && !this.handlerMapping.useRegisteredSuffixPatternMatch(),
+                        "Suffix pattern matching not supported with PathPatternParser.");
+            } else {
+                this.config.setSuffixPatternMatch(this.handlerMapping.useSuffixPatternMatch());
+                this.config.setRegisteredSuffixPatternMatch(this.handlerMapping.useRegisteredSuffixPatternMatch());
+                this.config.setPathMatcher(this.handlerMapping.getPathMatcher());
+            }
         }
 
         @Override
         public void register() {
-            requestMappingInfoWrappers = ScanProcessor.builder().build().scan(obj.getClass());
+            requestMappingInfoWrappers = ScanProcessor.builder().build().scan(obj.getClass(), this.config);
             for (ScanProcessor.RequestMappingInfoWrapper mapping : requestMappingInfoWrappers) {
                 if (Boolean.parseBoolean(replaceEnabled.get())) {
                     // 覆盖, 删除老的 URL;

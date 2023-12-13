@@ -26,7 +26,7 @@ public class ScanProcessor {
         list.add(new PutMappingHandler());
     }
 
-    public List<RequestMappingInfoWrapper> scan(Class<?> aClass) {
+    public List<RequestMappingInfoWrapper> scan(Class<?> aClass, Object config) {
         List<RequestMappingInfoWrapper> result = new ArrayList<>();
         Annotation[] annotations = aClass.getDeclaredAnnotations();
         if (aClass.getName().contains("$$Enhancer")) {
@@ -36,13 +36,13 @@ public class ScanProcessor {
         }
 
         for (Annotation annotation : annotations) {
-            processAnnotation(aClass, annotation, result);
+            processAnnotation(aClass, annotation, result, config);
         }
 
         return result;
     }
 
-    private void processAnnotation(Class<?> aClass, Annotation annotation, List<RequestMappingInfoWrapper> result) {
+    private void processAnnotation(Class<?> aClass, Annotation annotation, List<RequestMappingInfoWrapper> result, Object config) {
         String[] parentPath = new String[]{""};
         if (annotation.annotationType().equals(RestController.class) || annotation.annotationType().equals(Controller.class)) {
             if (aClass.isAnnotationPresent(RequestMapping.class)) {
@@ -51,14 +51,14 @@ public class ScanProcessor {
             }
             Method[] declaredMethods = aClass.getDeclaredMethods();
             for (Method declaredMethod : declaredMethods) {
-                doScan(declaredMethod, result, parentPath);
+                doScan(declaredMethod, result, parentPath, config);
             }
         }
     }
 
     private void doScan(Method declaredMethod,
                         List<RequestMappingInfoWrapper> resultList,
-                        String[] parentPath) {
+                        String[] parentPath, Object config) {
 
         for (Handler handler : list) {
             Optional<Result> result = handler.handler(declaredMethod);
@@ -72,6 +72,7 @@ public class ScanProcessor {
                         .paths(pathFinal)
                         .methods(methods)
                         .params(params)
+                        .options((RequestMappingInfo.BuilderConfiguration) config)
                         .headers(headers)
                         .build(), declaredMethod, pathFinal));
 
