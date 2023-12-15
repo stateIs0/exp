@@ -156,7 +156,7 @@ public class PluginMetaServiceImpl implements PluginMetaService {
         }
 
         //如果含Boot启动类则停止
-        if(pluginMetaFat.getExpBoot()!=null) {
+        if (pluginMetaFat.getExpBoot() != null) {
             Optional.of(pluginMetaFat.getExpBoot()).ifPresent(ExpBoot::stop);
         }
         ids.remove(pluginId);
