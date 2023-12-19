@@ -25,7 +25,7 @@ import java.util.jar.JarFile;
 public class MetaConfigReader {
 
     public static PluginMetaInnerModel getMeta(File file) {
-        try {
+        try (ConfigSupportClassLoader configSupportClassLoader = new ConfigSupportClassLoader(file)) {
             Properties properties = loadProperties(file.getAbsolutePath(), Constant.PLUGIN_META_FILE_NAME, false);
             String code = properties.getProperty(Constant.PLUGIN_CODE_KEY);
             String desc = properties.getProperty(Constant.PLUGIN_DESC_KEY);
@@ -33,7 +33,7 @@ public class MetaConfigReader {
             String ext = properties.getProperty(Constant.PLUGIN_EXT_KEY);
             String boot = properties.getProperty(Constant.PLUGIN_BOOT_CLASS);
             String mode = properties.getProperty(Constant.PLUGIN_CLASS_LOADER_MODE);
-            List<ConfigSupport> list = new ConfigSupportClassLoader(file).get();
+            List<ConfigSupport> list = configSupportClassLoader.get();
             return new PluginMetaInnerModel(code, desc, version, ext, boot, list, mode);
         } catch (Exception e) {
             throw new RuntimeException(e);
