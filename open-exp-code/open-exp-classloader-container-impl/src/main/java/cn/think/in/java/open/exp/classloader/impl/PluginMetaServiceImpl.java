@@ -72,7 +72,7 @@ public class PluginMetaServiceImpl implements PluginMetaService {
         }
         Map<String, String> mapping = MetaConfigReader.getMapping(file);
 
-        String dir = pluginMetaConfig.getWorkDir() + "/" + meta.getPluginId();
+        String dir = pluginMetaConfig.getWorkDir() + File.separator + meta.getPluginId();
         if (new File(dir).exists()) {
             log.warn("---->>>>> 插件目录已经存在, 删除 = {}", dir);
             if (Boolean.parseBoolean(pluginMetaConfig.getAutoDelete())) {
