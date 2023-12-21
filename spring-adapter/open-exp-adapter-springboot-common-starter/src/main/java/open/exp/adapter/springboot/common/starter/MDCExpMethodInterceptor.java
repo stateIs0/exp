@@ -30,7 +30,7 @@ public class MDCExpMethodInterceptor implements MethodInterceptor {
     public Object intercept(Object origin, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
         try {
             if ("toString".equals(method.getName())) {
-                return target.hashCode();
+                return target.toString();
             }
             if ("hashcode".equals(method.getName())) {
                 return target.hashCode();
