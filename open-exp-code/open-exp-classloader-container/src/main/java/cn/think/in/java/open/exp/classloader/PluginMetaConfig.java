@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class PluginMetaConfig {
 
-    String workDir = "exp-tmp-dir/";
+    String workDir = "exp-tmp-dir";
     String autoDelete = "true";
 
 
