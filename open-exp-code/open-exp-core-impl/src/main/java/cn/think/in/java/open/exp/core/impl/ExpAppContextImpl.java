@@ -48,7 +48,6 @@ public class ExpAppContextImpl implements ExpAppContext {
         List<Class<?>> classes = fat.getScanner().scan();
         objectStore.registerCallback(classes, fat.getPluginId());
         all.add(fat.getPluginId());
-        PluginLifeCycleHookManager.addHook(fat.getPluginId());
         log.info("安装加载插件, 插件 ID = [{}], 配置={}", fat.getPluginId(), fat.getConfigSupportList());
         return fat.conv();
     }

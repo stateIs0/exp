@@ -62,6 +62,7 @@ public class ObjectStoreSpringboot implements ObjectStore {
         }
 
         objectScans.forEach(e -> e.registerApis(classes, pluginId));
+        PluginLifeCycleHookManager.addHook(pluginId);
         postInit(pluginId, classes);
         classesCache.put(pluginId, classes);
     }
@@ -126,9 +127,6 @@ public class ObjectStoreSpringboot implements ObjectStore {
             } catch (Exception ignore) {
                 //log.warn(ex.getMessage());
             }
-        }
-        for (Class<?> aClass : classes) {
-            String name = PluginNameBuilder.build(aClass, pluginId);
             PluginLifeCycleHookManager.postInit(this, aClass, () -> beanFactory.getBean(name), name);
         }
     }
