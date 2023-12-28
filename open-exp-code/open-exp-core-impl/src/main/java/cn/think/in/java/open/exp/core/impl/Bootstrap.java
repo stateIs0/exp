@@ -59,9 +59,12 @@ public class Bootstrap {
                 if (!file.exists()) {
                     continue;
                 }
-                log.info("准备安装插件, 压缩包路径: " + file.getAbsolutePath());
-                Plugin plugin = expAppContext.load(file);
-                tmp.add(plugin.getPluginId());
+                //不加载文件夹里面的隐藏文件。
+                if(!file.isHidden()) {
+                    log.info("准备安装插件, 压缩包路径: " + file.getAbsolutePath());
+                    Plugin plugin = expAppContext.load(file);
+                    tmp.add(plugin.getPluginId());
+                }
             } catch (Exception e) {
                 log.error(e.getMessage() + " ---->>>> " + file.getAbsolutePath(), e);
                 throw e;
