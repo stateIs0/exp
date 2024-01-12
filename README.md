@@ -8,9 +8,6 @@
 
 ![](https://github.com/stateIs0/exp/assets/24973360/c33f99b9-198c-4aeb-9f69-d987d0340937)
 
-⭐️⭐️⭐️⭐️⭐️wechat开源社区⭐️⭐️⭐️⭐️⭐️
-
-![image](https://github.com/stateIs0/exp/assets/24973360/215011f1-a937-4c2e-9042-74db77f894aa)
 
 
 
