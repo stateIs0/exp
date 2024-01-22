@@ -174,7 +174,7 @@ public class PluginMetaServiceImpl implements PluginMetaService {
 
         Set<String> pluginIdSet = extCache.get(extCode);
         if (pluginIdSet == null) {
-            return new ArrayList<>();
+            return re;
         }
         for (String pluginId : pluginIdSet) {
             re.add(get(extCode, pluginId));
