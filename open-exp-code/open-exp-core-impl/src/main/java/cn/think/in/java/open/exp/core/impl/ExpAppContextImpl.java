@@ -67,7 +67,7 @@ public class ExpAppContextImpl implements ExpAppContext {
         try {
             List<ExpClass<P>> classes = metaService.get(extCode);
 
-            if (classes == null) {
+            if (classes == null || classes.isEmpty()) {
                 return new ArrayList<>();
             }
 
