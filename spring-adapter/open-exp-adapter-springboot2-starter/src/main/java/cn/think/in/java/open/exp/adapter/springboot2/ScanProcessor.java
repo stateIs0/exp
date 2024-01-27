@@ -187,7 +187,7 @@ public class ScanProcessor {
         public Optional<Result> handler(Method declaredMethod) {
             PutMapping mapping = declaredMethod.getAnnotation(PutMapping.class);
             if (mapping != null) {
-                RequestMethod[] methods = new RequestMethod[]{RequestMethod.DELETE};
+                RequestMethod[] methods = new RequestMethod[]{RequestMethod.PUT};
                 return getResult(methods, mapping.params(), mapping.headers(), mapping.value(), mapping.path());
             }
             return Optional.empty();
