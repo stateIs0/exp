@@ -131,6 +131,7 @@ public class ApacheHttpSimpleServer {
                 log.error(ex.getMessage(), ex);
             } finally {
                 try {
+                    this.conn.flush();
                     this.conn.shutdown();
                 } catch (IOException ignore) {
                 }
