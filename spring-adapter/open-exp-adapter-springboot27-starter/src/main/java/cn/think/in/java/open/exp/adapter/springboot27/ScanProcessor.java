@@ -67,7 +67,7 @@ public class ScanProcessor {
                 String[] params = r.params;
                 String[] headers = r.headers;
                 String[] path = r.path;
-                String pathFinal = RequestMappingInfoWrapper.buildPath(parentPath, path);
+                String[] pathFinal = RequestMappingInfoWrapper.buildPath(parentPath, path);
                 resultList.add(new RequestMappingInfoWrapper(RequestMappingInfo
                         .paths(pathFinal)
                         .methods(methods)
@@ -98,25 +98,33 @@ public class ScanProcessor {
     public static class RequestMappingInfoWrapper {
         public RequestMappingInfo requestMappingInfo;
         public Method method;
-        public String path;
+        public String[] path;
 
-        public RequestMappingInfoWrapper(RequestMappingInfo requestMappingInfo, Method method, String path) {
+        public RequestMappingInfoWrapper(RequestMappingInfo requestMappingInfo, Method method, String[] path) {
             this.requestMappingInfo = requestMappingInfo;
             this.method = method;
             this.path = path;
         }
 
-        public static String buildPath(String[] parent, String[] subPath) {
-            if (subPath.length == 0) {
-                subPath = new String[]{"/"};
+        public static String[] buildPath(String[] parent, String[] subPath) {
+            List<String> paths = new ArrayList<>();
+
+            if (parent == null || parent.length == 0) {
+                return subPath;
             }
-            if (parent.length == 0) {
-                parent = new String[]{"/"};
+
+            if (subPath == null || subPath.length == 0) {
+                return parent;
             }
-            if (subPath[0].startsWith("/")) {
-                return parent[0] + subPath[0];
+
+            for (String parentPath : parent) {
+                for (String subPathValue : subPath) {
+                    String combinedPath = (parentPath.endsWith("/") ? parentPath : parentPath + "/") +
+                            (subPathValue.startsWith("/") ? subPathValue.substring(1) : subPathValue);
+                    paths.add(combinedPath);
+                }
             }
-            return parent[0] + "/" + subPath[0];
+            return paths.toArray(new String[0]);
         }
     }
 
