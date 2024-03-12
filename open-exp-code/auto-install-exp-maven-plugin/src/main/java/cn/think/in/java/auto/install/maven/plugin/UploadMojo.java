@@ -18,7 +18,7 @@ import org.codehaus.plexus.util.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.io.InputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Properties;
@@ -54,16 +54,16 @@ public class UploadMojo extends AbstractMojo {
             throw new MojoExecutionException("Jar file does not exist: " + jarFile);
         }
 
-        URLClassLoader urlClassLoader = null;
-        try {
-            urlClassLoader = new URLClassLoader(new URL[]{jarFile.toURL()}, Thread.currentThread().getContextClassLoader());
-        } catch (MalformedURLException e) {
+        URL resource;
+        try (URLClassLoader urlClassLoader = new URLClassLoader(new URL[]{jarFile.toURI().toURL()}, Thread.currentThread().getContextClassLoader())) {
+            resource = urlClassLoader.findResource(PLUGIN_META_FILE_NAME);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        URL resource = urlClassLoader.findResource(PLUGIN_META_FILE_NAME);
+
         Properties properties = new Properties();
-        try {
-            properties.load(resource.openStream());
+        try(InputStream resourceStream = resource.openStream()) {
+            properties.load(resourceStream);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -84,14 +84,22 @@ public class UploadMojo extends AbstractMojo {
             return;
         }
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            HttpGet uploadFile = new HttpGet(uninstallUrl + "?pluginid=" + pluginId);
+            HttpGet uploadFile = new HttpGet(uninstallUrl + "?pluginId=" + pluginId);
 
             CloseableHttpResponse response = httpClient.execute(uploadFile);
             HttpEntity responseEntity = response.getEntity();
 
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode != 200) {
+                String reasonPhrase = response.getStatusLine().getReasonPhrase();
+                getLog().info("卸载失败. Server response: " + EntityUtils.toString(responseEntity));
+                throw new MojoExecutionException("Failed to uninstall plugin. Server returned status code: " + statusCode
+                        + ", reasonPhrase = " + reasonPhrase + ", pluginId = " + pluginId);
+            }
+
             getLog().info("卸载结束. Server response: " + EntityUtils.toString(responseEntity));
         } catch (Exception e) {
-            throw new MojoExecutionException("Error uploading file", e);
+            throw new MojoExecutionException("Error uninstall plugin", e);
         }
 
     }
