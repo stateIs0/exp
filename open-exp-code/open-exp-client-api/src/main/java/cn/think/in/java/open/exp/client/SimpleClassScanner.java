@@ -85,20 +85,14 @@ public class SimpleClassScanner {
 
     private static void listAddClass(List<Class<?>> list, Class<?> extenderService, ClassLoader classLoader, String fullClassName) throws ClassNotFoundException {
         Class<?> clazz = classLoader.loadClass(fullClassName);
-        boolean flag = false;
         if (!clazz.isInterface()) {
             Class<?>[] impls = clazz.getInterfaces();
             for (Class<?> impl : impls) {
                 if (impl.getName().equals(extenderService.getName())) {
                     list.add(clazz);
-                    flag = true;
-                    break;
+                    return;
                 }
             }
-        }
-        // 不再处理
-        if (flag) {
-            return;
         }
 
         for (Annotation declaredAnnotation : clazz.getDeclaredAnnotations()) {
