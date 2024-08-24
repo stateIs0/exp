@@ -1,0 +1,11 @@
+exp_object_field_config_json: '
+[
+{
+"className":"cn.think.in.java.open.exp.adapter.springboot3.User",
+"fieldModelsDesc": [{
+		"fieldType": "java.lang.String",
+		"fieldName": "email"
+	}]
+}
+]
+'

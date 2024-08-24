@@ -8,6 +8,7 @@
     <artifactId>open-exp-code</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+
     <modules>
         <module>open-exp-client-api</module>
         <module>open-exp-classloader-container</module>
@@ -18,12 +19,11 @@
         <module>open-exp-plugin-depend</module>
         <module>open-exp-object-field-extend</module>
         <module>open-exp-json-api</module>
-        <module>open-exp-http-server</module>
     </modules>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
