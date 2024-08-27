@@ -7,6 +7,7 @@
         <groupId>cn.think.in.java</groupId>
         <artifactId>example</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>example-springboot1</artifactId>

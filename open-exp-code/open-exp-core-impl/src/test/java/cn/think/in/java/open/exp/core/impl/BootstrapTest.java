@@ -49,7 +49,7 @@ public class BootstrapTest {
 
 
         // 调用逻辑
-        expAppContext.streamOne(UserService.class).stream().findFirst().ifPresent(userService -> {
+        expAppContext.list(UserService.class).stream().findFirst().ifPresent(userService -> {
             System.out.println("---->>> " + userService.getClass().getName());
             userService.createUserExt();
             // Assert

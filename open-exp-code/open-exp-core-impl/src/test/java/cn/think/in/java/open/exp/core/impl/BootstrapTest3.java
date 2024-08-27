@@ -19,7 +19,7 @@ public class BootstrapTest3 {
 
         String absolutePath = new File("../../exp-plugins/").getAbsolutePath();
         ExpAppContext bootstrap = Bootstrap.bootstrap(absolutePath, "exp-workdir3");
-        bootstrap.streamOne(UserService.class).stream().findFirst().ifPresent(userService -> {
+        bootstrap.list(UserService.class).stream().findFirst().ifPresent(userService -> {
             System.out.println("exist");
             System.out.println(userService.getClass());
             System.out.println(userService.getClass().getClassLoader());

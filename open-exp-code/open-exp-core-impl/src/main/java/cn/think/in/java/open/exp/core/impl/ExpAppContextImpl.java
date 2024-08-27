@@ -86,7 +86,7 @@ public class ExpAppContextImpl implements ExpAppContext {
     }
 
     @Override
-    public <P> List<P> streamOne(Class<P> pClass) {
+    public <P> List<P> list(Class<P> pClass) {
         return get(pClass.getName());
     }
 
@@ -111,18 +111,4 @@ public class ExpAppContextImpl implements ExpAppContext {
         this.objectStore = objectStore;
     }
 
-    @Override
-    public <R, P> R streamList(Class<P> pClass, Ec<R, List<P>> ecs) {
-        List<P> list = this.streamOne(pClass);
-        if (list == null) {
-            return null;
-        }
-        return ecs.run(list);
-    }
-
-    @Override
-    public <R, P> R stream(Class<P> clazz, String pluginId, Ec<R, P> ec) {
-        Optional<P> o = get(clazz.getName(), pluginId);
-        return o.map(ec::run).orElse(null);
-    }
 }

@@ -43,7 +43,7 @@ public class ExpAppContextMock implements ExpAppContext {
     }
 
     @Override
-    public <P> List<P> streamOne(Class<P> pClass) {
+    public <P> List<P> list(Class<P> pClass) {
         return null;
     }
 
@@ -52,13 +52,4 @@ public class ExpAppContextMock implements ExpAppContext {
         return Optional.ofNullable(null);
     }
 
-    @Override
-    public <R, P> R streamList(Class<P> pClass, Ec<R, List<P>> ecs) {
-        return null;
-    }
-
-    @Override
-    public <R, P> R stream(Class<P> clazz, String pluginId, Ec<R, P> ec) {
-        return null;
-    }
 }

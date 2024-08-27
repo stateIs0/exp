@@ -20,4 +20,9 @@ public class UserPlugin implements UserService, ExPBean {
         System.out.println("name = " + name);
         log.info("name = {}", name);
     }
+
+    @Override
+    public String getName() {
+        return UserService.class.getName();
+    }
 }

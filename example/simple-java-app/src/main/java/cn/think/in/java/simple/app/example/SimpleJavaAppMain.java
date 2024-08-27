@@ -16,30 +16,22 @@ public class SimpleJavaAppMain {
         Class<UserService> extensionClass = UserService.class;
         expAppContext = Bootstrap.bootstrap("exp-plugins/", "workdir-simple-java-app");
 
-        expAppContext.streamOne(extensionClass).stream().findFirst().ifPresent(userService -> {
-            System.out.println(userService.getClass());
-            System.out.println(userService.getClass().getClassLoader());
+        expAppContext.list(extensionClass).stream().findFirst().ifPresent(userService -> {
+            log.info("userService.getClass={}", userService.getClass());
+            log.info("userService.getClass().getClassLoader()={}", userService.getClass().getClassLoader());
             userService.createUserExt();
         });
 
-        // UserService.class.getName(), 参数是字符串, 无法使用流式.
         Optional<UserService> optional = expAppContext.get(UserService.class.getName(), "example.plugin.a_1.0.0");
         optional.ifPresent(userService -> {
-            log.info(userService.getClass().getName());
+            log.info("example.plugin.a_1.0.0--->userService.getClass().getName()={}", userService.getClass().getName());
             userService.createUserExt();
         });
 
-        String name = expAppContext.stream(UserService.class, "example.plugin.a_1.0.0", UserService::getName);
-        System.out.println(name);
-
-        String listName = expAppContext.streamList(UserService.class, SimpleJavaAppMain::run);
-        System.out.println(listName);
-
         List<String> allPluginId = expAppContext.getAllPluginId();
-        System.out.println(allPluginId);
+        log.info("allPluginId={}", allPluginId);
+        log.info("allPluginId.size={}", allPluginId.size());
+        log.info("end --------------->>>>>>>>>>>");
     }
 
-    private static String run(List<UserService> userServices) {
-        return userServices.stream().findFirst().get().getName();
-    }
 }
