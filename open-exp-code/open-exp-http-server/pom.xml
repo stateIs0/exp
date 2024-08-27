@@ -7,6 +7,7 @@
         <groupId>cn.think.in.java</groupId>
         <artifactId>open-exp-code</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>open-exp-http-server</artifactId>

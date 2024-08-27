@@ -19,6 +19,7 @@
         <module>open-exp-adapter-springboot27-starter</module>
         <module>open-exp-rest-support</module>
         <module>open-exp-json-impl-jackson</module>
+        <module>open-exp-plugin-manager</module>
     </modules>
 
     <properties>
