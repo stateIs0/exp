@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -83,6 +84,11 @@ public class ExpAppContextImpl implements ExpAppContext {
                 Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public <P> List<P> get(Class<P> aClass) {
+        return get(aClass.getName());
     }
 
     @Override

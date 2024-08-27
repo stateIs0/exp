@@ -14,7 +14,6 @@ public interface ExpAppContext extends StreamAppContext {
      */
     List<String> getAllPluginId();
 
-
     /**
      * 预加载, 只读取元信息和 load boot class 和配置, 不做 bean 加载.
      */
@@ -34,6 +33,11 @@ public interface ExpAppContext extends StreamAppContext {
      * 获取多个扩展点的插件实例
      */
     <P> List<P> get(String extCode);
+
+    /**
+     * 获取多个扩展点的插件实例
+     */
+    <P> List<P> get(Class<P> pClass);
 
     /**
      * 获取单个插件实例.

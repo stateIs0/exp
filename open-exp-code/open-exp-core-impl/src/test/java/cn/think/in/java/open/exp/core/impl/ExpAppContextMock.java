@@ -6,6 +6,7 @@ import cn.think.in.java.open.exp.client.Plugin;
 import cn.think.in.java.open.exp.client.PluginFilter;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +41,11 @@ public class ExpAppContextMock implements ExpAppContext {
     @Override
     public <P> List<P> get(String extCode) {
         return null;
+    }
+
+    @Override
+    public <P> List<P> get(Class<P> extCode) {
+        return Collections.emptyList();
     }
 
     @Override
