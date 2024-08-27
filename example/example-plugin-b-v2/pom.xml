@@ -123,7 +123,7 @@
                         <id>copy</id>
                         <phase>package</phase>
                         <configuration>
-                            <tasks>
+                            <target>
 
                                 <copy todir="../../exp-plugins">
                                     <!-- project.build.directory表示各个模块的target目录 -->
@@ -132,7 +132,7 @@
                                         <include name="${project.artifactId}-${project.version}-*.zip"/>
                                     </fileset>
                                 </copy>
-                            </tasks>
+                            </target>
                         </configuration>
                         <goals>
                             <goal>run</goal>

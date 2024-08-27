@@ -76,12 +76,13 @@
 
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
                 <executions>
                     <execution>
                         <id>copy</id>
                         <phase>package</phase>
                         <configuration>
-                            <tasks>
+                            <target>
 
                                 <copy todir="../../exp-plugins">
                                     <!-- project.build.directory表示各个模块的target目录 -->
@@ -90,7 +91,7 @@
                                         <include name="${project.artifactId}-${project.version}.jar"/>
                                     </fileset>
                                 </copy>
-                            </tasks>
+                            </target>
                         </configuration>
                         <goals>
                             <goal>run</goal>
