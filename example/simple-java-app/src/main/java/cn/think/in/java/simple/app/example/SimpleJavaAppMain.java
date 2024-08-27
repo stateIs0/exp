@@ -40,6 +40,9 @@ public class SimpleJavaAppMain {
     }
 
     private static String run(List<UserService> userServices) {
-        return userServices.stream().findFirst().get().getName();
+        userServices.stream().findFirst().ifPresent(i-> {
+            log.info(i.getClass().getName());
+        });
+        return "success";
     }
 }
