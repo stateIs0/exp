@@ -34,7 +34,7 @@ public class ExpApplicationListener implements ApplicationListener<ApplicationRe
                 return bean;
             }
             log.debug("====>>>> beanName = {}", bean);
-            return MDCExpMethodInterceptor.getEnhancer(bean, pluginId);
+            return bean;
         }
 
         @Override

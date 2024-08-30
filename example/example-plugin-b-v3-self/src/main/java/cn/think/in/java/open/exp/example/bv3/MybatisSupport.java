@@ -1,12 +1,12 @@
 package cn.think.in.java.open.exp.example.bv3;
 
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
+import jakarta.annotation.PreDestroy;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PreDestroy;
-import javax.annotation.Resource;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +17,7 @@ import java.util.Set;
  * @date 2023/8/25
  **/
 @Slf4j
-@Component
+//@Component
 public class MybatisSupport {
 
 

@@ -13,7 +13,6 @@ public class Listener implements SpringApplicationRunListener {
     public void contextPrepared(ConfigurableApplicationContext context) {
         if (!(context instanceof AnnotationConfigApplicationContext)) {
             context.addApplicationListener(new ExpApplicationListener());
-            ExtFieldJsonConfigHandler.builder().environment(context.getEnvironment()).build().run();
             DocHandler.builder().environment(context.getEnvironment()).build().init();
         }
     }

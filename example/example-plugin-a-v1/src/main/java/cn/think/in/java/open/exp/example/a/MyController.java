@@ -15,6 +15,11 @@ import static cn.think.in.java.open.exp.example.a.Boot.configSupport;
 @RequestMapping("/hello")
 public class MyController {
 
+    @jakarta.annotation.PostConstruct
+    public void init() {
+        System.out.println("--->>");
+    }
+
     @RequestMapping("/av1")
     public String hello() {
         return configSupport.getProperty();

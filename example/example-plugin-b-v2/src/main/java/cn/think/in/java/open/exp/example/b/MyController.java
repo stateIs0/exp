@@ -16,16 +16,16 @@ import javax.annotation.Resource;
 @RequestMapping("/hello")
 public class MyController {
 
-    @Resource
-    MybatisSupport mybatisSupport;
+    //@Resource
+    //MybatisSupport mybatisSupport;
 
     @GetMapping("/bv2")
     public String hello() {
 
-        MyMapper myMapper = mybatisSupport.doGetMapper(MyMapper.class);
+//        MyMapper myMapper = mybatisSupport.doGetMapper(MyMapper.class);
+//
+//        MyTable myTable = myMapper.selectById(1L);
 
-        MyTable myTable = myMapper.selectById(1L);
-
-        return myTable.name;
+        return "myTable.name";
     }
 }
